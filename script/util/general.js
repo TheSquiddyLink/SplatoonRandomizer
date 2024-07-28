@@ -73,7 +73,7 @@ function randomObject(object){
 function intervalFor(func, ms, length) {
     return new Promise((resolve) => {
         let i = 0;
-        let interval = setInterval(function() {
+        let interval = setInterval(async function() {
             func();
             i++;
             if (i >= length) {

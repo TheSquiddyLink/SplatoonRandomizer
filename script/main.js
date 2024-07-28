@@ -28,13 +28,27 @@ async function generate(){
     console.log(weapon);
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
-    document.getElementById("mainWeaponImage").style.animation = "shake 0.2s infinite";
-    await intervalFor(function(){
+    let weaponImage = document.getElementById("mainWeaponImage");
+    let subSpecial = document.getElementsByClassName("multiImage");
+    subSpecial.item(0).hidden = true;
+    subSpecial.item(1).hidden = true;
+    let iterations = 10;
+    let lengthMS = 200;
+    let lengthS = lengthMS/1000;
+    document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
+    for(let i = 0; i < iterations; i++){
         let randomKey = randomObject(MAIN_WEAPONS);
         let randomWeapon = MAIN_WEAPONS[randomKey];
-        applyMain(randomWeapon);
-    }, 50, 75);
-    document.getElementById("mainWeaponImage").style.animation = "none"
+        weaponImage.src = randomWeapon.primaryTexture;
+        await sleep(lengthMS)
+    }
+    applyMain(weapon)
+    weaponImage.style.animation = `finish ${lengthS}s`;
+    subSpecial.item(0).hidden = false;
+    subSpecial.item(1).hidden = false;
+    subSpecial.item(0).style.animation = `finish ${lengthS}s`
+    subSpecial.item(1).style.animation = `finish ${lengthS}s`;
+
 
 }
 

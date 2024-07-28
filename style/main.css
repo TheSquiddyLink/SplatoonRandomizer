@@ -28,22 +28,42 @@ body {
     width: calc(var(--sub_special_size) * 0.7);
 }
 
-.mainWeaponDiv {
+#mainWeaponDiv {
     display: flex;
     height: calc(var(--sub_special_size) * 2);
     width: calc(var(--sub_special_size) * 2);
     justify-content: space-around;
     width: 100%;
+    margin-top: var(--sub_special_size);
+    margin-bottom: var(--sub_special_size);
 }
 
 @keyframes shake {
+  0% {
+    translate: 0 -100px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 100%;
+  }
+  100% {
+    translate: 0 100px;
+    opacity: 0;
+  }
+}
+
+@keyframes finish {
     0% {
-        translate: 0 20px;
+        opacity: 0;
+        transform: scale(1);
+        translate: 0 -100px;
     }
-    50% {
-        translate: 0 -20px;
+    75% {
+        transform: scale(1.2);
+        opacity: 1;
+        translate: 0;
     }
     100% {
-        translate: 0 20px;
+        transform: scale(1);
     }
 }
