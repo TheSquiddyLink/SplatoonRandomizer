@@ -1,0 +1,10 @@
+body {
+    background-color: gray;
+}
+.weapon > * {
+    position: absolute;
+}
+
+.weaponWhite{
+    scale: 1.0
+}

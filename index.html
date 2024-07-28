@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./style/main.css">
 </head>
 <body>
-    
+    <select id="teamColor">
+        <option value="BlueYellow">Blue Yellow</option>
+        <option value="GreenPurple">Green Purple</option>
+        <option value="LimegreenPurple">Limegreen Purple</option>
+        <option value="OrangeBlue">Orange Blue</option>
+        <option value="OrangePurple">Orange Purple</option>
+        <option value="PinkGreen">Pink Green</option>
+        <option value="TurquoisePink">Turquoise Pink</option>
+        <option value="TurquoiseRed">Turquoise Red</option>
+        <option value="YellowBlue">Yellow Blue</option>
+        <option value="YellowPurple">Yellow Purple</option>
+    </select>
+    <select id="teamSide">
+        <option value="alpha">Alpha</option>
+        <option value="bravo">Bravo</option>
+    </select>
+    <div class="weapon">
+        <canvas id="weaponInk">
+        </canvas>
+        <img class="weaponWhite" src="./assets/subs/fizzy_bomb_2.png">
+        <img id="inkColor" hidden src="./assets/subs/fizzy_bomb_1.png">
+    </div>
+
 </body>
+<script src="./script/main.js"></script>
 </html>
