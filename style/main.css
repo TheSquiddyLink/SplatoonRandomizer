@@ -38,7 +38,17 @@ body {
     width: 100%;
     margin-top: var(--sub_special_size);
 }
-
+.nameDiv {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -75px;
+    font-family: "Splatoon";
+    font-size: large;
+}
+#mainWeaponName {
+    position: absolute;
+    text-align: center;
+}
 @keyframes shake {
   0% {
     translate: 0 -100px;
@@ -67,4 +77,9 @@ body {
     100% {
         transform: scale(1);
     }
+}
+
+@font-face {
+    font-family: "Splatoon";
+    src: url(../assets/fonts/Splatoon2.otf);
 }

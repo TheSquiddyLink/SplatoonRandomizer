@@ -7,28 +7,35 @@
     <link rel="stylesheet" href="./style/main.css">
 </head>
 <body>
-    <select id="teamColor">
-    </select>
-    <select id="teamSide">
-        <option value="alpha">Alpha</option>
-        <option value="bravo">Bravo</option>
-    </select>
-    <select id="subWeapon"></select>
-    <select id="specialWeapon"></select>
-    <select id="mainWeapon"></select>
-    <input type="color" id="customColor">
+    <div id="debugControls" hidden>
+        <select id="teamColor">
+        </select>
+        <select id="teamSide">
+            <option value="alpha">Alpha</option>
+            <option value="bravo">Bravo</option>
+        </select>
+        <select id="subWeapon"></select>
+        <select id="specialWeapon"></select>
+        <select id="mainWeapon"></select>
+        <input type="color" id="customColor">
+    </div>
+
+    
     <div id="randomizerResult">
+        <div class="nameDiv">
+            <p id="mainWeaponName"></p>
+        </div>
         <div id="mainWeaponDiv">
             <img draggable=false id="mainWeaponImage">
         </div>
         <section class="subSpecial">
-            <div class="multiImage subWeapon">
+            <div class="multiImage subWeapon" hidden>
                 <canvas id="weaponInk">
                 </canvas>
                 <img id="subWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
                 <img id="subColor" hidden src="./assets/subs/fizzy_bomb_1.png">
             </div>
-            <div class="multiImage">
+            <div class="multiImage" hidden>
                 <canvas id="specialInk">
                 </canvas>
                 <img id="specialWhite" draggable=false src="./assets/specials/crab_tank_2.png">

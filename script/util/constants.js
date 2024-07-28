@@ -5,7 +5,7 @@ export const SPECIAL_WEAPONS = {
     BigBubbler: new SpecialWeapon("Big Bubbler", "big_bubbler"),
     BooyahBomb: new SpecialWeapon("Booyah Bomb", "booyah_bomb"),
     CrabTank: new SpecialWeapon("Crab Tank", "crab_tank"),
-    InkJet: new SpecialWeapon("Ink Het", "ink_jet"),
+    InkJet: new SpecialWeapon("Ink Jet", "ink_jet"),
     InkStorm: new SpecialWeapon("Ink Storm", "ink_storm"),
     InkVac: new SpecialWeapon("Ink Vac", "ink_vac"),
     KillerWail: new SpecialWeapon("Killer Wail 5.1", "killer_wail_5_1"),
