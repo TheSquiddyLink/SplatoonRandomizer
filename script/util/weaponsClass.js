@@ -39,8 +39,23 @@ class SpecialWeapon extends SecondaryTextureWeapon {
 }
 
 class MainWeapon extends BaseWeapon {
-    constructor(name, type, primaryTexture) {
+    /**
+     * @type {string}
+     */
+    type;
+    /**
+     * @type {SubWeapon}
+     */
+    subWeapon;
+    /**
+     * @type {SpecialWeapon}
+     */
+    specialWeapon;
+    constructor(name, type, primaryTexture, subWeapon, specialWeapon) {
         super(name, primaryTexture);
+        this.type = type;
+        this.subWeapon = subWeapon;
+        this.specialWeapon = specialWeapon;
     }
     get path(){
         return WEAPON_TEXTURES;
