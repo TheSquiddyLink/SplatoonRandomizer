@@ -1,12 +1,22 @@
 const SUB_TEXTURES = "./assets/subs/";
 const SPECIAL_TEXTURES = "./assets/specials/";
-class SubWeapon {
+const WEAPON_TEXTURES = "./assets/weapon_flat/";
+class BaseWeapon {
     name;
     primaryTexture;
-    secondaryTexture;
     constructor(name, primaryTexture) {
         this.name = name;
-        this.primaryTexture = this.path+primaryTexture+"_1"+".png";
+        this.primaryTexture = this.path+primaryTexture+".png";
+    }
+    get path(){
+        throw new Error("path not implemented");
+    }
+}
+
+class SubWeapon extends BaseWeapon {
+    secondaryTexture;
+    constructor(name, primaryTexture) {
+        super(name, primaryTexture);
         this.secondaryTexture = this.path+primaryTexture+"_2"+".png";
     }
     get path(){
@@ -22,4 +32,27 @@ class SpecialWeapon extends SubWeapon {
         return SPECIAL_TEXTURES;
     }
 }
-export { SubWeapon, SpecialWeapon };
+
+class MainWeapon extends BaseWeapon {
+    constructor(name, type, primaryTexture) {
+        super(name, primaryTexture);
+    }
+    get path(){
+        return WEAPON_TEXTURES;
+    }
+}
+
+const MAIN_TYPES = {
+    Blaster: "blaster",
+    Brella: "brella",
+    Brush: "brush",
+    Charger: "charger",
+    Dualies: "dualies",
+    Roller: "roller",
+    Shooter: "shooter",
+    Slosher: "slosher",
+    Splatana: "splatana",
+    Splatling: "splatling",
+    Stringer: "stringer",
+}
+export { SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES };

@@ -1,7 +1,7 @@
 import {Color} from "./util/general.js";
 import {SubWeapon} from "./util/weaponsClass.js";
 
-import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS} from "./util/constants.js";
+import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
 console.log("hello world"); 
 
 
@@ -9,6 +9,9 @@ console.log("hello world");
  * @type {HTMLCanvasElement}
  */
 const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
+/**
+ * @type {HTMLCanvasElement}
+ */
 const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
@@ -16,6 +19,17 @@ document.getElementById("teamSide").addEventListener("change", () => selectTeam(
 document.getElementById("subWeapon").addEventListener("change", () => selectSub());
 document.getElementById("specialWeapon").addEventListener("change", () => selectSpecial());
 document.getElementById("customColor").addEventListener("change", () => customColor());
+document.getElementById("mainWeapon").addEventListener("change", () => selectMainWeapon());
+
+function selectMainWeapon(){
+    let main = document.getElementById("mainWeapon").value;
+    applyMain(MAIN_WEAPONS[main]);
+}
+function applyMain(main){
+    console.log(main);
+    document.getElementById("mainWeaponImage").src = main.primaryTexture;
+    selectTeam();
+}
 
 function customColor(){
     let color = document.getElementById("customColor").value;
@@ -30,6 +44,7 @@ function updateDropDowns(){
     let teamColor = document.getElementById("teamColor");
     let subWeapon = document.getElementById("subWeapon");
     let specialWeapon = document.getElementById("specialWeapon");
+    let mainWeapon = document.getElementById("mainWeapon");
     for (let team in TEAMS) {
         let option = document.createElement("option");
         option.value = team;
@@ -49,6 +64,13 @@ function updateDropDowns(){
         option.value = special;
         option.innerText = weapon.name;
         specialWeapon.appendChild(option);
+    }
+    for (let main in MAIN_WEAPONS) {
+        let weapon = MAIN_WEAPONS[main];
+        let option = document.createElement("option");
+        option.value = main;
+        option.innerText = weapon.name;
+        mainWeapon.appendChild(option);
     }
 }
 function selectSpecial(){
