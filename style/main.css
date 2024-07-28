@@ -4,15 +4,26 @@
 body {
     background-color: gray;
 }
-.weapon, .special {
-    height: var(--sub_special_size);
-    display: flex;
-}
+
 .multiImage > * {
     position: absolute;
-    height: var(--sub_special_size);
+    height: inherit;
 }
 .multiImage > canvas {
+    height: inherit;
+    width: inherit;
+}
+.subSpecial {
+    display: flex;
+    justify-content: space-around;
+    height: auto;
+    align-items: center;
+}
+.multiImage {
     height: var(--sub_special_size);
     width: var(--sub_special_size);
+}
+.subWeapon {
+    height: calc(var(--sub_special_size) * 0.7);
+    width: calc(var(--sub_special_size) * 0.7);
 }
