@@ -1,4 +1,4 @@
-import {Color} from "./util/general.js";
+import {Color, sleep} from "./util/general.js";
 import {SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -37,7 +37,14 @@ function customColor(){
     console.log(customColor);
     applyColorAll(customColor);
 }
-
+async function testMainWeapons(){
+    const image = document.getElementById("mainWeaponImage");
+    for (let main in MAIN_WEAPONS) {
+        await sleep(100);
+        let weapon = MAIN_WEAPONS[main];
+        image.src = weapon.primaryTexture;
+    }
+}
 applyColorAll(TEAMS.BlueYellow.alpha);
 updateDropDowns();
 function updateDropDowns(){
