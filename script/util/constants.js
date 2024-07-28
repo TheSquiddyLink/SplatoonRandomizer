@@ -1,4 +1,4 @@
-import {Team, Color} from "./general.js";
+import {Team, Color, randomObject} from "./general.js";
 import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES} from "./weaponsClass.js";
 
 export const SPECIAL_WEAPONS = {
@@ -10,7 +10,7 @@ export const SPECIAL_WEAPONS = {
     InkVac: new SpecialWeapon("Ink Vac", "ink_vac"),
     KillerWail: new SpecialWeapon("Killer Wail 5.1", "killer_wail_5_1"),
     KrakenRoyale: new SpecialWeapon("Kraken Royale", "kraken_royale"),
-    ReefSlider: new SpecialWeapon("Reef Slider", "reef_slider"),
+    ReefSlider: new SpecialWeapon("Reef Slider", "reefslider"),
     SplattercolorScreen: new SpecialWeapon("Splattercolor Screen", "splattercolor_screen"),
     SuperChump: new SpecialWeapon("Super Chump", "super_chump"),
     Tacticooler: new SpecialWeapon("Tacticooler", "tacticooler"),
@@ -137,7 +137,7 @@ export const MAIN_WEAPONS = {
     OctobrushNouveau: new MainWeapon("Octobrush Nouveau", MAIN_TYPES.Brush, "octobrush_nouveau", SUB_WEAPONS.SquidBeakon, SPECIAL_WEAPONS.InkStorm),
     Octobrush: new MainWeapon("Octobrush", MAIN_TYPES.Brush, "octobrush", SUB_WEAPONS.SuctionBomb, SPECIAL_WEAPONS.Zipcaster),
     OrderBlasterReplica: new MainWeapon("Order Blaster Replica", MAIN_TYPES.Blaster, "order_blaster_replica", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.Zipcaster),
-    OrderBrella: new MainWeapon("Order Brella", MAIN_TYPES.Brella, "order_brella", SUB_WEAPONS.Sprinkler, SPECIAL_WEAPONS.TripleInkstrike),
+    OrderBrellaReplica: new MainWeapon("Order Brella Replica", MAIN_TYPES.Brella, "order_brella_replica", SUB_WEAPONS.Sprinkler, SPECIAL_WEAPONS.TripleInkstrike),
     OrderBrushReplica: new MainWeapon("Order Brush Replica", MAIN_TYPES.Brush, "order_brush_replica", SUB_WEAPONS.SuctionBomb, SPECIAL_WEAPONS.Zipcaster),
     OrderChargerReplica: new MainWeapon("Order Charger Replica", MAIN_TYPES.Charger, "order_charger_replica", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.InkVac),
     OrderDualieReplicas: new MainWeapon("Order Dualie Replicas", MAIN_TYPES.Dualies, "order_dualie_replicas", SUB_WEAPONS.SuctionBomb, SPECIAL_WEAPONS.CrabTank),
@@ -196,3 +196,5 @@ export const MAIN_WEAPONS = {
     ZnFSplatterscope: new MainWeapon("Z+F Splatterscope", MAIN_TYPES.Charger, "z+f_splatterscope", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.TripleInkstrike),
     ZinkMiniSplatling: new MainWeapon("Zink Mini Splatling", MAIN_TYPES.Splatling, "zink_mini_splatling", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.BigBubbler),
 }
+
+console.log(randomObject(MAIN_WEAPONS))

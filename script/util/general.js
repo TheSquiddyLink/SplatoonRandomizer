@@ -1,3 +1,4 @@
+
 class Color {
     /**
      * 
@@ -61,4 +62,9 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export { Color, Team, sleep };
+function randomObject(object){
+    let arr = Object.keys(object);
+    return arr[Math.floor(Math.random()*arr.length-1)];
+}
+
+export { Color, Team, sleep, randomObject };

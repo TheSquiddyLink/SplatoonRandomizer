@@ -1,4 +1,4 @@
-import {Color, sleep} from "./util/general.js";
+import {Color, randomObject, sleep} from "./util/general.js";
 import {SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -20,6 +20,17 @@ document.getElementById("subWeapon").addEventListener("change", () => selectSub(
 document.getElementById("specialWeapon").addEventListener("change", () => selectSpecial());
 document.getElementById("customColor").addEventListener("change", () => customColor());
 document.getElementById("mainWeapon").addEventListener("change", () => selectMainWeapon());
+document.getElementById("generate").addEventListener("click", () => generate());
+
+function generate(){
+    let key = randomObject(MAIN_WEAPONS);
+    let weapon = MAIN_WEAPONS[key];
+    console.log(weapon);
+    applyMain(weapon);
+    applySub(weapon.subWeapon);
+    applySpecial(weapon.specialWeapon);
+
+}
 
 function selectMainWeapon(){
     let main = document.getElementById("mainWeapon").value;
