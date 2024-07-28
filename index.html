@@ -15,12 +15,21 @@
     </select>
     <select id="subWeapon"></select>
     <input type="color" id="customColor">
-    <div class="weapon">
-        <canvas id="weaponInk">
-        </canvas>
-        <img id="weaponWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
-        <img id="inkColor" hidden src="./assets/subs/fizzy_bomb_1.png">
-    </div>
+    <section style="display: flex; justify-content: space-around;">
+        <div class="multiImage">
+            <canvas id="weaponInk">
+            </canvas>
+            <img id="weaponWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
+            <img id="inkColor" hidden src="./assets/subs/fizzy_bomb_1.png">
+        </div>
+        <div class="multiImage">
+            <canvas id="specialInk">
+            </canvas>
+            <img id="specialWhite" draggable=false src="./assets/specials/crab_tank_2.png">
+            <img id="specialColor" hidden src="./assets/specials/crab_tank_1.png">
+        </div>
+    </section>
+    
 
 </body>
 <script src="./script/main.js"></script>

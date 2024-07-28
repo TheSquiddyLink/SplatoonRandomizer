@@ -1,6 +1,18 @@
+:root {
+    --sub_special_size: 100px
+}
 body {
     background-color: gray;
 }
-.weapon > * {
+.weapon, .special {
+    height: var(--sub_special_size);
+    display: flex;
+}
+.multiImage > * {
     position: absolute;
+    height: var(--sub_special_size);
+}
+.multiImage > canvas {
+    height: var(--sub_special_size);
+    width: var(--sub_special_size);
 }

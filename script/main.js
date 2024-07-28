@@ -5,7 +5,7 @@ console.log("hello world");
  * @type {HTMLCanvasElement}
  */
 const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
-
+const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
 const SUB_TEXTURES = "./assets/subs/";
 class SubWeapon {
@@ -103,10 +103,10 @@ function customColor(){
     let r = parseInt(result[1], 16)
     let g = parseInt(result[2], 16)
     let b = parseInt(result[3], 16)
-    applyColor(new RGB(r, g, b));
+    ApplyColorAll(new RGB(r,g,b));
 }
 
-applyColor(new RGB(0, 0, 0));
+ApplyColorAll(TEAMS.BlueYellow.alpha);
 updateDropDowns();
 function updateDropDowns(){
     let teamColor = document.getElementById("teamColor");
@@ -128,7 +128,7 @@ function updateDropDowns(){
 function selectTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
-    applyColor(TEAMS[team][side]);
+    ApplyColorAll(TEAMS[team][side]);
 }
 
 function selectSub(){
@@ -149,13 +149,13 @@ function applySub(sub){
  * 
  * @param {RGB} color 
  */
-function applyColor(color){
-    console.log(color);
-    const ctx = WEAPON_INK_CANVAS.getContext("2d");
-    let image = document.getElementById("inkColor");
-    ctx.clearRect(0, 0, WEAPON_INK_CANVAS.width, WEAPON_INK_CANVAS.height);
-    ctx.drawImage(image, 0, 0);
-    let imageData = ctx.getImageData(0, 0, WEAPON_INK_CANVAS.width, WEAPON_INK_CANVAS.height);
+function applyColor(color, imageID, canvas){
+    let ctx = canvas.getContext("2d");
+    console.log(imageID)
+    let image = document.getElementById(imageID);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < imageData.data.length; i += 4) {
         const threashold = 115;
         if(!(imageData.data[i] <= threashold && imageData.data[i + 1] <= threashold && imageData.data[i + 2] <= threashold)) continue;
@@ -164,4 +164,9 @@ function applyColor(color){
         imageData.data[i + 2] = color.b;
     }
     ctx.putImageData(imageData, 0, 0);
+}
+
+function ApplyColorAll(color){
+    applyColor(color, "inkColor", WEAPON_INK_CANVAS);
+    applyColor(color, "specialColor", SPECIAL_INK_CANVAS);
 }
