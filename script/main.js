@@ -1,4 +1,4 @@
-import {Team, RGB} from "./util/general.js";
+import {Team, RGB as Color} from "./util/general.js";
 import {SubWeapon} from "./util/weapons.js";
 
 console.log("hello world"); 
@@ -11,16 +11,16 @@ const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
 const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
 const TEAMS = {
-    BlueYellow: new Team("BlueYellow", "Splatoon 3", new RGB(26,26,174), new RGB(227,141,36)),
-    GreenPurple: new Team("GreenPurple", "Splatoon 3", new RGB(160,201,55), new RGB(174,0,174)),
-    LimegreenPurple: new Team("LimegreenPurple", "Splatoon 3", new RGB(190,205,65), new RGB(99,37,205)),
-    OrangeBlue: new Team("OrangeBlue", "Splatoon 1", new RGB(222, 102, 36), new RGB(52,59,196)),
-    OrangePurple: new Team("OrangePurple", "Splatoon 3", new RGB(222, 102, 36), new RGB(110,4,182)),
-    PinkGreen: new Team("PinkGreen", "Splatoon 2", new RGB(193,45,116), new RGB(44,183,33)),
-    TurquoisePink: new Team("TurquoisePink", "Splatoon 3", new RGB(27,190,171), new RGB(196,58,110)),
-    TurquoiseRed: new Team("TurquoiseRed", "Splatoon 3", new RGB(30,192,173), new RGB(215,75,49)),
-    YellowBlue: new Team("YellowBlue", "Splatoon 3", new RGB(208,190,8), new RGB(58,12,205)),
-    YellowPurple: new Team("YellowPurple", "Splatoon 3", new RGB(206,177,33), new RGB(144,37,198)),
+    BlueYellow: new Team("BlueYellow", "Splatoon 3", new Color(26,26,174), new Color(227,141,36)),
+    GreenPurple: new Team("GreenPurple", "Splatoon 3", new Color(160,201,55), new Color(174,0,174)),
+    LimegreenPurple: new Team("LimegreenPurple", "Splatoon 3", new Color(190,205,65), new Color(99,37,205)),
+    OrangeBlue: new Team("OrangeBlue", "Splatoon 1", new Color(222, 102, 36), new Color(52,59,196)),
+    OrangePurple: new Team("OrangePurple", "Splatoon 3", new Color(222, 102, 36), new Color(110,4,182)),
+    PinkGreen: new Team("PinkGreen", "Splatoon 2", new Color(193,45,116), new Color(44,183,33)),
+    TurquoisePink: new Team("TurquoisePink", "Splatoon 3", new Color(27,190,171), new Color(196,58,110)),
+    TurquoiseRed: new Team("TurquoiseRed", "Splatoon 3", new Color(30,192,173), new Color(215,75,49)),
+    YellowBlue: new Team("YellowBlue", "Splatoon 3", new Color(208,190,8), new Color(58,12,205)),
+    YellowPurple: new Team("YellowPurple", "Splatoon 3", new Color(206,177,33), new Color(144,37,198)),
 }
 
 const SUB_WEAPONS = {
@@ -45,16 +45,13 @@ document.getElementById("subWeapon").addEventListener("change", () => selectSub(
 document.getElementById("customColor").addEventListener("change", () => customColor());
 
 function customColor(){
-    let customColor = document.getElementById("customColor").value;
-    console.log(customColor)
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(customColor);
-    let r = parseInt(result[1], 16)
-    let g = parseInt(result[2], 16)
-    let b = parseInt(result[3], 16)
-    ApplyColorAll(new RGB(r,g,b));
+    let color = document.getElementById("customColor").value;
+    let customColor = Color.hex(color);
+    console.log(customColor);
+    applyColorAll(customColor);
 }
 
-ApplyColorAll(TEAMS.BlueYellow.alpha);
+applyColorAll(TEAMS.BlueYellow.alpha);
 updateDropDowns();
 function updateDropDowns(){
     let teamColor = document.getElementById("teamColor");
@@ -76,7 +73,7 @@ function updateDropDowns(){
 function selectTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
-    ApplyColorAll(TEAMS[team][side]);
+    applyColorAll(TEAMS[team][side]);
 }
 
 function selectSub(){
@@ -95,7 +92,7 @@ async function applySub(sub){
 }
 /**
  * 
- * @param {RGB} color 
+ * @param {Color} color 
  */
 function applyColor(color, imageID, canvas){
     let ctx = canvas.getContext("2d");
@@ -114,7 +111,7 @@ function applyColor(color, imageID, canvas){
     ctx.putImageData(imageData, 0, 0);
 }
 
-function ApplyColorAll(color){
+function applyColorAll(color){
     applyColor(color, "inkColor", WEAPON_INK_CANVAS);
     applyColor(color, "specialColor", SPECIAL_INK_CANVAS);
 }

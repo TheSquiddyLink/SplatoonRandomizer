@@ -1,8 +1,26 @@
-class RGB {
-    constructor(r, g, b) {
+class Color {
+    /**
+     * 
+     * @param {number} r 
+     * @param {number} g 
+     * @param {number} b 
+     */
+    constructor(r,g,b){
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+    /**
+     * 
+     * @param {string} hex 6 character hex string
+     * @returns {Color} RGB color
+     */
+    static hex(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        let r = parseInt(result[1], 16)
+        let g = parseInt(result[2], 16)
+        let b = parseInt(result[3], 16)
+        return new Color(r, g, b);
     }
 }
 class Team {
@@ -42,4 +60,5 @@ class Team {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-export { RGB, Team, sleep };
+
+export { Color as RGB, Team, sleep };
