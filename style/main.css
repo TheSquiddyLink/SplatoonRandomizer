@@ -28,6 +28,7 @@ body {
 .subWeapon {
     height: calc(var(--sub_special_size) * 0.7);
     width: calc(var(--sub_special_size) * 0.7);
+    margin: calc(var(--sub_special_size) * 0.15);
 }
 
 #mainWeaponDiv {
@@ -48,6 +49,12 @@ body {
 #mainWeaponName {
     position: absolute;
     text-align: center;
+}
+.subSpecialName {
+    margin-top: auto;
+    text-align: center;
+    width: var(--sub_special_size);
+    font-family: "Splatoon";
 }
 @keyframes shake {
   0% {

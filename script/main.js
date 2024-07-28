@@ -26,6 +26,8 @@ async function generate(){
     let key = randomObject(MAIN_WEAPONS);
     let weapon = MAIN_WEAPONS[key];
     let mainWeaponName = document.getElementById("mainWeaponName");
+    let subWeaponName = document.getElementById("subWeaponName");
+    let specialWeaponName = document.getElementById("specialWeaponName");
     console.log(weapon);
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
@@ -34,6 +36,8 @@ async function generate(){
     subSpecial.item(0).hidden = true;
     subSpecial.item(1).hidden = true;
     mainWeaponName.hidden = true;
+    subWeaponName.hidden = true;
+    specialWeaponName.hidden = true;
     let iterations = 10;
     let lengthMS = 200;
     let lengthS = lengthMS/1000;
@@ -47,7 +51,11 @@ async function generate(){
     applyMain(weapon)
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
+    subWeaponName.hidden = false;
+    specialWeaponName.hidden = false;
     mainWeaponName.innerHTML = weapon.name;
+    subWeaponName.innerHTML = weapon.subWeapon.name;
+    specialWeaponName.innerHTML = weapon.specialWeapon.name;
     mainWeaponName.style.animation = `finish ${lengthS}s`;
     subSpecial.item(0).hidden = false;
     subSpecial.item(1).hidden = false;
