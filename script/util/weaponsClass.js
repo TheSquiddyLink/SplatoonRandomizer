@@ -12,19 +12,24 @@ class BaseWeapon {
         throw new Error("path not implemented");
     }
 }
-
-class SubWeapon extends BaseWeapon {
+class SecondaryTextureWeapon extends BaseWeapon {
     secondaryTexture;
     constructor(name, primaryTexture) {
         super(name, primaryTexture);
-        this.secondaryTexture = this.path+primaryTexture+"_2"+".png";
+        this.primaryTexture = this.path+primaryTexture+"_1.png";
+        this.secondaryTexture = this.path+primaryTexture+"_2.png";
+    }
+}
+class SubWeapon extends SecondaryTextureWeapon {
+    constructor(name, primaryTexture) {
+        super(name, primaryTexture);
     }
     get path(){
         return SUB_TEXTURES;
     }
 }
 
-class SpecialWeapon extends SubWeapon {
+class SpecialWeapon extends SecondaryTextureWeapon {
     constructor(name, primaryTexture) {
         super(name, primaryTexture);
     }
