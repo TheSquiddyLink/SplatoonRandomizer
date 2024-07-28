@@ -61,4 +61,4 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export { Color as RGB, Team, sleep };
+export { Color, Team, sleep };
