@@ -64,7 +64,23 @@ function sleep(ms) {
 
 function randomObject(object){
     let arr = Object.keys(object);
-    return arr[Math.floor(Math.random()*arr.length-1)];
+    let index = Math.floor(Math.random()*(arr.length-1))
+    console.log("Index "+index);
+    return arr[index];
 }
 
-export { Color, Team, sleep, randomObject };
+
+function intervalFor(func, ms, length) {
+    return new Promise((resolve) => {
+        let i = 0;
+        let interval = setInterval(function() {
+            func();
+            i++;
+            if (i >= length) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, ms);
+    });
+}
+export { Color, Team, sleep, randomObject, intervalFor };

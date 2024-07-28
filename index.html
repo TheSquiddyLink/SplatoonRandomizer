@@ -17,21 +17,26 @@
     <select id="specialWeapon"></select>
     <select id="mainWeapon"></select>
     <input type="color" id="customColor">
-    <img id="mainWeaponImage">
-    <section class="subSpecial">
-        <div class="multiImage subWeapon">
-            <canvas id="weaponInk">
-            </canvas>
-            <img id="subWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
-            <img id="subColor" hidden src="./assets/subs/fizzy_bomb_1.png">
+    <div id="randomizerResult">
+        <div class="mainWeaponDiv">
+            <img draggable=false id="mainWeaponImage">
         </div>
-        <div class="multiImage">
-            <canvas id="specialInk">
-            </canvas>
-            <img id="specialWhite" draggable=false src="./assets/specials/crab_tank_2.png">
-            <img id="specialColor" hidden src="./assets/specials/crab_tank_1.png">
-        </div>
-    </section>
+        <section class="subSpecial">
+            <div class="multiImage subWeapon">
+                <canvas id="weaponInk">
+                </canvas>
+                <img id="subWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
+                <img id="subColor" hidden src="./assets/subs/fizzy_bomb_1.png">
+            </div>
+            <div class="multiImage">
+                <canvas id="specialInk">
+                </canvas>
+                <img id="specialWhite" draggable=false src="./assets/specials/crab_tank_2.png">
+                <img id="specialColor" hidden src="./assets/specials/crab_tank_1.png">
+            </div>
+        </section>
+    </div>
+
     
     <input type="button" id="generate" value="Generate">
 </body>

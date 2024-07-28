@@ -1,4 +1,4 @@
-import {Color, randomObject, sleep} from "./util/general.js";
+import {Color, intervalFor, randomObject, sleep} from "./util/general.js";
 import {SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -22,13 +22,19 @@ document.getElementById("customColor").addEventListener("change", () => customCo
 document.getElementById("mainWeapon").addEventListener("change", () => selectMainWeapon());
 document.getElementById("generate").addEventListener("click", () => generate());
 
-function generate(){
+async function generate(){
     let key = randomObject(MAIN_WEAPONS);
     let weapon = MAIN_WEAPONS[key];
     console.log(weapon);
-    applyMain(weapon);
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
+    document.getElementById("mainWeaponImage").style.animation = "shake 0.2s infinite";
+    await intervalFor(function(){
+        let randomKey = randomObject(MAIN_WEAPONS);
+        let randomWeapon = MAIN_WEAPONS[randomKey];
+        applyMain(randomWeapon);
+    }, 50, 75);
+    document.getElementById("mainWeaponImage").style.animation = "none"
 
 }
 
@@ -39,7 +45,6 @@ function selectMainWeapon(){
 function applyMain(main){
     console.log(main);
     document.getElementById("mainWeaponImage").src = main.primaryTexture;
-    selectTeam();
 }
 
 function customColor(){

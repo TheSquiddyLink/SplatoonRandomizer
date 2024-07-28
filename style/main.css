@@ -27,3 +27,23 @@ body {
     height: calc(var(--sub_special_size) * 0.7);
     width: calc(var(--sub_special_size) * 0.7);
 }
+
+.mainWeaponDiv {
+    display: flex;
+    height: calc(var(--sub_special_size) * 2);
+    width: calc(var(--sub_special_size) * 2);
+    justify-content: space-around;
+    width: 100%;
+}
+
+@keyframes shake {
+    0% {
+        translate: 0 20px;
+    }
+    50% {
+        translate: 0 -20px;
+    }
+    100% {
+        translate: 0 20px;
+    }
+}
