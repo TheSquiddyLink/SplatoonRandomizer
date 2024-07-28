@@ -8,25 +8,16 @@
 </head>
 <body>
     <select id="teamColor">
-        <option value="BlueYellow">Blue Yellow</option>
-        <option value="GreenPurple">Green Purple</option>
-        <option value="LimegreenPurple">Limegreen Purple</option>
-        <option value="OrangeBlue">Orange Blue</option>
-        <option value="OrangePurple">Orange Purple</option>
-        <option value="PinkGreen">Pink Green</option>
-        <option value="TurquoisePink">Turquoise Pink</option>
-        <option value="TurquoiseRed">Turquoise Red</option>
-        <option value="YellowBlue">Yellow Blue</option>
-        <option value="YellowPurple">Yellow Purple</option>
     </select>
     <select id="teamSide">
         <option value="alpha">Alpha</option>
         <option value="bravo">Bravo</option>
     </select>
+    <select id="subWeapon"></select>
     <div class="weapon">
         <canvas id="weaponInk">
         </canvas>
-        <img class="weaponWhite" src="./assets/subs/fizzy_bomb_2.png">
+        <img id="weaponWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
         <img id="inkColor" hidden src="./assets/subs/fizzy_bomb_1.png">
     </div>
 
