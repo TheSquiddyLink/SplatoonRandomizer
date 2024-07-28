@@ -94,6 +94,17 @@ const SUB_WEAPONS = {
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
 document.getElementById("subWeapon").addEventListener("change", () => selectSub());
+document.getElementById("customColor").addEventListener("change", () => customColor());
+
+function customColor(){
+    let customColor = document.getElementById("customColor").value;
+    console.log(customColor)
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(customColor);
+    let r = parseInt(result[1], 16)
+    let g = parseInt(result[2], 16)
+    let b = parseInt(result[3], 16)
+    applyColor(new RGB(r, g, b));
+}
 
 applyColor(new RGB(0, 0, 0));
 updateDropDowns();
@@ -139,7 +150,7 @@ function applySub(sub){
  * @param {RGB} color 
  */
 function applyColor(color){
-    console.log
+    console.log(color);
     const ctx = WEAPON_INK_CANVAS.getContext("2d");
     let image = document.getElementById("inkColor");
     ctx.clearRect(0, 0, WEAPON_INK_CANVAS.width, WEAPON_INK_CANVAS.height);
