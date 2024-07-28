@@ -1,3 +1,6 @@
+import {Team, RGB} from "./util/general.js";
+import {SubWeapon} from "./util/weapons.js";
+
 console.log("hello world"); 
 
 
@@ -6,61 +9,6 @@ console.log("hello world");
  */
 const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
 const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
-
-const SUB_TEXTURES = "./assets/subs/";
-class SubWeapon {
-    name;
-    primaryTexture;
-    secondaryTexture;
-    constructor(name, primaryTexture) {
-        this.name = name;
-        this.primaryTexture = SUB_TEXTURES+primaryTexture+"_1"+".png";
-        this.secondaryTexture = SUB_TEXTURES+primaryTexture+"_2"+".png";
-    }
-}
-
-class RGB {
-    constructor(r, g, b) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-    }
-}
-
-class Team {
-
-    /**
-     * @type {string}
-     */
-    name;
-    /**
-     * @type {string}
-     */
-    game;
-    /**
-     * @type {Color}
-     */
-    alpha;
-    /**
-     * @type {Color} 
-    */
-    bravo;
-
-
-    /**
-     * 
-     * @param {string} name 
-     * @param {string} game 
-     * @param {Color} alpha 
-     * @param {Color} bravo 
-     */
-    constructor(name, game, alpha, bravo){
-        this.name = name;
-        this.game = game;
-        this.alpha = alpha;
-        this.bravo = bravo;
-    }
-}
 
 const TEAMS = {
     BlueYellow: new Team("BlueYellow", "Splatoon 3", new RGB(26,26,174), new RGB(227,141,36)),
@@ -134,9 +82,6 @@ function selectTeam(){
 function selectSub(){
     let sub = document.getElementById("subWeapon").value;
     applySub(SUB_WEAPONS[sub]);
-}
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 /**
  * 
