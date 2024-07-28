@@ -125,11 +125,12 @@ async function applySub(sub){
  * 
  * @param {Color} color 
  */
-function applyColor(color, imageID, canvas){
+async function applyColor(color, imageID, canvas){
     let ctx = canvas.getContext("2d");
     console.log(imageID)
     let image = document.getElementById(imageID);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    await sleep(50);
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < imageData.data.length; i += 4) {
