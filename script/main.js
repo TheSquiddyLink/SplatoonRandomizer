@@ -87,7 +87,7 @@ const SUB_WEAPONS = {
     Sprinkler: new SubWeapon("Sprinkler", "sprinkler"),
     SquidBeakon: new SubWeapon("SquidBeakon", "squid_beakon"),
     SuctionBomb: new SubWeapon("SuctionBomb", "suction_bomb"),
-    Topedo: new SubWeapon("Topedo", "topedo"),
+    Torpedo: new SubWeapon("Torpedo", "torpedo"),
     ToxicMist: new SubWeapon("ToxicMist", "toxic_mist"),
 }
 
@@ -135,14 +135,17 @@ function selectSub(){
     let sub = document.getElementById("subWeapon").value;
     applySub(SUB_WEAPONS[sub]);
 }
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 /**
  * 
  * @param {SubWeapon} sub 
  */
-function applySub(sub){
+async function applySub(sub){
     document.getElementById("inkColor").src = sub.primaryTexture;
     document.getElementById("weaponWhite").src = sub.secondaryTexture;
+    // BUG: Color dose not change on first attempt
     selectTeam();
 }
 /**
