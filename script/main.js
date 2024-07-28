@@ -1,5 +1,5 @@
 import {Team, RGB as Color} from "./util/general.js";
-import {SubWeapon} from "./util/weapons.js";
+import {SubWeapon, SpecialWeapon} from "./util/weapons.js";
 
 console.log("hello world"); 
 
@@ -24,24 +24,47 @@ const TEAMS = {
 }
 
 const SUB_WEAPONS = {
-    AngleShooter: new SubWeapon("AngleShooter", "angle_shooter"),
-    AutoBomb: new SubWeapon("AutoBomb", "auto_bomb"),
-    BurstBomb: new SubWeapon("BurstBomb", "burst_bomb"),
-    CurlingBomb: new SubWeapon("CurlingBomb", "curling_bomb"),
-    FizzyBomb: new SubWeapon("FizzyBomb", "fizzy_bomb"),
-    InkMine: new SubWeapon("InkMine", "ink_mine"),
-    PointSensorr: new SubWeapon("PointSensor", "point_sensor"),
-    SplatBomb: new SubWeapon("SplatBomb", "splat_bomb"),
+    AngleShooter: new SubWeapon("Angle Shooter", "angle_shooter"),
+    AutoBomb: new SubWeapon("Auto Bomb", "auto_bomb"),
+    BurstBomb: new SubWeapon("Burst Bomb", "burst_bomb"),
+    CurlingBomb: new SubWeapon("Curling Bomb", "curling_bomb"),
+    FizzyBomb: new SubWeapon("Fizzy Bomb", "fizzy_bomb"),
+    InkMine: new SubWeapon("Ink Mine", "ink_mine"),
+    PointSensorr: new SubWeapon("Point Sensor", "point_sensor"),
+    SplatBomb: new SubWeapon("Splat Bomb", "splat_bomb"),
     Sprinkler: new SubWeapon("Sprinkler", "sprinkler"),
-    SquidBeakon: new SubWeapon("SquidBeakon", "squid_beakon"),
-    SuctionBomb: new SubWeapon("SuctionBomb", "suction_bomb"),
+    SquidBeakon: new SubWeapon("Squid Beakon", "squid_beakon"),
+    SuctionBomb: new SubWeapon("Suction Bomb", "suction_bomb"),
     Torpedo: new SubWeapon("Torpedo", "torpedo"),
-    ToxicMist: new SubWeapon("ToxicMist", "toxic_mist"),
+    ToxicMist: new SubWeapon("Toxic Mist", "toxic_mist"),
 }
 
+
+const SPECIAL_WEAPONS = {
+    BigBubbler: new SpecialWeapon("Big Bubbler", "big_bubbler"),
+    BooyahBomb: new SpecialWeapon("Booyah Bomb", "booyah_bomb"),
+    CrabTank: new SpecialWeapon("Crab Tank", "crab_tank"),
+    InkJet: new SpecialWeapon("Ink Het", "ink_jet"),
+    InkStorm: new SpecialWeapon("Ink Storm", "ink_storm"),
+    InkVac: new SpecialWeapon("Ink Vac", "ink_vac"),
+    KillerWail: new SpecialWeapon("Killer Wail 5.1", "killer_wail_5_1"),
+    KrakenRoyale: new SpecialWeapon("Kraken Royale", "kraken_royale"),
+    ReefSlider: new SpecialWeapon("Reef Slider", "reef_slider"),
+    SplattercolorScreen: new SpecialWeapon("Splattercolor Screen", "splattercolor_screen"),
+    SuperChump: new SpecialWeapon("Super Chump", "super_chump"),
+    Tacticooler: new SpecialWeapon("Tacticooler", "tacticooler"),
+    TentaMissiles: new SpecialWeapon("Tenta Missiles", "tenta_missiles"),
+    TripleInkstrike: new SpecialWeapon("Triple Inkstrike", "triple_inkstrike"),
+    TripleSplashdown: new SpecialWeapon("Triple Splashdown", "triple_splashdown"),
+    Trizooka: new SpecialWeapon("Trizooka", "trizooka"),
+    UltraStamp: new SpecialWeapon("Ultra Stamp", "ultra_stamp"),
+    WaveBreaker: new SpecialWeapon("Wave Breaker", "wave_breaker"),
+    Zipcaster: new SpecialWeapon("Zipcaster", "zipcaster"),
+}
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
 document.getElementById("subWeapon").addEventListener("change", () => selectSub());
+document.getElementById("specialWeapon").addEventListener("change", () => selectSpecial());
 document.getElementById("customColor").addEventListener("change", () => customColor());
 
 function customColor(){
@@ -56,6 +79,7 @@ updateDropDowns();
 function updateDropDowns(){
     let teamColor = document.getElementById("teamColor");
     let subWeapon = document.getElementById("subWeapon");
+    let specialWeapon = document.getElementById("specialWeapon");
     for (let team in TEAMS) {
         let option = document.createElement("option");
         option.value = team;
@@ -63,13 +87,30 @@ function updateDropDowns(){
         teamColor.appendChild(option);
     }
     for (let sub in SUB_WEAPONS) {
+        let weapon = SUB_WEAPONS[sub];
         let option = document.createElement("option");
         option.value = sub;
-        option.innerText = sub;
+        option.innerText = weapon.name;
         subWeapon.appendChild(option);
     }
+    for (let special in SPECIAL_WEAPONS) {
+        let weapon = SPECIAL_WEAPONS[special];
+        let option = document.createElement("option");
+        option.value = special;
+        option.innerText = weapon.name;
+        specialWeapon.appendChild(option);
+    }
 }
-
+function selectSpecial(){
+    let special = document.getElementById("specialWeapon").value;
+    applySpecial(SPECIAL_WEAPONS[special]);
+}
+function applySpecial(special){
+    document.getElementById("specialColor").src = special.primaryTexture;
+    document.getElementById("specialWhite").src = special.secondaryTexture;
+    // BUG: Color dose not change on first attempt
+    selectTeam();
+}
 function selectTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
@@ -85,8 +126,8 @@ function selectSub(){
  * @param {SubWeapon} sub 
  */
 async function applySub(sub){
-    document.getElementById("inkColor").src = sub.primaryTexture;
-    document.getElementById("weaponWhite").src = sub.secondaryTexture;
+    document.getElementById("subColor").src = sub.primaryTexture;
+    document.getElementById("subWhite").src = sub.secondaryTexture;
     // BUG: Color dose not change on first attempt
     selectTeam();
 }
@@ -112,6 +153,6 @@ function applyColor(color, imageID, canvas){
 }
 
 function applyColorAll(color){
-    applyColor(color, "inkColor", WEAPON_INK_CANVAS);
+    applyColor(color, "subColor", WEAPON_INK_CANVAS);
     applyColor(color, "specialColor", SPECIAL_INK_CANVAS);
 }
