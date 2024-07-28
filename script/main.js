@@ -1,5 +1,5 @@
 import {Team, RGB as Color} from "./util/general.js";
-import {SubWeapon, SpecialWeapon} from "./util/weapons.js";
+import {SubWeapon, SpecialWeapon} from "./util/weaponsClass.js";
 
 console.log("hello world"); 
 
