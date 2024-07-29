@@ -4,6 +4,11 @@ import {SubWeapon} from "./util/weaponsClass.js";
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
 console.log("hello world"); 
 
+const CONFIG = {
+    autoHide: false,
+    hideDuration: 2.5,
+    showDuration: 2.5,
+}
 
 /**
  * @type {HTMLCanvasElement}
@@ -23,14 +28,33 @@ document.getElementById("mainWeapon").addEventListener("change", () => selectMai
 document.getElementById("generate").addEventListener("click", () => generate());
 document.getElementById("hide").addEventListener("click", () => hide());
 
+document.getElementById("autoHide").addEventListener("change", () => updateConfig());
+document.getElementById("hideLen").addEventListener("change", () => updateConfig());
+document.getElementById("showLen").addEventListener("change", () => updateConfig());
+
 async function hide(){
     let randomizerResult = document.getElementById("randomizerResult");
-    randomizerResult.style.animation = "fadeOut 2s";
-    await sleep(2000);
+    randomizerResult.style.animation = `fadeOut ${CONFIG.hideDuration}s`;
+    await sleep(CONFIG.hideDuration * 1000);
     randomizerResult.hidden = true;
     randomizerResult.style.animation = "none";
 }
 
+function updateConfig(){
+    console.log("updating config");
+    let autoHide = document.getElementById("autoHide").checked;
+    let hideDuration = document.getElementById("hideLen").value;
+    let showDuration = document.getElementById("showLen").value;
+    CONFIG.autoHide = autoHide;
+    CONFIG.hideDuration = hideDuration;
+    CONFIG.showDuration = showDuration;
+    if(autoHide){
+        document.getElementById("showControls").hidden = false;
+    } else {
+        document.getElementById("showControls").hidden = true;
+    }
+
+}
 
 async function generate(){
     let randomizerResult = document.getElementById("randomizerResult");
@@ -73,7 +97,10 @@ async function generate(){
     subSpecial.item(1).hidden = false;
     subSpecial.item(0).style.animation = `finish ${lengthS}s`
     subSpecial.item(1).style.animation = `finish ${lengthS}s`;
-
+    if(CONFIG.autoHide){
+        await sleep(CONFIG.showDuration*1000);
+        hide();
+    }
 
 }
 

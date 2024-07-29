@@ -20,6 +20,20 @@
         <input type="color" id="customColor">
     </div>
 
+    <div class="config">
+        <label for="autoHide">Auto Hide</label>
+        <label class="switch" style="scale: 0.75;">
+            <input type="checkbox" id="autoHide">
+            <span class="slider round"></span>
+        </label>
+        <label for="hideLen">Hide Duration</label>
+        <input type="number" value="2.5" id="hideLen">
+        <span hidden id="showControls">
+            <label for="showLen">Show Duration</label>
+            <input type="number" value="2.5" id="showLen">
+        </span>
+
+    </div>
     <div class="basicControls">
         <input type="button" id="generate" value="Generate">
         <input type="button" id="hide" value="Hide">
