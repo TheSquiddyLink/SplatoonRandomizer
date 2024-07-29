@@ -97,6 +97,8 @@ async function generate(){
     let subWeaponName = document.getElementById("subWeaponName");
     let specialWeaponName = document.getElementById("specialWeaponName");
     console.log(weapon);
+    applySub(weapon.subWeapon);
+    applySpecial(weapon.specialWeapon);
     let weaponImage = document.getElementById("mainWeaponImage");
     let subSpecial = document.getElementsByClassName("multiImage");
     subSpecial.item(0).hidden = true;
@@ -108,10 +110,6 @@ async function generate(){
     let iterations = 15;
     let lengthMS = totalLenght/iterations;
     let lengthS = lengthMS/1000;
-    document.getElementById("subColor").src = weapon.subWeapon.primaryTexture;
-    document.getElementById("subWhite").src  = weapon.subWeapon.secondaryTexture;
-    document.getElementById("specialColor").src = weapon.specialWeapon.primaryTexture;
-    document.getElementById("specialWhite").src  = weapon.specialWeapon.secondaryTexture;
     document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
     if(!CONFIG.disableMusic) AUDIO.play();
     for(let i = 0; i < iterations; i++){
@@ -121,8 +119,6 @@ async function generate(){
         await sleep(lengthMS)
     }
     applyMain(weapon)
-
-    selectTeam();
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
@@ -206,6 +202,12 @@ function updateDropDowns(){
 function selectSpecial(){
     let special = document.getElementById("specialWeapon").value;
     applySpecial(SPECIAL_WEAPONS[special]);
+}
+function applySpecial(special){
+    document.getElementById("specialColor").src = special.primaryTexture;
+    document.getElementById("specialWhite").src = special.secondaryTexture;
+    // BUG: Color dose not change on first attempt
+    selectTeam();
 }
 function selectTeam(){
     let team = document.getElementById("teamColor").value;
