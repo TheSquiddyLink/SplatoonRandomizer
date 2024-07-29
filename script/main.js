@@ -21,7 +21,7 @@ const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
 const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
 
-const AUDIO = new Audio("../assets/audio/randomizer.mp3");
+const AUDIO = new Audio("./assets/audio/randomizer.mp3");
 
 
 var animationPlaying = false;
