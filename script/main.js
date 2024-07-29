@@ -19,6 +19,8 @@ const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
  */
 const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
+
+const AUDIO = new Audio("../assets/audio/randomizer.mp3");
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
 document.getElementById("subWeapon").addEventListener("change", () => selectSub());
@@ -32,6 +34,21 @@ document.getElementById("autoHide").addEventListener("change", () => updateConfi
 document.getElementById("hideLen").addEventListener("change", () => updateConfig());
 document.getElementById("showLen").addEventListener("change", () => updateConfig());
 
+document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
+document.getElementById("showConfig").addEventListener("click", () => showConfig());
+
+function hideConfig(){
+    let config = document.getElementById("config")
+    config.hidden = true
+    let showConfigButton = document.getElementById("showConfig");
+    showConfigButton.hidden = false;
+}
+function showConfig(){
+    let config = document.getElementById("config")
+    config.hidden = false;
+    let showConfigButton = document.getElementById("showConfig");
+    showConfigButton.hidden = true;
+}
 async function hide(){
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.style.animation = `fadeOut ${CONFIG.hideDuration}s`;
@@ -74,10 +91,12 @@ async function generate(){
     mainWeaponName.hidden = true;
     subWeaponName.hidden = true;
     specialWeaponName.hidden = true;
-    let iterations = 10;
-    let lengthMS = 200;
+    let totalLenght = 2550;
+    let iterations = 15;
+    let lengthMS = totalLenght/iterations;
     let lengthS = lengthMS/1000;
     document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
+    AUDIO.play();
     for(let i = 0; i < iterations; i++){
         let randomKey = randomObject(MAIN_WEAPONS);
         let randomWeapon = MAIN_WEAPONS[randomKey];
