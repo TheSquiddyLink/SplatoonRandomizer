@@ -21,8 +21,20 @@ document.getElementById("specialWeapon").addEventListener("change", () => select
 document.getElementById("customColor").addEventListener("change", () => customColor());
 document.getElementById("mainWeapon").addEventListener("change", () => selectMainWeapon());
 document.getElementById("generate").addEventListener("click", () => generate());
+document.getElementById("hide").addEventListener("click", () => hide());
+
+async function hide(){
+    let randomizerResult = document.getElementById("randomizerResult");
+    randomizerResult.style.animation = "fadeOut 2s";
+    await sleep(2000);
+    randomizerResult.hidden = true;
+    randomizerResult.style.animation = "none";
+}
+
 
 async function generate(){
+    let randomizerResult = document.getElementById("randomizerResult");
+    randomizerResult.hidden = false;
     let key = randomObject(MAIN_WEAPONS);
     let weapon = MAIN_WEAPONS[key];
     let mainWeaponName = document.getElementById("mainWeaponName");

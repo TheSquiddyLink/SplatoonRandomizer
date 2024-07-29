@@ -42,7 +42,7 @@ body {
 .nameDiv {
     display: flex;
     justify-content: center;
-    margin-bottom: -75px;
+    margin-bottom: -50px;
     font-family: "Splatoon";
     font-size: large;
 }
@@ -89,4 +89,12 @@ body {
 @font-face {
     font-family: "Splatoon";
     src: url(../assets/fonts/Splatoon2.otf);
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
