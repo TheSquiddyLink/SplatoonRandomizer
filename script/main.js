@@ -22,6 +22,9 @@ const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
 
 const AUDIO = new Audio("../assets/audio/randomizer.mp3");
+
+
+var animationPlaying = false;
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
 document.getElementById("subWeapon").addEventListener("change", () => selectSub());
@@ -78,6 +81,14 @@ function updateConfig(){
 }
 
 async function generate(){
+    let generateButton = document.getElementById("generate");
+    if(animationPlaying){
+        console.log("Animation already playing");
+        return;
+    } else {
+        animationPlaying = true;
+        generateButton.disabled = true;
+    }
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.hidden = false;
     let key = randomObject(MAIN_WEAPONS);
@@ -124,7 +135,10 @@ async function generate(){
         await sleep(CONFIG.showDuration*1000);
         hide();
     }
-
+    console.log(AUDIO.duration)
+    await sleep(AUDIO.duration*1000 - totalLenght)
+    animationPlaying = false;
+    generateButton.disabled = false;
 }
 
 function selectMainWeapon(){
