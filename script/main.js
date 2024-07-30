@@ -10,6 +10,7 @@ const CONFIG = {
     showDuration: 2.5,
     disableMusic: false,
     iterations: 25,
+    disableAnimation: false, 
 }
 
 /**
@@ -40,6 +41,7 @@ document.getElementById("hideLen").addEventListener("change", () => updateConfig
 document.getElementById("showLen").addEventListener("change", () => updateConfig());
 document.getElementById("disableSound").addEventListener("change", () => updateConfig());
 document.getElementById("iterations").addEventListener("change", () => updateConfig());
+document.getElementById("disableAnimation").addEventListener("change", () => updateConfig());
 
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
@@ -72,11 +74,13 @@ function updateConfig(){
     let showDuration = document.getElementById("showLen").value;
     let disableMusic = document.getElementById("disableSound").checked;
     let iterations = document.getElementById("iterations").value;
+    let disableAnimation = document.getElementById("disableAnimation").checked;
     CONFIG.autoHide = autoHide;
     CONFIG.hideDuration = hideDuration;
     CONFIG.showDuration = showDuration;
     CONFIG.disableMusic = disableMusic;
     CONFIG.iterations = iterations;
+    CONFIG.disableAnimation = disableAnimation;
     if(autoHide){
         document.getElementById("showControls").hidden = false;
     } else {
@@ -91,6 +95,7 @@ function setDefaultConfig(){
     document.getElementById("showLen").value = CONFIG.showDuration;
     document.getElementById("disableSound").checked = CONFIG.disableMusic;
     document.getElementById("iterations").value = CONFIG.iterations;
+    document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
 }
 
 async function generate(){
@@ -129,11 +134,13 @@ async function generate(){
     selectSpecial();
     if(!CONFIG.disableMusic) AUDIO.play();
     console.log(iterations)
-    for(let i = 0; i < iterations; i++){
-        let randomKey = randomObject(MAIN_WEAPONS);
-        let randomWeapon = MAIN_WEAPONS[randomKey];
-        weaponImage.src = randomWeapon.primaryTexture;
-        await sleep(lengthMS)
+    if(!CONFIG.disableAnimation){
+        for(let i = 0; i < iterations; i++){
+            let randomKey = randomObject(MAIN_WEAPONS);
+            let randomWeapon = MAIN_WEAPONS[randomKey];
+            weaponImage.src = randomWeapon.primaryTexture;
+            await sleep(lengthMS)
+        }
     }
     applyMain(weapon)
     selectTeam();
