@@ -44,9 +44,18 @@ document.getElementById("iterations").addEventListener("change", () => updateCon
 document.getElementById("disableAnimation").addEventListener("change", () => updateConfig());
 
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
+document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 
 setDefaultConfig();
+
+function toggleColorConfig() {
+    let colorConfig = document.getElementById("colorConfig");
+    console.log(colorConfig.hidden)
+    colorConfig.hidden =!colorConfig.hidden;
+    let colorToggle = document.getElementById("colorToggle");
+    colorToggle.innerText = colorConfig.hidden? "Show Color Config" : "Hide Color Config";
+}
 function hideConfig(){
     let config = document.getElementById("config")
     config.hidden = true

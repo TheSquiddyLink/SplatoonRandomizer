@@ -9,16 +9,9 @@
 <body>
     <!-- Debug Controls -->
     <div id="debugControls" hidden>
-        <select id="teamColor">
-        </select>
-        <select id="teamSide">
-            <option value="alpha">Alpha</option>
-            <option value="bravo">Bravo</option>
-        </select>
         <select id="subWeapon"></select>
         <select id="specialWeapon"></select>
         <select id="mainWeapon"></select>
-        <input type="color" id="customColor">
     </div>
 
     <!-- Config -->
@@ -47,9 +40,20 @@
             <input type="checkbox" id="disableAnimation">
             <span class="slider round"></span>
         </label>
+        <button id="colorToggle">Hide Color Config</button>
         <button id="hideConfig">Hide Config</button>
     </div>
 
+
+    <div id="colorConfig">
+        <select id="teamColor">
+        </select>
+        <select id="teamSide">
+            <option value="alpha">Alpha</option>
+            <option value="bravo">Bravo</option>
+        </select>
+        <input type="color" id="customColor">
+    </div>
     <!-- Main Controls -->
     <div class="basicControls">
         <input type="button" id="generate" value="Generate">
