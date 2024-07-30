@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./style/main.css">
 </head>
 <body>
+    <!-- Debug Controls -->
     <div id="debugControls" hidden>
         <select id="teamColor">
         </select>
@@ -20,6 +21,7 @@
         <input type="color" id="customColor">
     </div>
 
+    <!-- Config -->
     <div id="config">
         <label for="autoHide">Auto Hide</label>
         <label class="switch">
@@ -38,15 +40,16 @@
             <span class="slider round"></span>
         </label>
         <button id="hideConfig">Hide Config</button>
-
-        
     </div>
+
+    <!-- Main Controls -->
     <div class="basicControls">
         <input type="button" id="generate" value="Generate">
         <input type="button" id="hide" value="Hide">
         <button hidden id="showConfig">Show Config</button>
     </div>
     
+    <!-- Randomizer Result -->
     <div id="randomizerResult" hidden>
         <div class="nameDiv">
             <p id="mainWeaponName"></p>
