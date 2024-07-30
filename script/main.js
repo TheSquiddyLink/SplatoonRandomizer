@@ -107,7 +107,7 @@ async function generate(){
     subWeaponName.hidden = true;
     specialWeaponName.hidden = true;
     let totalLenght = 2550;
-    let iterations = 15;
+    let iterations = 30;
     let lengthMS = totalLenght/iterations;
     let lengthS = lengthMS/1000;
     document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
