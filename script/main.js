@@ -49,8 +49,22 @@ document.getElementById("hideConfig").addEventListener("click", () => hideConfig
 document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 
-setDefaultConfig();
-updateConfig();
+
+loadUrlConfig();
+
+function loadUrlConfig(){
+    console.log("loading url config");
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("autoHide") !== null) CONFIG.autoHide = params.get("autoHide") === "true";
+    if (params.get("hideLen") !== null) CONFIG.hideDuration = parseFloat(params.get("hideLen"));
+    if (params.get("showLen") !== null) CONFIG.showDuration = parseFloat(params.get("showLen"));
+    if (params.get("disableSound") !== null) CONFIG.disableMusic = params.get("disableSound") == "true";
+    if (params.get("disableAnimation") !== null) CONFIG.disableAnimation = params.get("disableAnimation") == "true";
+    console.log(CONFIG);
+    setDefaultConfig();
+    updateConfig();
+}
+
 function updateColorPreview(defaultColor){
     console.log(defaultColor)
     let color;
