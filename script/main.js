@@ -9,7 +9,7 @@ const CONFIG = {
     hideDuration: 2.5,
     showDuration: 2.5,
     disableMusic: false,
-    iterations: 50,
+    iterations: 25,
 }
 
 /**
@@ -44,6 +44,7 @@ document.getElementById("iterations").addEventListener("change", () => updateCon
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 
+setDefaultConfig();
 function hideConfig(){
     let config = document.getElementById("config")
     config.hidden = true
@@ -84,6 +85,14 @@ function updateConfig(){
 
 }
 
+function setDefaultConfig(){
+    document.getElementById("autoHide").checked = CONFIG.autoHide;
+    document.getElementById("hideLen").value = CONFIG.hideDuration;
+    document.getElementById("showLen").value = CONFIG.showDuration;
+    document.getElementById("disableSound").checked = CONFIG.disableMusic;
+    document.getElementById("iterations").value = CONFIG.iterations;
+}
+
 async function generate(){
     let generateButton = document.getElementById("generate");
     if(animationPlaying){
@@ -119,6 +128,7 @@ async function generate(){
     selectSub();
     selectSpecial();
     if(!CONFIG.disableMusic) AUDIO.play();
+    console.log(iterations)
     for(let i = 0; i < iterations; i++){
         let randomKey = randomObject(MAIN_WEAPONS);
         let randomWeapon = MAIN_WEAPONS[randomKey];
