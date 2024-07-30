@@ -23,6 +23,9 @@ class Color {
         let b = parseInt(result[3], 16)
         return new Color(r, g, b);
     }
+    toString(){
+        return "rgb("+this.r+","+this.g+","+this.b+")";
+    }
 }
 class Team {
 

@@ -57,6 +57,11 @@ body {
     font-family: "Splatoon";
 }
 
+#colorPreview {
+    display: inline-block;
+    width: 50px;
+    background-color: black;
+}
 
 /* Toggle Switch */
 /* The switch - the box around the slider */

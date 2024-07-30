@@ -11,6 +11,8 @@ const CONFIG = {
     disableMusic: false,
     iterations: 25,
     disableAnimation: false, 
+    defaultTeam: TEAMS.BlueYellow,
+    defaultSide: "alpha",
 }
 
 /**
@@ -48,12 +50,26 @@ document.getElementById("colorToggle").addEventListener("click", () => toggleCol
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 
 setDefaultConfig();
+updateConfig();
+function updateColorPreview(defaultColor){
+    console.log(defaultColor)
+    let color;
+    if(defaultColor != null){
+        console.log("Found Default Color")
+        color = defaultColor;
+    } else {
+        color = getTeam();
+    }
+   
+    let colorPreview = document.getElementById("colorPreview");
+    colorPreview.style.backgroundColor = color.toString();
+    colorPreview.style.color = color.toString();
+}
 
 function toggleColorConfig() {
     let colorConfig = document.getElementById("colorConfig");
     console.log(colorConfig.hidden)
     colorConfig.hidden =!colorConfig.hidden;
-    let colorToggle = document.getElementById("colorToggle");
 }
 function hideConfig(){
     let config = document.getElementById("config")
@@ -94,7 +110,7 @@ function updateConfig(){
     } else {
         document.getElementById("showControls").hidden = true;
     }
-
+    updateColorPreview(CONFIG.defaultTeam[CONFIG.defaultSide]);
 }
 
 function setDefaultConfig(){
@@ -240,10 +256,14 @@ function applySpecial(special){
     document.getElementById("specialColor").src = special.primaryTexture;
     document.getElementById("specialWhite").src = special.secondaryTexture;
 }
-function selectTeam(){
+function getTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
-    applyColorAll(TEAMS[team][side]);
+    return TEAMS[team][side];
+}
+function selectTeam(){
+    updateColorPreview();
+    applyColorAll(getTeam());
 }
 
 function selectSub(){
