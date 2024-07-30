@@ -54,7 +54,6 @@ function toggleColorConfig() {
     console.log(colorConfig.hidden)
     colorConfig.hidden =!colorConfig.hidden;
     let colorToggle = document.getElementById("colorToggle");
-    colorToggle.innerText = colorConfig.hidden? "Show Color Config" : "Hide Color Config";
 }
 function hideConfig(){
     let config = document.getElementById("config")
