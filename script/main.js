@@ -8,7 +8,8 @@ const CONFIG = {
     autoHide: false,
     hideDuration: 2.5,
     showDuration: 2.5,
-    disableMusic: false
+    disableMusic: false,
+    iterations: 50,
 }
 
 /**
@@ -38,6 +39,7 @@ document.getElementById("autoHide").addEventListener("change", () => updateConfi
 document.getElementById("hideLen").addEventListener("change", () => updateConfig());
 document.getElementById("showLen").addEventListener("change", () => updateConfig());
 document.getElementById("disableSound").addEventListener("change", () => updateConfig());
+document.getElementById("iterations").addEventListener("change", () => updateConfig());
 
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
@@ -68,10 +70,12 @@ function updateConfig(){
     let hideDuration = document.getElementById("hideLen").value;
     let showDuration = document.getElementById("showLen").value;
     let disableMusic = document.getElementById("disableSound").checked;
+    let iterations = document.getElementById("iterations").value;
     CONFIG.autoHide = autoHide;
     CONFIG.hideDuration = hideDuration;
     CONFIG.showDuration = showDuration;
     CONFIG.disableMusic = disableMusic;
+    CONFIG.iterations = iterations;
     if(autoHide){
         document.getElementById("showControls").hidden = false;
     } else {
@@ -107,7 +111,7 @@ async function generate(){
     subWeaponName.hidden = true;
     specialWeaponName.hidden = true;
     let totalLenght = 2550;
-    let iterations = 30;
+    let iterations = CONFIG.iterations;
     let lengthMS = totalLenght/iterations;
     let lengthS = lengthMS/1000;
     document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
