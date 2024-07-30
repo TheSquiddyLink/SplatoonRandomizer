@@ -58,12 +58,12 @@ body {
 }
 
 
-/* Toggle Switchh */
+/* Toggle Switch */
 /* The switch - the box around the slider */
 .switch {
     position: relative;
     display: inline-block;
-    width: 40px;
+    width: 35px;
     height: 17.5px;
 }
 
@@ -108,9 +108,9 @@ box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked + .slider:before {
--webkit-transform: translateX(26px);
--ms-transform: translateX(26px);
-transform: translateX(26px);
+-webkit-transform: translateX(17px);
+-ms-transform: translateX(17px);
+transform: translateX(17px);
 }
 
 /* Rounded sliders */
