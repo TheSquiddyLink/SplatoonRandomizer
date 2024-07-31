@@ -11,8 +11,8 @@ const CONFIG = {
     disableMusic: false,
     iterations: 25,
     disableAnimation: false, 
-    defaultTeam: TEAMS.BlueYellow,
-    defaultSide: "alpha",
+    teamColor: TEAMS.BlueYellow,
+    teamSide: "alpha",
 }
 
 /**
@@ -70,6 +70,7 @@ function loadUrlConfig(){
     else enableAllSubs();
     if(params.get("teamColor") !== null) setTeamColor(params.get("teamColor"));
     if(params.get("teamSide") !== null) setTeamSide(params.get("teamSide"));
+    updateDropDowns();
     setDefaultConfig();
     updateConfig();
     generateWeaponConfig();
@@ -80,7 +81,7 @@ function setTeamColor(teamColor){
     console.log(keys);
     console.log(teamColor);
     if(keys.includes(teamColor)){
-        CONFIG.defaultTeam  = TEAMS[teamColor];
+        CONFIG.teamColor  = TEAMS[teamColor];
         console.log("Team color set to "+teamColor);
     } 
 }
@@ -91,7 +92,7 @@ function setTeamColor(teamColor){
 function setTeamSide(teamSide){
     const teams = ["alpha", "bravo"];
     console.log(teamSide)
-    if(teams.includes(teamSide)) CONFIG.defaultSide = teamSide;
+    if(teams.includes(teamSide)) CONFIG.teamSide = teamSide;
 }
 function enableAllWeapons(){
     for(let weapon in MAIN_WEAPONS){
@@ -188,6 +189,8 @@ function exportToURL(){
     url.searchParams.set("disableAnimation", CONFIG.disableAnimation);
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
     url.searchParams.set("subConfig", generateSubConfigHex());
+    url.searchParams.set("teamColor", CONFIG.teamColor.name);
+    url.searchParams.set("teamSide", CONFIG.teamSide);
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -251,7 +254,7 @@ function updateConfig(){
     } else {
         document.getElementById("showControls").hidden = true;
     }
-    updateColorPreview(CONFIG.defaultTeam[CONFIG.defaultSide]);
+    updateColorPreview(CONFIG.teamColor[CONFIG.teamSide]);
 }
 
 function setDefaultConfig(){
@@ -262,8 +265,8 @@ function setDefaultConfig(){
     document.getElementById("disableSound").checked = CONFIG.disableMusic;
     document.getElementById("iterations").value = CONFIG.iterations;
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
-    document.getElementById("teamColor").value = CONFIG.defaultTeam[CONFIG.defaultSide];
-    document.getElementById("teamSide").value = CONFIG.defaultSide;
+    document.getElementById("teamColor").value = CONFIG.teamColor.name;
+    document.getElementById("teamSide").value = CONFIG.teamSide;
 }
 function generateWeaponConfigHex() {
     return generateAnyConfigHex(MAIN_WEAPONS);
@@ -406,7 +409,6 @@ async function testMainWeapons(){
     }
 }
 applyColorAll(TEAMS.BlueYellow.alpha);
-updateDropDowns();
 function updateDropDowns(){
     let teamColor = document.getElementById("teamColor");
     let subWeapon = document.getElementById("subWeapon");
@@ -454,6 +456,13 @@ function getTeam(){
     return TEAMS[team][side];
 }
 function selectTeam(){
+    let team = document.getElementById("teamColor").value;
+    let side = document.getElementById("teamSide").value;
+    console.log("Team Changed")
+    console.log(side)
+    console.log(team)
+    CONFIG.teamColor = TEAMS[team];
+    CONFIG.teamSide = side;
     updateColorPreview();
     applyColorAll(getTeam());
 }
