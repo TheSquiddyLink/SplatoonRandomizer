@@ -64,14 +64,20 @@ body {
 }
 
 
-#weaponConfig{
+#weaponConfig, #subConfig{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .weaponConfigImg{
     height: 50px;
     width: 50px;
+    margin: 10px;
+}
+.subConfigImg {
+    height: 75px;
+    width: 75px;
     margin: 10px;
 }
 /* Toggle Switch */
