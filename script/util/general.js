@@ -67,11 +67,10 @@ function sleep(ms) {
 
 function randomObject(object){
     let arr = Object.keys(object);
-    let index = Math.floor(Math.random()*(arr.length-1))
+    let index = Math.floor(Math.random()*(arr.length))
     console.log("Index "+index);
     return arr[index];
 }
-
 
 function intervalFor(func, ms, length) {
     return new Promise((resolve) => {
@@ -86,4 +85,23 @@ function intervalFor(func, ms, length) {
         }, ms);
     });
 }
-export { Color, Team, sleep, randomObject, intervalFor };
+
+/**
+ * 
+ */
+function isWeaponDisabled(weapon){
+    return weapon.enabled;
+}
+
+function filterWeapons(weapons){
+    let filteredWeapons = {};
+    for(
+        let weapon in weapons
+    ){
+        if(isWeaponDisabled(weapons[weapon])){
+            filteredWeapons[weapon] = weapons[weapon];
+        }
+    }
+    return filteredWeapons;
+}
+export { Color, Team, sleep, randomObject, intervalFor, filterWeapons };

@@ -4,7 +4,7 @@ const WEAPON_TEXTURES = "./assets/weapon_flat/";
 class BaseWeapon {
     name;
     primaryTexture;
-    enabled = true;
+    enabled = false;
     constructor(name, primaryTexture) {
         this.name = name;
         this.primaryTexture = this.path+primaryTexture+".png";

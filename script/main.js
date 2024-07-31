@@ -1,4 +1,4 @@
-import {Color, intervalFor, randomObject, sleep} from "./util/general.js";
+import {Color, filterWeapons, intervalFor, randomObject, sleep} from "./util/general.js";
 import {SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -76,12 +76,15 @@ function loadUrlConfig(){
 function selectWeapon(weaponStr){
     let weaponEl = document.getElementById(weaponStr);
     MAIN_WEAPONS[weaponStr].toggleEnabled();
-    let opacity = weaponEl.style.opacity;
-    if(opacity == 1) weaponEl.style.opacity = 0.5;
-    else weaponEl.style.opacity = 1;
+    console.log(MAIN_WEAPONS[weaponStr].enabled);
+    setWeaponOpacity(weaponStr);
     
 }
-
+function setWeaponOpacity(weaponStr){
+    let weaponEl = document.getElementById(weaponStr);
+    if(MAIN_WEAPONS[weaponStr].enabled) weaponEl.style.opacity = 1;
+    else weaponEl.style.opacity = 0.5;
+}
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     for (let weapon in MAIN_WEAPONS){
@@ -91,6 +94,7 @@ function generateWeaponConfig(){
         img.id = weapon;
         img.addEventListener("click", () => selectWeapon(weapon));
         weaponConfig.appendChild(img);
+        setWeaponOpacity(weapon);
     }
 }
 function toggleWeaponConfig(){
@@ -201,7 +205,10 @@ async function generate(){
     }
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.hidden = false;
-    let key = randomObject(MAIN_WEAPONS);
+    let filteredWeapons = filterWeapons(MAIN_WEAPONS);
+    console.log("Filtered Weapons:")
+    console.log(filteredWeapons)
+    let key = randomObject(filteredWeapons);
     let weapon = MAIN_WEAPONS[key];
     let mainWeaponName = document.getElementById("mainWeaponName");
     let subWeaponName = document.getElementById("subWeaponName");
@@ -228,8 +235,8 @@ async function generate(){
     console.log(iterations)
     if(!CONFIG.disableAnimation){
         for(let i = 0; i < iterations; i++){
-            let randomKey = randomObject(MAIN_WEAPONS);
-            let randomWeapon = MAIN_WEAPONS[randomKey];
+            let randomKey = randomObject(filteredWeapons);
+            let randomWeapon = filteredWeapons[randomKey];
             weaponImage.src = randomWeapon.primaryTexture;
             await sleep(lengthMS)
         }
