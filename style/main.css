@@ -63,6 +63,17 @@ body {
     background-color: black;
 }
 
+
+#weaponConfig{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.weaponConfigImg{
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+}
 /* Toggle Switch */
 /* The switch - the box around the slider */
 .switch {

@@ -4,12 +4,16 @@ const WEAPON_TEXTURES = "./assets/weapon_flat/";
 class BaseWeapon {
     name;
     primaryTexture;
+    enabled = true;
     constructor(name, primaryTexture) {
         this.name = name;
         this.primaryTexture = this.path+primaryTexture+".png";
     }
     get path(){
         throw new Error("path not implemented");
+    }
+    toggleEnabled(){
+        this.enabled = !this.enabled;
     }
 }
 class SecondaryTextureWeapon extends BaseWeapon {

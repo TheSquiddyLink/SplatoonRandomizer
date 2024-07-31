@@ -49,8 +49,10 @@ document.getElementById("hideConfig").addEventListener("click", () => hideConfig
 document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
+document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
 
 loadUrlConfig();
+generateWeaponConfig();
 
 function loadUrlConfig(){
     console.log("loading url config");
@@ -67,7 +69,40 @@ function loadUrlConfig(){
     updateConfig();
 }
 
+/**
+ * 
+ * @param {string} weapon 
+ */
+function selectWeapon(weaponStr){
+    let weaponEl = document.getElementById(weaponStr);
+    MAIN_WEAPONS[weaponStr].toggleEnabled();
+    let opacity = weaponEl.style.opacity;
+    if(opacity == 1) weaponEl.style.opacity = 0.5;
+    else weaponEl.style.opacity = 1;
+    
+}
 
+function generateWeaponConfig(){
+    let weaponConfig = document.getElementById("weaponConfig");
+    for (let weapon in MAIN_WEAPONS){
+        let img = document.createElement("img");
+        img.src = MAIN_WEAPONS[weapon].primaryTexture;
+        img.classList.add("weaponConfigImg");
+        img.id = weapon;
+        img.addEventListener("click", () => selectWeapon(weapon));
+        weaponConfig.appendChild(img);
+    }
+}
+function toggleWeaponConfig(){
+    let weaponConfig = document.getElementById("weaponConfig");
+    if(weaponConfig.style.display === "none"){
+        weaponConfig.style.display = "flex";
+    }
+    else{
+        weaponConfig.style.display = "none";
+    }
+    console.log(weaponConfig.hidden);
+}
 function hideAllControls(){
     document.getElementById("debugControls").hidden = true;
     document.getElementById("config").hidden = true;
