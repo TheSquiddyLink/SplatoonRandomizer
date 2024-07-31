@@ -60,11 +60,18 @@ function loadUrlConfig(){
     if (params.get("showLen") !== null) CONFIG.showDuration = parseFloat(params.get("showLen"));
     if (params.get("disableSound") !== null) CONFIG.disableMusic = params.get("disableSound") == "true";
     if (params.get("disableAnimation") !== null) CONFIG.disableAnimation = params.get("disableAnimation") == "true";
+    if (params.get("hideConfig")  !== null) hideConfig();
+    if(params.get("hideControls") !==  null) hideAllControls();
     console.log(CONFIG);
     setDefaultConfig();
     updateConfig();
 }
 
+
+function hideAllControls(){
+    document.getElementById("debugControls").hidden = true;
+    document.getElementById("config").hidden = true;
+}
 function exportToURL(){
     console.log("generating url config");
     let url = new URL(window.location.href);
