@@ -48,7 +48,7 @@ document.getElementById("disableAnimation").addEventListener("change", () => upd
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
 document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
-
+document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
 
 loadUrlConfig();
 
@@ -63,6 +63,18 @@ function loadUrlConfig(){
     console.log(CONFIG);
     setDefaultConfig();
     updateConfig();
+}
+
+function exportToURL(){
+    console.log("generating url config");
+    let url = new URL(window.location.href);
+    url.searchParams.set("autoHide", CONFIG.autoHide);
+    url.searchParams.set("hideLen", CONFIG.hideDuration);
+    url.searchParams.set("showLen", CONFIG.showDuration);
+    url.searchParams.set("disableSound", CONFIG.disableMusic);
+    url.searchParams.set("disableAnimation", CONFIG.disableAnimation);
+    navigator.clipboard.writeText(url.href);
+    alert("URL Config Generated and Copied to Clipboard");
 }
 
 function updateColorPreview(defaultColor){
