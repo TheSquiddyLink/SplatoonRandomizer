@@ -15,6 +15,7 @@ class BaseWeapon {
     toggleEnabled(){
         this.enabled = !this.enabled;
     }
+    
 }
 class SecondaryTextureWeapon extends BaseWeapon {
     secondaryTexture;
@@ -63,6 +64,9 @@ class MainWeapon extends BaseWeapon {
     }
     get path(){
         return WEAPON_TEXTURES;
+    }
+    getEnabled() {
+        return this.enabled && this.subWeapon.enabled;
     }
 }
 

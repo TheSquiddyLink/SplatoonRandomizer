@@ -90,7 +90,7 @@ function intervalFor(func, ms, length) {
  * 
  */
 function isWeaponDisabled(weapon){
-    return weapon.enabled;
+    return weapon.getEnabled();
 }
 
 function filterWeapons(weapons){
@@ -104,4 +104,5 @@ function filterWeapons(weapons){
     }
     return filteredWeapons;
 }
+
 export { Color, Team, sleep, randomObject, intervalFor, filterWeapons };

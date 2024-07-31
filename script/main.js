@@ -1,4 +1,4 @@
-import {Color, filterWeapons, intervalFor, randomObject, sleep} from "./util/general.js";
+import {Color, filterWeapons, randomObject, sleep} from "./util/general.js";
 import {SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -50,6 +50,7 @@ document.getElementById("colorToggle").addEventListener("click", () => toggleCol
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
 document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
+document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
 
 loadUrlConfig();
 
@@ -65,11 +66,26 @@ function loadUrlConfig(){
     if(params.get("hideControls") !==  null) hideAllControls();
     console.log(CONFIG);
     if(params.get("weaponConfig") !== null) parseWeaponConfigHex(params.get("weaponConfig"));
+    else enableAllWeapons();
+    if(params.get("subConfig") !== null) parseSubConfigHex(params.get("subConfig"));
+    else enableAllSubs();
     setDefaultConfig();
     updateConfig();
     generateWeaponConfig();
+    generateSubConfig();
 }
 
+function enableAllWeapons(){
+    for(let weapon in MAIN_WEAPONS){
+        MAIN_WEAPONS[weapon].enabled = true;
+    }
+}
+
+function enableAllSubs(){
+    for(let sub in SUB_WEAPONS){
+        SUB_WEAPONS[sub].enabled = true;
+    }
+}
 /**
  * 
  * @param {string} weapon 
@@ -79,6 +95,39 @@ function selectWeapon(weaponStr){
     console.log(MAIN_WEAPONS[weaponStr].enabled);
     setWeaponOpacity(weaponStr);
     
+}
+function generateSubConfig(){
+    let subConfig = document.getElementById("subConfig");
+    for (let sub in SUB_WEAPONS){
+        let weapon = SUB_WEAPONS[sub];
+        let img = document.createElement("img");
+        img.src = weapon.primaryTexture;
+        img.classList.add("subConfigImg");
+        img.id = sub;
+        img.addEventListener("click", () => toggleSub(sub));
+        subConfig.appendChild(img);
+        setSubOpacity(sub);
+    }
+}
+function toggleSub(subStr){
+    let sub = SUB_WEAPONS[subStr];
+    sub.toggleEnabled();
+    setSubOpacity(subStr);
+}
+function setSubOpacity(weaponStr){
+    let weaponEl = document.getElementById(weaponStr);
+    if(SUB_WEAPONS[weaponStr].enabled) weaponEl.style.opacity = 1;
+    else weaponEl.style.opacity = 0.5;
+}
+function toggleSubConfig(){
+    let subConfig = document.getElementById("subConfig");
+    if(subConfig.style.display === "none"){
+        subConfig.style.display = "flex";
+    }
+    else{
+        subConfig.style.display = "none";
+    }
+    console.log(subConfig.hidden);
 }
 function setWeaponOpacity(weaponStr){
     let weaponEl = document.getElementById(weaponStr);
@@ -120,6 +169,7 @@ function exportToURL(){
     url.searchParams.set("disableSound", CONFIG.disableMusic);
     url.searchParams.set("disableAnimation", CONFIG.disableAnimation);
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
+    url.searchParams.set("subConfig", generateSubConfigHex());
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -195,9 +245,15 @@ function setDefaultConfig(){
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
 }
 function generateWeaponConfigHex() {
+    return generateAnyConfigHex(MAIN_WEAPONS);
+}
+function generateSubConfigHex(){
+    return generateAnyConfigHex(SUB_WEAPONS);
+}
+function generateAnyConfigHex(weaponArr){
     let binary = "";
-    for (let weaponKey in MAIN_WEAPONS) {
-        let weapon = MAIN_WEAPONS[weaponKey];
+    for (let weaponKey in weaponArr) {
+        let weapon = weaponArr[weaponKey];
         binary += weapon.enabled ? "1" : "0";
         console.log(weapon.name + " enabled: " + weapon.enabled);
     }
@@ -208,16 +264,15 @@ function generateWeaponConfigHex() {
     console.log(hex);
     return hex;
 }
-
-function parseWeaponConfigHex(hex) {
+function parseAnyWeaponFromHex(hex, weapons){
     let binaryString = BigInt("0x" + hex).toString(2);
-    let expectedLength = Object.keys(MAIN_WEAPONS).length;
+    let expectedLength = Object.keys(weapons).length;
     binaryString = binaryString.padStart(expectedLength, '0');
     console.log("Check here")
     console.log(binaryString)
     let i = 0;
-    for (let weaponKey in MAIN_WEAPONS) {
-        let weapon = MAIN_WEAPONS[weaponKey];
+    for (let weaponKey in weapons) {
+        let weapon = weapons[weaponKey];
         let enabled = binaryString[i] === '1';
         weapon.enabled = enabled;
         if(enabled){
@@ -225,6 +280,12 @@ function parseWeaponConfigHex(hex) {
         }
         i++
     }
+}
+function parseWeaponConfigHex(hex) {
+    parseAnyWeaponFromHex(hex, MAIN_WEAPONS);
+}
+function parseSubConfigHex(hex){
+    parseAnyWeaponFromHex(hex, SUB_WEAPONS);
 }
 
 
@@ -243,7 +304,8 @@ async function generate(){
     console.log("Filtered Weapons:")
     console.log(filteredWeapons)
     let key = randomObject(filteredWeapons);
-    let weapon = MAIN_WEAPONS[key];
+    let weapon = filteredWeapons[key];
+    console.log("Selected Weapon:");
     let mainWeaponName = document.getElementById("mainWeaponName");
     let subWeaponName = document.getElementById("subWeaponName");
     let specialWeaponName = document.getElementById("specialWeaponName");
@@ -263,8 +325,8 @@ async function generate(){
     let lengthS = lengthMS/1000;
     document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
 
-    selectSub();
-    selectSpecial();
+    applySub(weapon.subWeapon);
+    applySpecial(weapon.specialWeapon);
     if(!CONFIG.disableMusic) AUDIO.play();
     console.log(iterations)
     if(!CONFIG.disableAnimation){
@@ -375,6 +437,9 @@ function selectTeam(){
     applyColorAll(getTeam());
 }
 
+/**
+ * @deprecated
+ */
 function selectSub(){
     let sub = document.getElementById("subWeapon").value;
     applySub(SUB_WEAPONS[sub]);
@@ -384,6 +449,8 @@ function selectSub(){
  * @param {SubWeapon} sub 
  */
 async function applySub(sub){
+    console.log("Look Bellow")
+    console.log(sub);
     document.getElementById("subColor").src = sub.primaryTexture;
     document.getElementById("subWhite").src = sub.secondaryTexture;
 }
