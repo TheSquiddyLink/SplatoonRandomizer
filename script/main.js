@@ -64,17 +64,35 @@ function loadUrlConfig(){
     if (params.get("disableAnimation") !== null) CONFIG.disableAnimation = params.get("disableAnimation") == "true";
     if (params.get("hideConfig")  !== null) hideConfig();
     if(params.get("hideControls") !==  null) hideAllControls();
-    console.log(CONFIG);
     if(params.get("weaponConfig") !== null) parseWeaponConfigHex(params.get("weaponConfig"));
     else enableAllWeapons();
     if(params.get("subConfig") !== null) parseSubConfigHex(params.get("subConfig"));
     else enableAllSubs();
+    if(params.get("teamColor") !== null) setTeamColor(params.get("teamColor"));
+    if(params.get("teamSide") !== null) setTeamSide(params.get("teamSide"));
     setDefaultConfig();
     updateConfig();
     generateWeaponConfig();
     generateSubConfig();
 }
-
+function setTeamColor(teamColor){
+    let keys = Object.keys(TEAMS);
+    console.log(keys);
+    console.log(teamColor);
+    if(keys.includes(teamColor)){
+        CONFIG.defaultTeam  = TEAMS[teamColor];
+        console.log("Team color set to "+teamColor);
+    } 
+}
+/**
+ * 
+ * @param {string} teamSide 
+ */
+function setTeamSide(teamSide){
+    const teams = ["alpha", "bravo"];
+    console.log(teamSide)
+    if(teams.includes(teamSide)) CONFIG.defaultSide = teamSide;
+}
 function enableAllWeapons(){
     for(let weapon in MAIN_WEAPONS){
         MAIN_WEAPONS[weapon].enabled = true;
@@ -237,12 +255,15 @@ function updateConfig(){
 }
 
 function setDefaultConfig(){
+    console.log(CONFIG)
     document.getElementById("autoHide").checked = CONFIG.autoHide;
     document.getElementById("hideLen").value = CONFIG.hideDuration;
     document.getElementById("showLen").value = CONFIG.showDuration;
     document.getElementById("disableSound").checked = CONFIG.disableMusic;
     document.getElementById("iterations").value = CONFIG.iterations;
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
+    document.getElementById("teamColor").value = CONFIG.defaultTeam[CONFIG.defaultSide];
+    document.getElementById("teamSide").value = CONFIG.defaultSide;
 }
 function generateWeaponConfigHex() {
     return generateAnyConfigHex(MAIN_WEAPONS);
