@@ -52,7 +52,6 @@ document.getElementById("exportToURL").addEventListener("click", () => exportToU
 document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
 
 loadUrlConfig();
-generateWeaponConfig();
 
 function loadUrlConfig(){
     console.log("loading url config");
@@ -65,8 +64,10 @@ function loadUrlConfig(){
     if (params.get("hideConfig")  !== null) hideConfig();
     if(params.get("hideControls") !==  null) hideAllControls();
     console.log(CONFIG);
+    if(params.get("weaponConfig") !== null) parseWeaponConfigHex(params.get("weaponConfig"));
     setDefaultConfig();
     updateConfig();
+    generateWeaponConfig();
 }
 
 /**
@@ -74,7 +75,6 @@ function loadUrlConfig(){
  * @param {string} weapon 
  */
 function selectWeapon(weaponStr){
-    let weaponEl = document.getElementById(weaponStr);
     MAIN_WEAPONS[weaponStr].toggleEnabled();
     console.log(MAIN_WEAPONS[weaponStr].enabled);
     setWeaponOpacity(weaponStr);
@@ -119,6 +119,7 @@ function exportToURL(){
     url.searchParams.set("showLen", CONFIG.showDuration);
     url.searchParams.set("disableSound", CONFIG.disableMusic);
     url.searchParams.set("disableAnimation", CONFIG.disableAnimation);
+    url.searchParams.set("weaponConfig", generateWeaponConfigHex());
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -193,6 +194,39 @@ function setDefaultConfig(){
     document.getElementById("iterations").value = CONFIG.iterations;
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
 }
+function generateWeaponConfigHex() {
+    let binary = "";
+    for (let weaponKey in MAIN_WEAPONS) {
+        let weapon = MAIN_WEAPONS[weaponKey];
+        binary += weapon.enabled ? "1" : "0";
+        console.log(weapon.name + " enabled: " + weapon.enabled);
+    }
+    console.log(binary);
+    let decimal = BigInt("0b" + binary);
+    console.log(decimal);
+    let hex = decimal.toString(16).toUpperCase();
+    console.log(hex);
+    return hex;
+}
+
+function parseWeaponConfigHex(hex) {
+    let binaryString = BigInt("0x" + hex).toString(2);
+    let expectedLength = Object.keys(MAIN_WEAPONS).length;
+    binaryString = binaryString.padStart(expectedLength, '0');
+    console.log("Check here")
+    console.log(binaryString)
+    let i = 0;
+    for (let weaponKey in MAIN_WEAPONS) {
+        let weapon = MAIN_WEAPONS[weaponKey];
+        let enabled = binaryString[i] === '1';
+        weapon.enabled = enabled;
+        if(enabled){
+            console.log(weapon.name + " is enabled");
+        }
+        i++
+    }
+}
+
 
 async function generate(){
     let generateButton = document.getElementById("generate");
