@@ -124,6 +124,7 @@ function loadUrlConfig(){
     if(params.get("displayStars") !== null) CONFIG.displayStars = params.get("displayStars") == "true";
     if(params.get("resultStars") !== null) CONFIG.resultStars = params.get("resultStars") == "true";
     if(params.get("exactStarsFilter") !== null) CONFIG.exactStarsFilter = params.get("exactStarsFilter") == "true";
+    if(params.get("starsFilter") !== null) CONFIG.starsFilter = parseInt(params.get("starsFilter"));
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -421,6 +422,7 @@ function setDefaultConfig(){
     document.getElementById("showStarsToggle").checked = CONFIG.displayStars;
     document.getElementById("showResultStars").checked = CONFIG.resultStars;
     document.getElementById("exactStarsFilter").checked = CONFIG.exactStarsFilter;
+    document.getElementById("selectStars").value = CONFIG.starsFilter;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
