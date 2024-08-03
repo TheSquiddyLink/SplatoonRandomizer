@@ -1,5 +1,5 @@
 import {Color, filterWeapons, randomObject, sleep} from "./util/general.js";
-import {SubWeapon} from "./util/weaponsClass.js";
+import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
 console.log("hello world"); 
@@ -200,12 +200,20 @@ function setWeaponOpacity(weaponStr){
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     for (let weapon in MAIN_WEAPONS){
+        let div = document.createElement("div");
         let img = document.createElement("img");
+        let starDiv = document.createElement("div");
+        generateStars(MAIN_WEAPONS[weapon], starDiv, "configStar");
+        starDiv.classList.add("configStars");
+        div.classList.add("weaponConfigDiv");
         img.src = MAIN_WEAPONS[weapon].primaryTexture;
         img.classList.add("weaponConfigImg");
         img.id = weapon;
         img.addEventListener("click", () => selectWeapon(weapon));
-        weaponConfig.appendChild(img);
+        div.appendChild(img);
+        div.appendChild(starDiv);
+        weaponConfig.appendChild(div);
+        console.log(starDiv);
         setWeaponOpacity(weapon);
     }
 }
@@ -418,12 +426,7 @@ async function generate(){
     }
     applyMain(weapon)
     selectTeam();
-    for(let i = 0; i< weapon.stars; i++){
-        let star = document.createElement("img");
-        star.src = "assets/svg/star.svg";
-        star.classList.add("star");
-        mainWeapoonStars.appendChild(star);
-    }
+    generateStars(weapon, mainWeapoonStars);
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
@@ -501,6 +504,22 @@ function updateDropDowns(){
         option.value = main;
         option.innerText = weapon.name;
         mainWeapon.appendChild(option);
+    }
+}
+
+/**
+ * 
+ * @param {MainWeapon} weapon 
+ * @param {HTMLDivElement} element 
+ * @param {?string} _class
+ */
+function generateStars(weapon, element, _class = "star"){
+    console.log(weapon.stars);  
+    for(let i = 0; i< weapon.stars; i++){
+        let star = document.createElement("img");
+        star.src = "assets/svg/star.svg";
+        star.classList.add(_class);
+        element.appendChild(star);
     }
 }
 function selectSpecial(){
