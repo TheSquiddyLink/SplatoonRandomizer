@@ -15,6 +15,7 @@ const CONFIG = {
     teamSide: "alpha",
     editStars: false,
     displayStars: false,
+    resultStars: false,
 }
 
 /**
@@ -55,11 +56,41 @@ document.getElementById("weaponToggle").addEventListener("click", () => toggleWe
 document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
 document.getElementById("specialToggle").addEventListener("click", () => toggleSpecialConfig());
 document.getElementById("editStarsToggle").addEventListener("click", () => toggleEditStarsConfig());
+document.getElementById("showStarsToggle").addEventListener("click", () => toggleShowStarsConfig());
+document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
 
+function toggleResultStars(){
+    CONFIG.resultStars = !CONFIG.resultStars;
+    updateStars();
+}
 function toggleEditStarsConfig(){
     CONFIG.editStars = !CONFIG.editStars;
+    if(CONFIG.editStars){
+        document.getElementById("showStarsToggle").checked = true;
+        toggleShowStarsConfig();
+    }
 }
-
+function toggleShowStarsConfig(){
+    CONFIG.displayStars = !CONFIG.displayStars;
+    updateStars();
+}
+function updateStars(){
+    let stars = document.getElementsByClassName("starDiv")
+    console.log(stars.length)
+    for(let i = 0; i < stars.length; i++){
+        stars.item(i).hidden = !CONFIG.displayStars;
+        stars.item(i).style.display = CONFIG.displayStars ? "flex" : "none";
+    }
+    let resultStar =  document.getElementsByClassName("mainStars").item(0);
+    if(CONFIG.resultStars) {
+       resultStar.hidden = false;
+       resultStar.style.display = "flex";
+    }
+    else {
+        resultStar.hidden = true;
+        resultStar.style.display = "none";
+    }
+}
 loadUrlConfig();
 
 function loadUrlConfig(){
@@ -80,6 +111,9 @@ function loadUrlConfig(){
     else enableAllSpecials();
     if(params.get("teamColor") !== null) setTeamColor(params.get("teamColor"));
     if(params.get("teamSide") !== null) setTeamSide(params.get("teamSide"));
+    if(params.get("editStars") !== null) CONFIG.editStars = params.get("editStars") == "true";
+    if(params.get("displayStars") !== null) CONFIG.displayStars = params.get("displayStars") == "true";
+    if(params.get("resultStars") !== null) CONFIG.resultStars = params.get("resultStars") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -272,6 +306,7 @@ function generateWeaponConfig(){
         console.log(starDiv);
         setWeaponOpacity(weapon);
     }
+    updateStars();
 }
 function toggleWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
@@ -300,6 +335,9 @@ function exportToURL(){
     url.searchParams.set("specialConfig", generateSpecialConfigHex());
     url.searchParams.set("teamColor", CONFIG.teamColor.name);
     url.searchParams.set("teamSide", CONFIG.teamSide);
+    url.searchParams.set("editStars", CONFIG.editStars);
+    url.searchParams.set("displayStars", CONFIG.displayStars);
+    url.searchParams.set("resultStars", CONFIG.resultStars);
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -376,6 +414,12 @@ function setDefaultConfig(){
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
     document.getElementById("teamColor").value = CONFIG.teamColor.name;
     document.getElementById("teamSide").value = CONFIG.teamSide;
+    document.getElementById("editStarsToggle").checked = CONFIG.editStars;
+    document.getElementById("showStarsToggle").checked = CONFIG.displayStars;
+    document.getElementById("showResultStars").checked = CONFIG.resultStars;
+    if(CONFIG.editStars){
+        document.getElementById("showStarsToggle").checked = true;
+    }
 }
 function generateWeaponConfigHex() {
     return generateAnyConfigHex(MAIN_WEAPONS);
