@@ -118,11 +118,26 @@ function enableAllSpecials(){
  * 
  * @param {string} weapon 
  */
-function selectWeapon(weaponStr){
-    MAIN_WEAPONS[weaponStr].toggleEnabled();
-    console.log(MAIN_WEAPONS[weaponStr].enabled);
+function clickWeapon(weaponStr){
+    console.log("Clicked Weapon")
+    let weapon = MAIN_WEAPONS[weaponStr];
+    weapon.increaseStars();
+    weapon.enabled = true;
     setWeaponOpacity(weaponStr);
-    
+}
+function rightClickWeapon(event, weaponStr){
+    console.log("Right Clicked Weapon")
+    event.preventDefault();
+    let weapon = MAIN_WEAPONS[weaponStr];
+    let stars = weapon.stars;
+    console.log(stars)
+    if(stars === 0){
+        weapon.enabled = false;
+    }
+    else{
+        weapon.decreaseStars();
+    }
+    setWeaponOpacity(weaponStr);
 }
 function generateSubConfig(){
     let subConfig = document.getElementById("subConfig");
@@ -192,10 +207,30 @@ function toggleSubConfig(){
     }
     console.log(subConfig.hidden);
 }
+function createConfigStar(_class = "configStar"){
+    let star = document.createElement("img");
+    star.src = "assets/svg/star.svg";
+    star.classList.add(_class);
+    return star;
+}
 function setWeaponOpacity(weaponStr){
     let weaponEl = document.getElementById(weaponStr);
-    if(MAIN_WEAPONS[weaponStr].enabled) weaponEl.style.opacity = 1;
+    let weapon = MAIN_WEAPONS[weaponStr]
+    if(weapon.enabled) weaponEl.style.opacity = 1;
     else weaponEl.style.opacity = 0.5;
+    let starDiv =  document.getElementById(`${weaponStr}-stars`)
+    let oldStars = starDiv.childElementCount;
+    let starDiff  = oldStars - weapon.stars
+    if (starDiff == 0) return;
+    if(starDiff > 0){
+        for(let i = 0; i < starDiff; i++){
+            starDiv.removeChild(starDiv.lastChild);
+        }
+    } else {
+        for(let i = 0; i < Math.abs(starDiff); i++){
+            starDiv.appendChild(createConfigStar());
+        }
+    }
 }
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
@@ -204,12 +239,14 @@ function generateWeaponConfig(){
         let img = document.createElement("img");
         let starDiv = document.createElement("div");
         generateStars(MAIN_WEAPONS[weapon], starDiv, "configStar");
-        starDiv.classList.add("configStars");
-        div.classList.add("weaponConfigDiv");
+        starDiv.classList.add("starDiv");
+        starDiv.setAttribute("id", `${weapon}-stars`);
         img.src = MAIN_WEAPONS[weapon].primaryTexture;
         img.classList.add("weaponConfigImg");
+        div.classList.add("weaponConfigDiv");
         img.id = weapon;
-        img.addEventListener("click", () => selectWeapon(weapon));
+        img.addEventListener("click", () => clickWeapon(weapon));
+        img.addEventListener("contextmenu", (e) => rightClickWeapon(e, weapon));
         div.appendChild(img);
         div.appendChild(starDiv);
         weaponConfig.appendChild(div);
@@ -516,9 +553,7 @@ function updateDropDowns(){
 function generateStars(weapon, element, _class = "star"){
     console.log(weapon.stars);  
     for(let i = 0; i< weapon.stars; i++){
-        let star = document.createElement("img");
-        star.src = "assets/svg/star.svg";
-        star.classList.add(_class);
+        let star = createConfigStar(_class);
         element.appendChild(star);
     }
 }

@@ -70,6 +70,13 @@ class MainWeapon extends BaseWeapon {
     getEnabled() {
         return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled;
     }
+    increaseStars() {
+        if(this.stars < 5) this.stars++;
+    }
+    decreaseStars() {
+        if(this.stars > 0) this.stars--;
+        return this.stars;
+    }
 }
 
 const MAIN_TYPES = {

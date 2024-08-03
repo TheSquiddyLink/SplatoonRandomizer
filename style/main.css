@@ -119,7 +119,10 @@ body {
     margin: 5px;
     filter: invert(100%) sepia(81%) saturate(3926%) hue-rotate(355deg) brightness(106%) contrast(102%);
 }
-
+.starDiv {
+    display: flex;
+    justify-content: space-around;
+}   
 
 .configStars {
     display: flex;
