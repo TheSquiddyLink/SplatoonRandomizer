@@ -1,4 +1,4 @@
-import {Color, filterWeapons, randomObject, sleep} from "./util/general.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, sleep} from "./util/general.js";
 import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -16,6 +16,7 @@ const CONFIG = {
     editStars: false,
     displayStars: false,
     resultStars: false,
+    starsFilter: 0
 }
 
 /**
@@ -58,6 +59,11 @@ document.getElementById("specialToggle").addEventListener("click", () => toggleS
 document.getElementById("editStarsToggle").addEventListener("click", () => toggleEditStarsConfig());
 document.getElementById("showStarsToggle").addEventListener("click", () => toggleShowStarsConfig());
 document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
+document.getElementById("selectStars").addEventListener("change", () => setStarsFilter());
+
+function setStarsFilter(){
+    CONFIG.starsFilter = document.getElementById("selectStars").value;
+}
 
 function toggleResultStars(){
     CONFIG.resultStars = !CONFIG.resultStars;
@@ -486,6 +492,13 @@ async function generate(){
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.hidden = false;
     let filteredWeapons = filterWeapons(MAIN_WEAPONS);
+    console.log("stars Filter: " + CONFIG.starsFilter);
+    if(CONFIG.starsFilter > 0){
+        filteredWeapons = filterWeaponsStars(filteredWeapons, CONFIG.starsFilter);
+    }
+       
+    
+
     console.log("Filtered Weapons:")
     console.log(filteredWeapons)
     let key = randomObject(filteredWeapons);

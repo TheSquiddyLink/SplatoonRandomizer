@@ -104,5 +104,16 @@ function filterWeapons(weapons){
     }
     return filteredWeapons;
 }
+function filterWeaponsStars(weapons, min){
+    let filteredWeapons = {};
+    for(
+        let weapon in weapons
+    ){
+        if(weapons[weapon].stars >= min){
+            filteredWeapons[weapon] = weapons[weapon];
+        }
+    }
+    return filteredWeapons;
+}
 
-export { Color, Team, sleep, randomObject, intervalFor, filterWeapons };
+export { Color, Team, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars };
