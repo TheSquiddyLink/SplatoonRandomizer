@@ -129,8 +129,8 @@ function loadUrlConfig(){
     setDefaultConfig();
     updateConfig();
     generateWeaponConfig();
-    generateSubConfig();
-    generateSpecialConfig();
+    generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
+    generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
 }
 function setTeamColor(teamColor){
     let keys = Object.keys(TEAMS);
@@ -203,32 +203,7 @@ function rightClickWeapon(event, weaponStr){
     setWeaponOpacity(weaponStr);
     
 }
-function generateSubConfig(){
-    let subConfig = document.getElementById("subConfig");
-    for (let sub in SUB_WEAPONS){
-        let weapon = SUB_WEAPONS[sub];
-        let img = document.createElement("img");
-        img.src = weapon.primaryTexture;
-        img.classList.add("subConfigImg");
-        img.id = sub;
-        img.addEventListener("click", () => toggleSub(sub));
-        subConfig.appendChild(img);
-        setSubOpacity(sub);
-    }
-}
-function generateSpecialConfig(){
-    let specialConfig = document.getElementById("specialConfig");
-    for (let special in SPECIAL_WEAPONS){
-        let weapon = SPECIAL_WEAPONS[special];
-        let img = document.createElement("img");
-        img.src = weapon.primaryTexture;
-        img.classList.add("specialConfigImg");
-        img.id = special;
-        img.addEventListener("click", () => toggleSpecial(special));
-        specialConfig.appendChild(img);
-        setSpecialOpacity(special);
-    }
-}
+
 function toggleSpecial(specialStr){
     let special = SPECIAL_WEAPONS[specialStr];
     special.toggleEnabled();
@@ -296,6 +271,23 @@ function setWeaponOpacity(weaponStr){
         }
     }
 }
+function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc){
+    let config = document.getElementById(id);
+    for (let item in array){
+        let div = document.createElement("div");
+        div.classList.add("weaponConfigDiv");
+        let weapon = array[item];
+        let img = document.createElement("img");
+        img.src = weapon.primaryTexture;
+        img.classList.add("weaponConfigImg");
+        img.id = item;
+        img.addEventListener("click", () => eventFunc(item));
+        div.appendChild(img);
+        config.appendChild(div);
+        opacityFunc(item);
+    }
+}
+
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     for (let weapon in MAIN_WEAPONS){
