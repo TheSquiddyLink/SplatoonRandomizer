@@ -85,33 +85,40 @@
     </div>
 
     <!-- Randomizer Result -->
-    <div id="randomizerResult" hidden>
-        <div class="nameDiv">
-            <p id="mainWeaponName"></p>
-        </div>
-        <div id="mainWeaponDiv">
-            <img draggable=false id="mainWeaponImage">
-        </div>
-        <section class="subSpecial">
-            <div>
-                <div class="multiImage subWeapon" hidden>
-                    <canvas id="weaponInk">
-                    </canvas>
-                    <img id="subWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
-                    <img id="subColor" hidden src="./assets/subs/fizzy_bomb_1.png">
-                </div>
-                <p class="subSpecialName" id="subWeaponName"></p>
+     <div class="randomizerDiv">
+        <div id="randomizerResult" hidden>
+            <div class="nameDiv">
+                <p id="mainWeaponName"></p>
             </div>
-            <div>
-                <div class="multiImage" hidden>
-                    <canvas id="specialInk">
-                    </canvas>
-                    <img id="specialWhite" draggable=false src="./assets/specials/crab_tank_2.png">
-                    <img id="specialColor" hidden src="./assets/specials/crab_tank_1.png">
-                </div>
-                <p class="subSpecialName" id="specialWeaponName"></p>
+            <div id="mainWeaponDiv">
+                <img draggable=false id="mainWeaponImage">
             </div>
-        </section>
+            <div class="mainStars">
+                <div id="mainWeaponStars" hidden>
+                </div>
+            </div>
+
+            <section class="subSpecial">
+                <div>
+                    <div class="multiImage subWeapon" hidden>
+                        <canvas id="weaponInk">
+                        </canvas>
+                        <img id="subWhite" draggable=false src="./assets/subs/fizzy_bomb_2.png">
+                        <img id="subColor" hidden src="./assets/subs/fizzy_bomb_1.png">
+                    </div>
+                    <p class="subSpecialName" id="subWeaponName"></p>
+                </div>
+                <div>
+                    <div class="multiImage" hidden>
+                        <canvas id="specialInk">
+                        </canvas>
+                        <img id="specialWhite" draggable=false src="./assets/specials/crab_tank_2.png">
+                        <img id="specialColor" hidden src="./assets/specials/crab_tank_1.png">
+                    </div>
+                    <p class="subSpecialName" id="specialWeaponName"></p>
+                </div>
+            </section>
+        </div>
     </div>
 </body>
 <script type="module" src="./script/main.js"></script>

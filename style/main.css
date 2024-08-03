@@ -63,6 +63,13 @@ body {
     background-color: black;
 }
 
+.randomizerDiv{
+    display: flex;
+    justify-content: space-around;
+}
+#randomizerResult {
+    width: 50%;
+}
 
 #weaponConfig, #subConfig{
     display: flex;
@@ -97,7 +104,25 @@ body {
     width: 35px;
     height: 17.5px;
 }
+.mainStars {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;;
+}
+#mainWeaponStars {
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+    margin-left: 30%;
+    margin-right: 30%;
+}
 
+.star {
+    height: 25px;
+    width: auto;
+    margin: 5px;
+    filter: invert(100%) sepia(81%) saturate(3926%) hue-rotate(355deg) brightness(106%) contrast(102%);
+}
 /* Hide default HTML checkbox */
 .switch input {
 opacity: 0;

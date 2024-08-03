@@ -56,6 +56,8 @@ class MainWeapon extends BaseWeapon {
      * @type {SpecialWeapon}
      */
     specialWeapon;
+
+    stars = 5;
     constructor(name, type, primaryTexture, subWeapon, specialWeapon) {
         super(name, primaryTexture);
         this.type = type;
@@ -83,4 +85,5 @@ const MAIN_TYPES = {
     Splatling: "splatling",
     Stringer: "stringer",
 }
+
 export { SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES };

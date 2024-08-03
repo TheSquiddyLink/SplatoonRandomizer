@@ -333,6 +333,8 @@ async function generate(){
     let mainWeaponName = document.getElementById("mainWeaponName");
     let subWeaponName = document.getElementById("subWeaponName");
     let specialWeaponName = document.getElementById("specialWeaponName");
+    let mainWeapoonStars = document.getElementById("mainWeaponStars");
+    mainWeapoonStars.innerHTML = "";
     console.log(weapon);
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
@@ -363,6 +365,12 @@ async function generate(){
     }
     applyMain(weapon)
     selectTeam();
+    for(let i = 0; i< weapon.stars; i++){
+        let star = document.createElement("img");
+        star.src = "assets/svg/star.svg";
+        star.classList.add("star");
+        mainWeapoonStars.appendChild(star);
+    }
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
