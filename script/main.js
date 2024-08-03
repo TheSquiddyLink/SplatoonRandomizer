@@ -51,6 +51,7 @@ document.getElementById("showConfig").addEventListener("click", () => showConfig
 document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
 document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
 document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
+document.getElementById("specialToggle").addEventListener("click", () => toggleSpecialConfig());
 
 loadUrlConfig();
 
@@ -75,6 +76,7 @@ function loadUrlConfig(){
     updateConfig();
     generateWeaponConfig();
     generateSubConfig();
+    generateSpecialConfig();
 }
 function setTeamColor(teamColor){
     let keys = Object.keys(TEAMS);
@@ -128,6 +130,24 @@ function generateSubConfig(){
         setSubOpacity(sub);
     }
 }
+function generateSpecialConfig(){
+    let specialConfig = document.getElementById("specialConfig");
+    for (let special in SPECIAL_WEAPONS){
+        let weapon = SPECIAL_WEAPONS[special];
+        let img = document.createElement("img");
+        img.src = weapon.primaryTexture;
+        img.classList.add("specialConfigImg");
+        img.id = special;
+        img.addEventListener("click", () => toggleSpecial(special));
+        specialConfig.appendChild(img);
+        setSpecialOpacity(special);
+    }
+}
+function toggleSpecial(specialStr){
+    let special = SPECIAL_WEAPONS[specialStr];
+    special.toggleEnabled();
+    setSpecialOpacity(specialStr);
+}
 function toggleSub(subStr){
     let sub = SUB_WEAPONS[subStr];
     sub.toggleEnabled();
@@ -137,6 +157,23 @@ function setSubOpacity(weaponStr){
     let weaponEl = document.getElementById(weaponStr);
     if(SUB_WEAPONS[weaponStr].enabled) weaponEl.style.opacity = 1;
     else weaponEl.style.opacity = 0.5;
+}
+function setSpecialOpacity(weaponStr){
+    let weaponEl = document.getElementById(weaponStr);
+    if(SPECIAL_WEAPONS[weaponStr].enabled) weaponEl.style.opacity = 1;
+    else weaponEl.style.opacity = 0.5;
+}
+
+
+function toggleSpecialConfig(){
+    let specialConfig = document.getElementById("specialConfig");
+    if(specialConfig.style.display === "none"){
+        specialConfig.style.display = "flex";
+    }
+    else{
+        specialConfig.style.display = "none";
+    }
+    console.log(specialConfig.hidden);
 }
 function toggleSubConfig(){
     let subConfig = document.getElementById("subConfig");
@@ -274,6 +311,8 @@ function generateWeaponConfigHex() {
 function generateSubConfigHex(){
     return generateAnyConfigHex(SUB_WEAPONS);
 }
+
+
 function generateAnyConfigHex(weaponArr){
     let binary = "";
     for (let weaponKey in weaponArr) {

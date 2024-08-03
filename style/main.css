@@ -71,12 +71,16 @@ body {
     width: 50%;
 }
 
-#weaponConfig, #subConfig{
+#weaponConfig, #subConfig, #specialConfig {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
-
+.specialConfigImg {
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+}
 .weaponConfigImg{
     height: 50px;
     width: 50px;
@@ -95,14 +99,6 @@ body {
 #generate {
     border-radius: 50px;
     font-size: xx-large;
-}
-/* Toggle Switch */
-/* The switch - the box around the slider */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 35px;
-    height: 17.5px;
 }
 .mainStars {
     display: flex;
@@ -128,6 +124,19 @@ body {
 opacity: 0;
 width: 0;
 height: 0;
+}
+
+
+
+
+
+/* Toggle Switch */
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 35px;
+    height: 17.5px;
 }
 
 /* The slider */

@@ -68,7 +68,7 @@ class MainWeapon extends BaseWeapon {
         return WEAPON_TEXTURES;
     }
     getEnabled() {
-        return this.enabled && this.subWeapon.enabled;
+        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled;
     }
 }
 
