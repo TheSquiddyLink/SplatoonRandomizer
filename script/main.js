@@ -69,6 +69,8 @@ function loadUrlConfig(){
     else enableAllWeapons();
     if(params.get("subConfig") !== null) parseSubConfigHex(params.get("subConfig"));
     else enableAllSubs();
+    if(params.get("specialConfig") !== null) parseSpecialConfigHex(params.get("specialConfig"));
+    else enableAllSpecials();
     if(params.get("teamColor") !== null) setTeamColor(params.get("teamColor"));
     if(params.get("teamSide") !== null) setTeamSide(params.get("teamSide"));
     updateDropDowns();
@@ -105,6 +107,11 @@ function enableAllWeapons(){
 function enableAllSubs(){
     for(let sub in SUB_WEAPONS){
         SUB_WEAPONS[sub].enabled = true;
+    }
+}
+function enableAllSpecials(){
+    for(let special in SPECIAL_WEAPONS){
+        SPECIAL_WEAPONS[special].enabled = true;
     }
 }
 /**
@@ -226,6 +233,7 @@ function exportToURL(){
     url.searchParams.set("disableAnimation", CONFIG.disableAnimation);
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
     url.searchParams.set("subConfig", generateSubConfigHex());
+    url.searchParams.set("specialConfig", generateSpecialConfigHex());
     url.searchParams.set("teamColor", CONFIG.teamColor.name);
     url.searchParams.set("teamSide", CONFIG.teamSide);
     navigator.clipboard.writeText(url.href);
@@ -311,6 +319,9 @@ function generateWeaponConfigHex() {
 function generateSubConfigHex(){
     return generateAnyConfigHex(SUB_WEAPONS);
 }
+function generateSpecialConfigHex(){
+    return generateAnyConfigHex(SPECIAL_WEAPONS);
+}
 
 
 function generateAnyConfigHex(weaponArr){
@@ -349,6 +360,9 @@ function parseWeaponConfigHex(hex) {
 }
 function parseSubConfigHex(hex){
     parseAnyWeaponFromHex(hex, SUB_WEAPONS);
+}
+function parseSpecialConfigHex(hex){
+    parseAnyWeaponFromHex(hex, SPECIAL_WEAPONS);
 }
 
 
