@@ -6,9 +6,9 @@ console.log("hello world");
 
 const CONFIG = {
     autoHide: false,
-    hideDuration: 2.5,
+    hideLen: 2.5,
     showDuration: 2.5,
-    disableMusic: false,
+    disableSound: false,
     iterations: 25,
     disableAnimation: false, 
     teamColor: TEAMS.BlueYellow,
@@ -106,9 +106,9 @@ function loadUrlConfig(){
     console.log("loading url config");
     const params = new URLSearchParams(window.location.search);
     if (params.get("autoHide") !== null) CONFIG.autoHide = params.get("autoHide") === "true";
-    if (params.get("hideLen") !== null) CONFIG.hideDuration = parseFloat(params.get("hideLen"));
+    if (params.get("hideLen") !== null) CONFIG.hideLen = parseFloat(params.get("hideLen"));
     if (params.get("showLen") !== null) CONFIG.showDuration = parseFloat(params.get("showLen"));
-    if (params.get("disableSound") !== null) CONFIG.disableMusic = params.get("disableSound") == "true";
+    if (params.get("disableSound") !== null) CONFIG.disableSound = params.get("disableSound") == "true";
     if (params.get("disableAnimation") !== null) CONFIG.disableAnimation = params.get("disableAnimation") == "true";
     if (params.get("hideConfig")  !== null) hideConfig();
     if(params.get("hideControls") !==  null) hideAllControls();
@@ -123,6 +123,7 @@ function loadUrlConfig(){
     if(params.get("editStars") !== null) CONFIG.editStars = params.get("editStars") == "true";
     if(params.get("displayStars") !== null) CONFIG.displayStars = params.get("displayStars") == "true";
     if(params.get("resultStars") !== null) CONFIG.resultStars = params.get("resultStars") == "true";
+    if(params.get("exactStarsFilter") !== null) CONFIG.exactStarsFilter = params.get("exactStarsFilter") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -334,19 +335,12 @@ function hideAllControls(){
 function exportToURL(){
     console.log("generating url config");
     let url = new URL(window.location.href);
-    url.searchParams.set("autoHide", CONFIG.autoHide);
-    url.searchParams.set("hideLen", CONFIG.hideDuration);
-    url.searchParams.set("showLen", CONFIG.showDuration);
-    url.searchParams.set("disableSound", CONFIG.disableMusic);
-    url.searchParams.set("disableAnimation", CONFIG.disableAnimation);
+    for(let setting in CONFIG){
+        url.searchParams.set(setting, CONFIG[setting]);
+    }
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
     url.searchParams.set("subConfig", generateSubConfigHex());
     url.searchParams.set("specialConfig", generateSpecialConfigHex());
-    url.searchParams.set("teamColor", CONFIG.teamColor.name);
-    url.searchParams.set("teamSide", CONFIG.teamSide);
-    url.searchParams.set("editStars", CONFIG.editStars);
-    url.searchParams.set("displayStars", CONFIG.displayStars);
-    url.searchParams.set("resultStars", CONFIG.resultStars);
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -385,8 +379,8 @@ function showConfig(){
 }
 async function hide(){
     let randomizerResult = document.getElementById("randomizerResult");
-    randomizerResult.style.animation = `fadeOut ${CONFIG.hideDuration}s`;
-    await sleep(CONFIG.hideDuration * 1000);
+    randomizerResult.style.animation = `fadeOut ${CONFIG.hideLen}s`;
+    await sleep(CONFIG.hideLen * 1000);
     randomizerResult.hidden = true;
     randomizerResult.style.animation = "none";
 }
@@ -400,9 +394,9 @@ function updateConfig(){
     let iterations = document.getElementById("iterations").value;
     let disableAnimation = document.getElementById("disableAnimation").checked;
     CONFIG.autoHide = autoHide;
-    CONFIG.hideDuration = hideDuration;
+    CONFIG.hideLen = hideDuration;
     CONFIG.showDuration = showDuration;
-    CONFIG.disableMusic = disableMusic;
+    CONFIG.disableSound = disableMusic;
     CONFIG.iterations = iterations;
     CONFIG.disableAnimation = disableAnimation;
     if(autoHide){
@@ -416,9 +410,9 @@ function updateConfig(){
 function setDefaultConfig(){
     console.log(CONFIG)
     document.getElementById("autoHide").checked = CONFIG.autoHide;
-    document.getElementById("hideLen").value = CONFIG.hideDuration;
+    document.getElementById("hideLen").value = CONFIG.hideLen;
     document.getElementById("showLen").value = CONFIG.showDuration;
-    document.getElementById("disableSound").checked = CONFIG.disableMusic;
+    document.getElementById("disableSound").checked = CONFIG.disableSound;
     document.getElementById("iterations").value = CONFIG.iterations;
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
     document.getElementById("teamColor").value = CONFIG.teamColor.name;
@@ -528,7 +522,7 @@ async function generate(){
 
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
-    if(!CONFIG.disableMusic) AUDIO.play();
+    if(!CONFIG.disableSound) AUDIO.play();
     console.log(iterations)
     if(!CONFIG.disableAnimation){
         for(let i = 0; i < iterations; i++){
