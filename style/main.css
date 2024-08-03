@@ -80,6 +80,15 @@ body {
     width: 75px;
     margin: 10px;
 }
+.generateDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+#generate {
+    border-radius: 50px;
+    font-size: xx-large;
+}
 /* Toggle Switch */
 /* The switch - the box around the slider */
 .switch {
