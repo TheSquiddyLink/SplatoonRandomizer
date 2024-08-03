@@ -57,7 +57,7 @@ class MainWeapon extends BaseWeapon {
      */
     specialWeapon;
 
-    stars = 4;
+    stars = 5;
     constructor(name, type, primaryTexture, subWeapon, specialWeapon) {
         super(name, primaryTexture);
         this.type = type;

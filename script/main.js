@@ -1,4 +1,4 @@
-import {Color, filterWeapons, filterWeaponsStars, randomObject, sleep} from "./util/general.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep} from "./util/general.js";
 import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -125,6 +125,7 @@ function loadUrlConfig(){
     if(params.get("resultStars") !== null) CONFIG.resultStars = params.get("resultStars") == "true";
     if(params.get("exactStarsFilter") !== null) CONFIG.exactStarsFilter = params.get("exactStarsFilter") == "true";
     if(params.get("starsFilter") !== null) CONFIG.starsFilter = parseInt(params.get("starsFilter"));
+    if(params.get("starConfig") !== null) parseStarHex(params.get("starConfig"));
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -334,6 +335,7 @@ function exportToURL(){
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
     url.searchParams.set("subConfig", generateSubConfigHex());
     url.searchParams.set("specialConfig", generateSpecialConfigHex());
+    url.searchParams.set("starConfig", generateStarHex(MAIN_WEAPONS));
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -443,6 +445,19 @@ function generateAnyConfigHex(weaponArr){
     let hex = decimal.toString(16).toUpperCase();
     console.log(hex);
     return hex;
+}
+
+function parseStarHex(hex){
+    let binaryString = BigInt("0x" + hex).toString(2);
+    let expectedLength = Object.keys(MAIN_WEAPONS).length;
+    binaryString = binaryString.padStart(expectedLength, '0');
+    let i = 0;
+    for (let weaponKey in MAIN_WEAPONS) {
+        let weapon = MAIN_WEAPONS[weaponKey]
+        let newStars = parseInt(binaryString[i] + binaryString[i + 1] + binaryString[i + 2], 2);
+        weapon.stars = newStars;
+    }
+
 }
 function parseAnyWeaponFromHex(hex, weapons){
     let binaryString = BigInt("0x" + hex).toString(2);

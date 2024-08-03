@@ -125,4 +125,19 @@ function filterWeaponsStars(weapons, min, exact){
     return result;
 }
 
-export { Color, Team, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars };
+function generateStarHex(weaponArray){
+    let binaryString = "";
+    for(let weapon in weaponArray){
+        let weaponObj = weaponArray[weapon];
+        // Stars are 0-5
+        let star = weaponObj.stars;
+        let starBinary = star.toString(2);
+        let starBinaryString = starBinary.padStart(3, "0");
+        binaryString += starBinaryString;
+    }
+    let decimal = BigInt("0b" + binaryString);
+    let hex = decimal.toString(16).toUpperCase();
+    return hex;
+}
+
+export { Color, Team, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex };
