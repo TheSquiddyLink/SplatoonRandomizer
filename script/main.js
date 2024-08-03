@@ -13,6 +13,8 @@ const CONFIG = {
     disableAnimation: false, 
     teamColor: TEAMS.BlueYellow,
     teamSide: "alpha",
+    editStars: false,
+    displayStars: false,
 }
 
 /**
@@ -52,6 +54,11 @@ document.getElementById("exportToURL").addEventListener("click", () => exportToU
 document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
 document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
 document.getElementById("specialToggle").addEventListener("click", () => toggleSpecialConfig());
+document.getElementById("editStarsToggle").addEventListener("click", () => toggleEditStarsConfig());
+
+function toggleEditStarsConfig(){
+    CONFIG.editStars = !CONFIG.editStars;
+}
 
 loadUrlConfig();
 
@@ -121,23 +128,35 @@ function enableAllSpecials(){
 function clickWeapon(weaponStr){
     console.log("Clicked Weapon")
     let weapon = MAIN_WEAPONS[weaponStr];
-    weapon.increaseStars();
-    weapon.enabled = true;
+    if(!CONFIG.editStars){
+        weapon.toggleEnabled();
+    } else {
+        weapon.increaseStars();
+        weapon.enabled = true;
+    }
     setWeaponOpacity(weaponStr);
 }
+
+/**
+ * 
+ * @param {MouseEvent} event 
+ * @param {string} weaponStr 
+ */
 function rightClickWeapon(event, weaponStr){
-    console.log("Right Clicked Weapon")
     event.preventDefault();
     let weapon = MAIN_WEAPONS[weaponStr];
-    let stars = weapon.stars;
-    console.log(stars)
-    if(stars === 0){
-        weapon.enabled = false;
+    if(!CONFIG.editStars){
+        return;
     }
-    else{
+    else if(event.shiftKey){
+        weapon.toggleEnabled();
+    }else {
+        let stars = weapon.stars;
+        console.log(stars)
         weapon.decreaseStars();
     }
     setWeaponOpacity(weaponStr);
+    
 }
 function generateSubConfig(){
     let subConfig = document.getElementById("subConfig");
