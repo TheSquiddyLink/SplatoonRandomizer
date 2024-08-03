@@ -16,7 +16,8 @@ const CONFIG = {
     editStars: false,
     displayStars: false,
     resultStars: false,
-    starsFilter: 0
+    starsFilter: 0,
+    exactStarsFilter: false,
 }
 
 /**
@@ -60,9 +61,11 @@ document.getElementById("editStarsToggle").addEventListener("click", () => toggl
 document.getElementById("showStarsToggle").addEventListener("click", () => toggleShowStarsConfig());
 document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
 document.getElementById("selectStars").addEventListener("change", () => setStarsFilter());
+document.getElementById("exactStarsFilter").addEventListener("change", () => setStarsFilter());
 
 function setStarsFilter(){
     CONFIG.starsFilter = document.getElementById("selectStars").value;
+    CONFIG.exactStarsFilter = document.getElementById("exactStarsFilter").checked;
 }
 
 function toggleResultStars(){
@@ -423,6 +426,7 @@ function setDefaultConfig(){
     document.getElementById("editStarsToggle").checked = CONFIG.editStars;
     document.getElementById("showStarsToggle").checked = CONFIG.displayStars;
     document.getElementById("showResultStars").checked = CONFIG.resultStars;
+    document.getElementById("exactStarsFilter").checked = CONFIG.exactStarsFilter;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
@@ -493,12 +497,9 @@ async function generate(){
     randomizerResult.hidden = false;
     let filteredWeapons = filterWeapons(MAIN_WEAPONS);
     console.log("stars Filter: " + CONFIG.starsFilter);
-    if(CONFIG.starsFilter > 0){
-        filteredWeapons = filterWeaponsStars(filteredWeapons, CONFIG.starsFilter);
+    if(CONFIG.starsFilter > 0 || CONFIG.exactStarsFilter){
+        filteredWeapons = filterWeaponsStars(filteredWeapons, CONFIG.starsFilter, CONFIG.exactStarsFilter);
     }
-       
-    
-
     console.log("Filtered Weapons:")
     console.log(filteredWeapons)
     let key = randomObject(filteredWeapons);

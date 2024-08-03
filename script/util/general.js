@@ -104,16 +104,25 @@ function filterWeapons(weapons){
     }
     return filteredWeapons;
 }
-function filterWeaponsStars(weapons, min){
-    let filteredWeapons = {};
-    for(
-        let weapon in weapons
-    ){
-        if(weapons[weapon].stars >= min){
-            filteredWeapons[weapon] = weapons[weapon];
+function filterWeaponsStars(weapons, min, exact){
+    console.log("Exact filter: "+exact);
+    console.log("Min: "+min);
+    var result = {};
+    for(let weapon in weapons){
+        let weaponObj = weapons[weapon];
+        let stars = weaponObj.stars;
+        if(exact){
+            if(stars == min){
+                result[weapon] = weaponObj;
+            }
+        } else {
+            if(stars >= min){
+                result[weapon] = weaponObj;
+            }
         }
     }
-    return filteredWeapons;
+    console.log(result)
+    return result;
 }
 
 export { Color, Team, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars };
