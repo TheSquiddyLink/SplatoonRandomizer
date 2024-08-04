@@ -95,6 +95,20 @@ body {
 #generate {
     border-radius: 50px;
     font-size: xx-large;
+    border-width: 0;
+    font-family: Splatoon;
+    padding-left: 2%;
+    padding-right: 2%;
+    box-shadow: 7px 7px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(45deg, rgb(110,4,182), rgb(222, 102, 36));
+    animation: movingBackground 5s infinite;
+}
+#generate:not(:enabled){
+    background-image: linear-gradient(45deg, hsl(276, 96%, 18%), hsl(21, 74%, 25%));
+}
+#generate:hover:enabled {
+    cursor: pointer;
+    transform: scale(1.05);
 }
 .mainStars {
     display: flex;
@@ -263,4 +277,19 @@ border-radius: 50%;
     to {
         opacity: 0;
     }
+}
+
+@keyframes movingBackground {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.element-with-moving-background {
+    background-image: linear-gradient(45deg, rgb(222, 102, 36), rgb(110, 4, 182), rgb(222, 102, 36));
+    background-size: 200% 200%;
+    animation: movingBackground 5s ease infinite;
 }
