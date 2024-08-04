@@ -20,6 +20,7 @@ const CONFIG = {
     exactStarsFilter: false,
     aniGenButton: true,
     autoURL: true,
+    permaHide: false,
 }
 
 /**
@@ -66,21 +67,31 @@ document.getElementById("selectStars").addEventListener("change", () => setStars
 document.getElementById("exactStarsFilter").addEventListener("change", () => setStarsFilter());
 document.getElementById("aniGenButton").addEventListener("click", () => setAniBackground())
 document.getElementById("autoURL").addEventListener("click", () => setAutoURL() )
+document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
 
 document.getElementById("config").addEventListener("click", () => automaticConfigUpdate())
 
+function permaHideConfig(){
+    CONFIG.permaHide = true;
+    document.getElementById("config").style.display = "none"
+    automaticConfigUpdate();
+}
+
 function setAutoURL(){
     CONFIG.autoURL = document.getElementById("autoURL").checked;
+    updateURL();
 }
 
 async function automaticConfigUpdate(){
     if(!CONFIG.autoURL) return;
     await sleep(500);
+    updateURL()
+}
+function updateURL(){
     let url = generateURL();
     window.history.pushState({}, '', url)
     console.log(url)
 }
-
 function setAniBackground(){
     console.log("Setting Ani Background")
     let button = document.getElementById("generate");
@@ -154,8 +165,9 @@ function loadUrlConfig(){
     if(params.get("exactStarsFilter") !== null) CONFIG.exactStarsFilter = params.get("exactStarsFilter") == "true";
     if(params.get("starsFilter") !== null) CONFIG.starsFilter = parseInt(params.get("starsFilter"));
     if(params.get("starConfig") !== null) parseStarHex(params.get("starConfig"));
-    if(params.get("aniGenButton") !== null) CONFIG.aniGenButton = params.get("aniGenButton") == "true"
-    if(params.get("autoURL") !=null) CONFIG.autoURL = params.get("autoURL") == "true"
+    if(params.get("aniGenButton") !== null) CONFIG.aniGenButton = params.get("aniGenButton") == "true";
+    if(params.get("autoURL") !=null) CONFIG.autoURL = params.get("autoURL") == "true";
+    if(params.get("permaHide") == "true") permaHideConfig(); 
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
