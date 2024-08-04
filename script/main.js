@@ -23,6 +23,8 @@ const CONFIG = {
     permaHide: false,
 }
 
+const ORGINAL_CONFIG = structuredClone(CONFIG)
+
 /**
  * @type {HTMLCanvasElement}
  */
@@ -68,13 +70,22 @@ document.getElementById("exactStarsFilter").addEventListener("change", () => set
 document.getElementById("aniGenButton").addEventListener("click", () => setAniBackground())
 document.getElementById("autoURL").addEventListener("click", () => setAutoURL() )
 document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
+document.getElementById("resetAll").addEventListener("click", () => resetAll())
 
 document.getElementById("config").addEventListener("click", () => automaticConfigUpdate())
 
+
+function resetAll(){
+    for(let setting in CONFIG){
+        CONFIG[setting] = ORGINAL_CONFIG[setting]
+    }
+    updateURL();
+    setDefaultConfig();
+}
 function permaHideConfig(){
     CONFIG.permaHide = true;
     document.getElementById("config").style.display = "none"
-    automaticConfigUpdate();
+    updateURL();
 }
 
 function setAutoURL(){
@@ -89,6 +100,7 @@ async function automaticConfigUpdate(){
 }
 function updateURL(){
     let url = generateURL();
+    if(window.location.href == url.href) return;
     window.history.pushState({}, '', url)
     console.log(url)
 }
