@@ -1,4 +1,4 @@
-import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep} from "./util/general.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team} from "./util/general.js";
 import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
@@ -650,6 +650,14 @@ function getTeam(){
     let side = document.getElementById("teamSide").value;
     return TEAMS[team][side];
 }
+/**
+ * 
+ * @returns {Team}
+ */
+function getAllTeams(){
+    let team = document.getElementById("teamColor").value
+    return TEAMS[team]
+}
 function selectTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
@@ -701,7 +709,19 @@ async function applyColor(color, imageID, canvas){
     ctx.putImageData(imageData, 0, 0);
 }
 
+/**
+ * 
+ * @param {Color} color 
+ */
 function applyColorAll(color){
     applyColor(color, "subColor", WEAPON_INK_CANVAS);
     applyColor(color, "specialColor", SPECIAL_INK_CANVAS);
+    let team = getAllTeams();
+
+    let color1 = team.alpha;
+    let color2 = team.bravo;
+
+    let backgroundImage = `linear-gradient(45deg, ${color1.toString()}, ${color2.toString()})`;
+    console.log(backgroundImage);
+    document.getElementById("generate").style.backgroundImage = backgroundImage;
 }
