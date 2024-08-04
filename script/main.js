@@ -74,7 +74,24 @@ document.getElementById("permaHide").addEventListener("click", () => permaHideCo
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
 document.getElementById("rainbowButton").addEventListener("click", () => setBackground())
+
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
+document.addEventListener("keypress", (e) => handleKeyPress(e));
+
+
+const INPUT_KEYS = ["Space", "Enter"]
+/**
+ * 
+ * @param {KeyboardEvent} event 
+ */
+function handleKeyPress(event){
+    console.log("Key Pressed: ");
+    console.log(event.code);
+    if(INPUT_KEYS.includes(event.code)){
+        generate();
+    }
+
+}
 
 // setRainbowBackground();
 function setBackground(){
