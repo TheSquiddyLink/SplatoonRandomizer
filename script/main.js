@@ -74,13 +74,15 @@ document.getElementById("autoURL").addEventListener("click", () => setAutoURL() 
 document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
-document.getElementById("rainbowButton").addEventListener("click", () => setRainbowButton())
+document.getElementById("rainbowButton").addEventListener("click", () => setBackground())
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 
 // setRainbowBackground();
 function setBackground(){
     CONFIG.rainbowBackground = document.getElementById("rainbowBackground").checked
+    CONFIG.rainbowButton = document.getElementById("rainbowButton").checked;
     let body = document.getElementById("body");
+    let button = document.getElementById("generate");
     if(CONFIG.rainbowBackground){
         body.style.backgroundImage = genRainbowGradient();
         body.style.backgroundSize = "2000%";
@@ -88,11 +90,6 @@ function setBackground(){
         body.style.backgroundImage = "none";
         body.style.backgroundSize = "100%";
     }
-  
-}
-function setRainbowButton(){
-    let button = document.getElementById("generate");
-    CONFIG.rainbowButton = document.getElementById("rainbowButton").checked;
     if(CONFIG.rainbowButton){
         button.style.backgroundImage = genRainbowGradient();
         button.style.backgroundSize = "2000%";
@@ -103,6 +100,7 @@ function setRainbowButton(){
         button.style.animation = "movingBackground 5s linnear infinite";
         applyColorAll();
     }
+  
 }
 function resetAll(){
     for(let setting in CONFIG){
@@ -211,6 +209,7 @@ function loadUrlConfig(){
     if(params.get("autoURL") !=null) CONFIG.autoURL = params.get("autoURL") == "true";
     if(params.get("permaHide") == "true") permaHideConfig(); 
     if(params.get("rainbowBackground") !== null) CONFIG.rainbowBackground = params.get("rainbowBackground") == "true";
+    if(params.get("rainbowButton") !== null) CONFIG.rainbowButton = params.get("rainbowButton") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -517,6 +516,7 @@ function setDefaultConfig(){
     document.getElementById("aniGenButton").checked = CONFIG.aniGenButton;
     document.getElementById("autoURL").checked = CONFIG.autoURL;
     document.getElementById("rainbowBackground").checked = CONFIG.rainbowBackground;
+    document.getElementById("rainbowButton").checked = CONFIG.rainbowButton;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
@@ -822,9 +822,11 @@ function applyColorAll(color){
     let color1 = team.alpha;
     let color2 = team.bravo;
 
-    let backgroundImage = `linear-gradient(45deg, ${color1.toString()}, ${color2.toString()})`;
-    console.log(backgroundImage);
-    document.getElementById("generate").style.backgroundImage = backgroundImage;
+    if(!CONFIG.rainbowButton)  {
+        let backgroundImage = `linear-gradient(45deg, ${color1.toString()}, ${color2.toString()})`;
+        console.log(backgroundImage);
+        document.getElementById("generate").style.backgroundImage = backgroundImage;
+    }
 }
 
 function genRainbowGradient(){
