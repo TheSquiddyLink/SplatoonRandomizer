@@ -21,6 +21,7 @@ const CONFIG = {
     aniGenButton: true,
     autoURL: true,
     permaHide: false,
+    rainbowBackground: false
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -71,9 +72,23 @@ document.getElementById("aniGenButton").addEventListener("click", () => setAniBa
 document.getElementById("autoURL").addEventListener("click", () => setAutoURL() )
 document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
+document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
 
-document.getElementById("config").addEventListener("click", () => automaticConfigUpdate())
+document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 
+// setRainbowBackground();
+function setBackground(){
+    CONFIG.rainbowBackground = document.getElementById("rainbowBackground").checked
+    let body = document.getElementById("body");
+    if(CONFIG.rainbowBackground){
+        body.style.backgroundImage = genRainbowGradient();
+        body.style.backgroundSize = "2000%";
+    } else {
+        body.style.backgroundImage = "none";
+        body.style.backgroundSize = "100%";
+    }
+  
+}
 
 function resetAll(){
     for(let setting in CONFIG){
@@ -180,6 +195,7 @@ function loadUrlConfig(){
     if(params.get("aniGenButton") !== null) CONFIG.aniGenButton = params.get("aniGenButton") == "true";
     if(params.get("autoURL") !=null) CONFIG.autoURL = params.get("autoURL") == "true";
     if(params.get("permaHide") == "true") permaHideConfig(); 
+    if(params.get("rainbowBackground") !== null) CONFIG.rainbowBackground = params.get("rainbowBackground") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -481,9 +497,11 @@ function setDefaultConfig(){
     document.getElementById("selectStars").value = CONFIG.starsFilter;
     document.getElementById("aniGenButton").checked = CONFIG.aniGenButton;
     document.getElementById("autoURL").checked = CONFIG.autoURL;
+    document.getElementById("rainbowBackground").checked = CONFIG.rainbowBackground;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
+    setBackground();
 }
 function generateWeaponConfigHex() {
     return generateAnyConfigHex(MAIN_WEAPONS);
@@ -788,4 +806,23 @@ function applyColorAll(color){
     let backgroundImage = `linear-gradient(45deg, ${color1.toString()}, ${color2.toString()})`;
     console.log(backgroundImage);
     document.getElementById("generate").style.backgroundImage = backgroundImage;
+}
+
+function genRainbowGradient(){
+    let backgroundImageString = "";
+    let i = 0;
+    let len = Object.keys(TEAMS).length;
+    console.log(len)
+    for(let key in TEAMS){
+        let team = TEAMS[key];
+        let color1 = team.alpha;
+        let color2 = team.bravo;
+        backgroundImageString += `${color1.toString()}, ${color2.toString()}`  
+       
+        if(i != len-1) backgroundImageString += ", ";
+        i++;
+    }
+    let backgroundImage = `linear-gradient(45deg, ${backgroundImageString})`;
+    console.log(backgroundImage);
+    return backgroundImage;
 }
