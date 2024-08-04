@@ -16,79 +16,91 @@
 
     <!-- Config -->
     <div id="config">
-        <label for="autoHide">Auto Hide</label>
-        <label class="switch">
-            <input type="checkbox" id="autoHide">
-            <span class="slider round"></span>
-        </label>
-        <label for="hideLen">Hide Duration</label>
-        <input type="number" id="hideLen">
-        <span hidden id="showControls">
-            <label for="showLen">Show Duration</label>
-            <input type="number" id="showLen">
-        </span>
-        <label for="disableSound">Disable Sound</label>
-        <label class="switch">
-            <input type="checkbox" id="disableSound">
-            <span class="slider round"></span>
-        </label>
-
-        <label for="iterations">Iterations</label>
-        <input id="iterations" type="number">
-        <label for="disableAnimation">Disable Animation</label>
-        <label class="switch">
-            <input type="checkbox" id="disableAnimation">
-            <span class="slider round"></span>
-        </label>
-        <label for="colorToggle">Color Toggle</label>
-        <label class="switch">
-            <input type="checkbox" id="colorToggle">
-            <span class="slider round"></span>
-        </label>
-        <label for="weaponToggle">Weapon Toggle</label>
-        <label class="switch">
-            <input type="checkbox" id="weaponToggle">
-            <span class="slider round"></span>
-        </label>
-        <label for="subToggle">Sub Toggle</label>
-        <label class="switch">
-            <input type="checkbox" id="subToggle">
-            <span class="slider round"></span>
-        </label>
-        <label for="specialToggle">Special Toggle</label>
-        <label class="switch">
-            <input type="checkbox" id="specialToggle">
-            <span class="slider round"></span>
-        </label>
-        <label for="editStarsToggle">Edit Stars</label>
+        <div>
+            <h3>Animation</h3>
+            <label for="disableSound">Disable Sound</label>
+            <label class="switch">
+                <input type="checkbox" id="disableSound">
+                <span class="slider round"></span>
+            </label>
+            <label for="disableAnimation">Disable Animation</label>
+            <label class="switch">
+                <input type="checkbox" id="disableAnimation">
+                <span class="slider round"></span>
+            </label>
+            <label for="iterations">Iterations</label>
+            <input id="iterations" type="number" style="width: 5%;">
+        </div>
+        <div>
+            <h3>Duration</h3>
+            <label for="autoHide">Auto Hide</label>
+            <label class="switch">
+                <input type="checkbox" id="autoHide">
+                <span class="slider round"></span>
+            </label>
+            <label for="hideLen">Hide Duration</label>
+            <input type="number" id="hideLen" style="width: 4%;">
+            <span hidden id="showControls">
+                <label for="showLen">Show Duration</label>
+                <input type="number" id="showLen">
+            </span>
+        </div>
+        <div>
+            <h3>Extra config menus</h3>
+            <label for="colorToggle">Color Toggle</label>
+            <label class="switch">
+                <input type="checkbox" id="colorToggle">
+                <span class="slider round"></span>
+            </label>
+            <label for="weaponToggle">Weapon Toggle</label>
+            <label class="switch">
+                <input type="checkbox" id="weaponToggle">
+                <span class="slider round"></span>
+            </label>
+            <label for="subToggle">Sub Toggle</label>
+            <label class="switch">
+                <input type="checkbox" id="subToggle">
+                <span class="slider round"></span>
+            </label>
+            <label for="specialToggle">Special Toggle</label>
+            <label class="switch">
+                <input type="checkbox" id="specialToggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div>
+            <h3>Freshness (Stars)</h3>
+            <label for="editStarsToggle">Edit Freshness</label>
             <label class="switch">
                 <input type="checkbox" id="editStarsToggle">
                 <span class="slider round"></span>
-        </label>
-        <label for="showStarsToggle">Show Config Stars</label>
+            </label>
+            <label for="showStarsToggle">Freshness in Config</label>
+                <label class="switch">
+                    <input type="checkbox" id="showStarsToggle">
+                    <span class="slider round"></span>
+            </label>
+            <label for="showResultStars">Result Freshness</label>
+                <label class="switch">
+                    <input type="checkbox" id="showResultStars">
+                    <span class="slider round"></span>
+            </label>
+            <label for="exactStarsFilter">Exact Stars Filter</label>
             <label class="switch">
-                <input type="checkbox" id="showStarsToggle">
+                <input type="checkbox" id="exactStarsFilter">
                 <span class="slider round"></span>
-        </label>
-        <label for="showResultStars">Show Result Stars</label>
-            <label class="switch">
-                <input type="checkbox" id="showResultStars">
-                <span class="slider round"></span>
-        </label>
-        <label for="selectStars">Star Filter</label>
-        <select id="selectStars">
-            <option value="0">0 Stars</option>
-            <option value="1">⭐</option>
-            <option value="2">⭐⭐</option>
-            <option value="3">⭐⭐⭐</option>
-            <option value="4">⭐⭐⭐⭐</option>
-            <option value="5">⭐⭐⭐⭐⭐</option>
-        </select>
-        <label for="exactStarsFilter">Exact Stars Filter</label>
-        <label class="switch">
-            <input type="checkbox" id="exactStarsFilter">
-            <span class="slider round"></span>
-        </label>
+            </label>
+            <label for="selectStars">Freshness Filter</label>
+            <select id="selectStars">
+                <option value="0">☆☆☆☆☆</option>
+                <option value="1">★☆☆☆☆</option>
+                <option value="2">★★☆☆☆</option>
+                <option value="3">★★★☆☆</option>
+                <option value="4">★★★★☆</option>
+                <option value="5">★★★★★</option>
+            </select>
+        </div>
+        
         <div id="colorConfig">
             <select id="teamColor">
                 <option value="test">test</option>
@@ -105,7 +117,7 @@
     </div>
     <!-- Main Controls -->
     <div id="basicControls">
-        <input type="button" id="hide" value="Hide">
+        <input type="button" id="hide" value="Hide" hidden>
         <button hidden id="showConfig">Show Config</button>
     </div>
     <div id="weaponConfig" style="display: none;">

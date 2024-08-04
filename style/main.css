@@ -2,7 +2,7 @@
     --sub_special_size: 100px
 }
 body {
-    background-color: gray;
+    background-color: rgb(89, 89, 89);
 }
 
 .multiImage > * {
@@ -109,6 +109,20 @@ body {
     margin-right: 30%;
 }
 
+#config {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 2%;
+    
+    margin: 10px;
+}
+
+#config > div {
+    margin: 10px;
+    padding: 10px;
+    background-color: inherit;
+    border-radius: 20px;
+}
 .star {
     height: 25px;
     width: auto;
