@@ -2,7 +2,6 @@ import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex,
 import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
-console.log("hello world"); 
 
 const CONFIG = {
     autoHide: false,
@@ -219,8 +218,6 @@ function loadUrlConfig(){
 }
 function setTeamColor(teamColor){
     let keys = Object.keys(TEAMS);
-    console.log(keys);
-    console.log(teamColor);
     if(keys.includes(teamColor)){
         CONFIG.teamColor  = TEAMS[teamColor];
         console.log("Team color set to "+teamColor);
@@ -391,7 +388,6 @@ function generateWeaponConfig(){
         div.appendChild(img);
         div.appendChild(starDiv);
         weaponConfig.appendChild(div);
-        console.log(starDiv);
         setWeaponOpacity(weapon);
     }
     updateStars();
@@ -564,16 +560,11 @@ function parseAnyWeaponFromHex(hex, weapons){
     let binaryString = BigInt("0x" + hex).toString(2);
     let expectedLength = Object.keys(weapons).length;
     binaryString = binaryString.padStart(expectedLength, '0');
-    console.log("Check here")
-    console.log(binaryString)
     let i = 0;
     for (let weaponKey in weapons) {
         let weapon = weapons[weaponKey];
         let enabled = binaryString[i] === '1';
         weapon.enabled = enabled;
-        if(enabled){
-            console.log(weapon.name + " is enabled");
-        }
         i++
     }
 }
@@ -732,7 +723,6 @@ function updateDropDowns(){
  * @param {?string} _class
  */
 function generateStars(weapon, element, _class = "star"){
-    console.log(weapon.stars);  
     for(let i = 0; i< weapon.stars; i++){
         let star = createConfigStar(_class);
         element.appendChild(star);
