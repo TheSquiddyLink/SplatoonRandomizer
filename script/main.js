@@ -18,6 +18,7 @@ const CONFIG = {
     resultStars: false,
     starsFilter: 0,
     exactStarsFilter: false,
+    aniGenButton: true,
 }
 
 /**
@@ -62,6 +63,17 @@ document.getElementById("showStarsToggle").addEventListener("click", () => toggl
 document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
 document.getElementById("selectStars").addEventListener("change", () => setStarsFilter());
 document.getElementById("exactStarsFilter").addEventListener("change", () => setStarsFilter());
+document.getElementById("aniGenButton").addEventListener("click", () => setAniBackground())
+
+function setAniBackground(){
+    console.log("Setting Ani Background")
+    let button = document.getElementById("generate");
+    let toggle = document.getElementById("aniGenButton");
+    CONFIG.aniGenButton = toggle.checked;
+    if(CONFIG.aniGenButton) button.style.animation = "movingBackground 1s infinite";
+    else button.style.animation = "none";
+    console.log(button.style.animation)
+}
 
 function setStarsFilter(){
     CONFIG.starsFilter = document.getElementById("selectStars").value;
@@ -126,6 +138,7 @@ function loadUrlConfig(){
     if(params.get("exactStarsFilter") !== null) CONFIG.exactStarsFilter = params.get("exactStarsFilter") == "true";
     if(params.get("starsFilter") !== null) CONFIG.starsFilter = parseInt(params.get("starsFilter"));
     if(params.get("starConfig") !== null) parseStarHex(params.get("starConfig"));
+    if(params.get("aniGenButton") !== null) CONFIG.aniGenButton = params.get("aniGenButton") == "true"
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -417,6 +430,7 @@ function setDefaultConfig(){
     document.getElementById("showResultStars").checked = CONFIG.resultStars;
     document.getElementById("exactStarsFilter").checked = CONFIG.exactStarsFilter;
     document.getElementById("selectStars").value = CONFIG.starsFilter;
+    document.getElementById("aniGenButton").checked = CONFIG.aniGenButton;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
