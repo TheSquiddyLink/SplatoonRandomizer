@@ -4,7 +4,15 @@
 body {
     background-color: rgb(89, 89, 89);
 }
-
+header {
+    font-family: Splatoon;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 80%;
+    margin: 3%;
+    padding: 2%;
+    border-radius: 50px;
+}
 .multiImage > * {
     position: absolute;
     height: inherit;
