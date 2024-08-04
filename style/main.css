@@ -109,7 +109,7 @@ header {
     padding-left: 2%;
     padding-right: 2%;
     box-shadow: 7px 7px rgba(0, 0, 0, 0.2);
-    animation: movingBackground 5s infinite;
+    animation: movingBackground 5s infinite linear;
 }
 #generate:not(:enabled){
     filter: brightness(0.5);

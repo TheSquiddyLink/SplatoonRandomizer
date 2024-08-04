@@ -21,7 +21,8 @@ const CONFIG = {
     aniGenButton: true,
     autoURL: true,
     permaHide: false,
-    rainbowBackground: false
+    rainbowBackground: false,
+    rainbowButton: false,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -73,7 +74,7 @@ document.getElementById("autoURL").addEventListener("click", () => setAutoURL() 
 document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
-
+document.getElementById("rainbowButton").addEventListener("click", () => setRainbowButton())
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 
 // setRainbowBackground();
@@ -89,7 +90,20 @@ function setBackground(){
     }
   
 }
-
+function setRainbowButton(){
+    let button = document.getElementById("generate");
+    CONFIG.rainbowButton = document.getElementById("rainbowButton").checked;
+    if(CONFIG.rainbowButton){
+        button.style.backgroundImage = genRainbowGradient();
+        button.style.backgroundSize = "2000%";
+        button.style.animation = "movingBackground 500s linear infinite";
+    } else {
+        button.style.backgroundImage = "none";
+        button.style.backgroundSize = "100%";
+        button.style.animation = "movingBackground 5s linnear infinite";
+        applyColorAll();
+    }
+}
 function resetAll(){
     for(let setting in CONFIG){
         CONFIG[setting] = ORGINAL_CONFIG[setting]
