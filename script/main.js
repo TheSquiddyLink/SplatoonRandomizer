@@ -19,6 +19,7 @@ const CONFIG = {
     starsFilter: 0,
     exactStarsFilter: false,
     aniGenButton: true,
+    autoURL: true,
 }
 
 /**
@@ -64,6 +65,21 @@ document.getElementById("showResultStars").addEventListener("click", () => toggl
 document.getElementById("selectStars").addEventListener("change", () => setStarsFilter());
 document.getElementById("exactStarsFilter").addEventListener("change", () => setStarsFilter());
 document.getElementById("aniGenButton").addEventListener("click", () => setAniBackground())
+document.getElementById("autoURL").addEventListener("click", () => setAutoURL() )
+
+document.getElementById("config").addEventListener("click", () => automaticConfigUpdate())
+
+function setAutoURL(){
+    CONFIG.autoURL = document.getElementById("autoURL").checked;
+}
+
+async function automaticConfigUpdate(){
+    if(!CONFIG.autoURL) return;
+    await sleep(500);
+    let url = generateURL();
+    window.history.pushState({}, '', url)
+    console.log(url)
+}
 
 function setAniBackground(){
     console.log("Setting Ani Background")
@@ -139,6 +155,7 @@ function loadUrlConfig(){
     if(params.get("starsFilter") !== null) CONFIG.starsFilter = parseInt(params.get("starsFilter"));
     if(params.get("starConfig") !== null) parseStarHex(params.get("starConfig"));
     if(params.get("aniGenButton") !== null) CONFIG.aniGenButton = params.get("aniGenButton") == "true"
+    if(params.get("autoURL") !=null) CONFIG.autoURL = params.get("autoURL") == "true"
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -339,8 +356,11 @@ function hideAllControls(){
     document.getElementById("debugControls").hidden = true;
     document.getElementById("config").hidden = true;
 }
-function exportToURL(){
-    console.log("generating url config");
+/**
+ * 
+ * @returns {URL}
+ */
+function generateURL(){
     let url = new URL(window.location.href);
     for(let setting in CONFIG){
         url.searchParams.set(setting, CONFIG[setting]);
@@ -349,6 +369,11 @@ function exportToURL(){
     url.searchParams.set("subConfig", generateSubConfigHex());
     url.searchParams.set("specialConfig", generateSpecialConfigHex());
     url.searchParams.set("starConfig", generateStarHex(MAIN_WEAPONS));
+    return url
+}
+function exportToURL(){
+    console.log("generating url config");
+    let url = generateURL()
     navigator.clipboard.writeText(url.href);
     alert("URL Config Generated and Copied to Clipboard");
 }
@@ -431,6 +456,7 @@ function setDefaultConfig(){
     document.getElementById("exactStarsFilter").checked = CONFIG.exactStarsFilter;
     document.getElementById("selectStars").value = CONFIG.starsFilter;
     document.getElementById("aniGenButton").checked = CONFIG.aniGenButton;
+    document.getElementById("autoURL").checked = CONFIG.autoURL;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
