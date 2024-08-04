@@ -100,6 +100,7 @@ function resetAll(){
 function permaHideConfig(){
     CONFIG.permaHide = true;
     document.getElementById("config").style.display = "none"
+    document.getElementById("header").style.display = "none"
     updateURL();
 }
 
@@ -443,12 +444,16 @@ function hideConfig(){
     config.hidden = true
     let showConfigButton = document.getElementById("showConfig");
     showConfigButton.hidden = false;
+    let header = document.getElementById("header");
+    header.style.display = "none"
 }
 function showConfig(){
     let config = document.getElementById("config")
     config.hidden = false;
     let showConfigButton = document.getElementById("showConfig");
     showConfigButton.hidden = true;
+    let header = document.getElementById("header");
+    header.style.display = "flex"
 }
 async function hide(){
     let randomizerResult = document.getElementById("randomizerResult");

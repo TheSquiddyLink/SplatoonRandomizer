@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./style/main.css">
 </head>
 <body id="body">
-    <div style="display: flex; justify-content: space-around;">
+    <div style="display: flex; justify-content: space-around;" id="header">
         <header>
             <h1>Splatoon 3 Weapon Randomizer</h1>
             <p>This is a highly customizable website that allows for users to randomly select their weapons for Splatoon 3</p>
@@ -128,8 +128,8 @@
                 <input type="checkbox" id="autoURL">
                 <span class="slider round"></span>
             </label>
-            <label for="permaHide">Permanently hide config</label>
-            <button id="permaHide">Perma Hide Config</button>
+            <label for="permaHide">Permanently hide all UI</label>
+            <button id="permaHide">Perma Hide UI</button>
             <button id="resetAll">Reset all</button>* Weapons not included
         </div>
         <div id="colorConfig" hidden>
@@ -144,12 +144,12 @@
             <input type="color" id="customColor" hidden>
         </div>
         <button id="exportToURL">Export to URL</button>
-        <button id="hideConfig">Hide Config</button>
+        <button id="hideConfig">Hide UI</button>
     </div>
     <!-- Main Controls -->
     <div id="basicControls">
         <input type="button" id="hide" value="Hide" hidden>
-        <button hidden id="showConfig">Show Config</button>
+        <button hidden id="showConfig">Show UI</button>
     </div>
     <div id="weaponConfig" style="display: none;">
 
