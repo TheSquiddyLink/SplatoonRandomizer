@@ -430,6 +430,11 @@ function hideAllControls(){
 function generateURL(){
     let url = new URL(window.location.href);
     for(let setting in CONFIG){
+        if(ORGINAL_CONFIG[setting] == CONFIG[setting]) continue;
+        if(setting == "teamColor") {
+            url.searchParams.set(setting, CONFIG[setting].name);
+            continue;
+        }
         url.searchParams.set(setting, CONFIG[setting]);
     }
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
