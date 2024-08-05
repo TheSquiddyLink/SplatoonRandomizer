@@ -164,7 +164,6 @@ function setAniBackground(){
         button.style.animationFillMode = "forwards";
         button.style.backgroundSize = "120%"
     }
-    
     else button.style.animation = "none";
     console.log(button.style.animation)
 }
@@ -848,6 +847,7 @@ function applyColorAll(color){
     if(!CONFIG.rainbowButton)  {
         let backgroundImage = `linear-gradient(45deg, ${color1.toString()}, ${color2.toString()})`;
         console.log(backgroundImage);
+        document.getElementById("generate").style.backgroundImage = "none"
         document.getElementById("generate").style.backgroundImage = backgroundImage;
     }
 }

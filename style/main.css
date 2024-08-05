@@ -4,6 +4,8 @@
 body {
     background-color: rgb(89, 89, 89);
     animation: movingBackground 500s infinite linear;
+    min-height: 100vh;
+    height: 100%;
 }
 header {
     font-family: Splatoon;
