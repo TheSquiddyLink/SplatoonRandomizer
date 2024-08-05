@@ -119,9 +119,7 @@ function setBackground(){
         button.style.backgroundSize = "2000%";
         button.style.animation = "movingBackground 500s linear infinite";
     } else {
-        button.style.backgroundImage = "none";
-        button.style.backgroundSize = "100%";
-        button.style.animation = "movingBackground 5s linnear infinite";
+        setAniBackground();
         applyColorAll();
     }
   
@@ -161,7 +159,12 @@ function setAniBackground(){
     let button = document.getElementById("generate");
     let toggle = document.getElementById("aniGenButton");
     CONFIG.aniGenButton = toggle.checked;
-    if(CONFIG.aniGenButton) button.style.animation = "movingBackground 1s infinite";
+    if(CONFIG.aniGenButton) {
+        button.style.animation = "movingBackground 10s infinite";
+        button.style.animationFillMode = "forwards";
+        button.style.backgroundSize = "120%"
+    }
+    
     else button.style.animation = "none";
     console.log(button.style.animation)
 }
