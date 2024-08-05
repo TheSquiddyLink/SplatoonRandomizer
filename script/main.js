@@ -71,13 +71,21 @@ document.getElementById("exactStarsFilter").addEventListener("change", () => set
 document.getElementById("aniGenButton").addEventListener("click", () => setAniBackground())
 document.getElementById("autoURL").addEventListener("click", () => setAutoURL() )
 document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
-document.getElementById("resetAll").addEventListener("click", () => resetAll())
+document.getElementById("resetConfig").addEventListener("click", () => resetConfig())
 document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
 document.getElementById("rainbowButton").addEventListener("click", () => setBackground())
+document.getElementById("resetAll").addEventListener("click", () => resetAll())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 
+function resetAll(){
+    let result = confirm("Are you sure you want to reset all settings including weapons?");
+    if(!result) return;
+    let oldURL = window.location.href;
+    let newURL = oldURL.split("?")[0];
+    window.location.href = newURL;
+}
 
 const INPUT_KEYS = ["Space", "Enter"]
 /**
@@ -118,7 +126,7 @@ function setBackground(){
     }
   
 }
-function resetAll(){
+function resetConfig(){
     for(let setting in CONFIG){
         CONFIG[setting] = ORGINAL_CONFIG[setting]
     }
