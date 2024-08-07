@@ -264,7 +264,6 @@ function loadUrlConfig(){
     generateWeaponConfig();
     generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
-    generate();
 }
 
 async function testSplatImgs(){
