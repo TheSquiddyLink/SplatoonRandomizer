@@ -109,8 +109,7 @@ header {
     padding-right: 2%;
     box-shadow: 7px 7px rgba(0, 0, 0, 0.2);
     animation: movingBackground 5s infinite linear;
-    transition: transform 0.2s ease;
-    transition: filter 0.2s ease;
+    transition: transform 0.2s ease, filter 0.2s ease;
 }
 #generate:not(:enabled){
     filter: brightness(0.5);
