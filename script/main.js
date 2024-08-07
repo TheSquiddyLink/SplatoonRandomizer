@@ -86,6 +86,37 @@ document.getElementById("invertSplat").addEventListener("click", () => toggleSpl
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
+
+let hoverTimeout;
+
+document.getElementById("config").addEventListener("mousemove", (e) => {
+    clearTimeout(hoverTimeout);
+    hoverTimeout = setTimeout(() => handleHover(e), 10);
+});
+
+/**
+ * 
+ * @param {MouseEvent} event 
+ */
+function handleHover(event) {
+    const hoverInfo = document.getElementById("hoverInfo");
+    const hoverTitle = document.getElementById("hoverTitle");
+    const hoverDesc = document.getElementById("hoverDesc");
+    requestAnimationFrame(() => {
+        let title = event.target.getAttribute('hoverTitle');
+        let dec = event.target.getAttribute('hoverDesc');
+        if(!title) {
+            hoverInfo.hidden = true;
+            return;
+        }
+        hoverInfo.hidden = false;
+        hoverInfo.style.position = "absolute";
+        hoverInfo.style.left = (event.clientX + window.scrollX + 10) + "px";
+        hoverInfo.style.top = (event.clientY + window.scrollY + 10) + "px";        
+        hoverTitle.innerHTML = title;
+        hoverDesc.innerHTML = dec;
+    });
+}
 function toggleSplatConfig(){
     let value = document.getElementById("invertSplat").checked;
     CONFIG.invertSplat = value;

@@ -27,51 +27,83 @@
     <div id="config">
         <div>
             <h3>Animation</h3>
-            <label for="disableSound">Disable Sound</label>
+            <label for="disableSound"
+                hoverTitle="Disable Sound Effect" 
+                hoverDesc="Disable the sound effect from playing when generating a weapon, animation will still play">
+                Disable Sound
+            </label>
             <label class="switch">
                 <input type="checkbox" id="disableSound">
                 <span class="slider round"></span>
             </label>
-            <label for="disableAnimation">Disable Animation</label>
+            <label for="disableAnimation"
+                hoverTitle="Disable Animation"
+                hoverDesc="Disable the animation from playing when generating a weapon, sound effect will not play (WIP)">
+                Disable Animation
+            </label>
             <label class="switch">
                 <input type="checkbox" id="disableAnimation">
                 <span class="slider round"></span>
             </label>
-            <label for="iterations">Iterations</label>
+            <label for="iterations"
+                hoverTitle="Number of Iterations"
+                hoverDesc="Number of times the randomizer will run before displaying the result">
+                Iterations</label>
             <input id="iterations" type="number" style="width: 5%;">
         </div>
         <div>
             <h3>Duration</h3>
-            <label for="autoHide">Auto Hide</label>
+            <label for="autoHide"
+                hoverTitle="Auto Hide"
+                hoverDesc="Automatically hide the UI after a set amount of time">
+                Auto Hide</label>
             <label class="switch">
                 <input type="checkbox" id="autoHide">
                 <span class="slider round"></span>
             </label>
-            <label for="hideLen">Hide Duration</label>
+            <label for="hideLen"
+                hoverTitle="Hide Duration"
+                hoverDesc="Duration in seconds the UI will be hidden for">
+                Hide Duration</label>
             <input type="number" id="hideLen" style="width: 4%;">
             <span hidden id="showControls">
-                <label for="showLen">Show Duration</label>
+                <label for="showLen"
+                    hoverTitle="Show Duration"
+                    hoverDesc="Duration in seconds the UI will be shown for (Only applies if Auto Hide is enabled)">
+                    Show Duration</label>
                 <input type="number" id="showLen">
             </span>
         </div>
         <div>
             <h3>Extra config menus</h3>
-            <label for="colorToggle">Color Toggle</label>
+            <label for="colorToggle"
+                hoverTitle="Color Config Toggle"
+                hoverDesc="Toggle the color section">
+                Color Toggle</label>
             <label class="switch">
                 <input type="checkbox" id="colorToggle">
                 <span class="slider round"></span>
             </label>
-            <label for="weaponToggle">Weapon Toggle</label>
+            <label for="weaponToggle"
+                hoverTitle="Weapon Config Toggle"
+                hoverDesc="Toggle the weapon section">
+                Weapon Toggle</label>
             <label class="switch">
                 <input type="checkbox" id="weaponToggle">
                 <span class="slider round"></span>
             </label>
-            <label for="subToggle">Sub Toggle</label>
+            <label for="subToggle"
+                hoverTitle="Sub Weapon Config Toggle"
+                hoverDesc="Toggle the sub weapon section">
+                Sub Toggle</label>
             <label class="switch">
                 <input type="checkbox" id="subToggle">
                 <span class="slider round"></span>
             </label>
-            <label for="specialToggle">Special Toggle</label>
+            <label for="specialToggle"
+                hoverTitle="Special Weapon Config Toggle"
+                hoverDesc="Toggle the special weapon section">
+                Special Toggle</label>
             <label class="switch">
                 <input type="checkbox" id="specialToggle">
                 <span class="slider round"></span>
@@ -79,27 +111,42 @@
         </div>
         <div>
             <h3>Freshness (Stars)</h3>
-            <label for="editStarsToggle">Edit Freshness</label>
+            <label for="editStarsToggle"
+                hoverTitle="Edit Freshness"
+                hoverDesc="Toggle the applitity to edit freshness in the Weapon Section (WIP)">
+                Edit Freshness</label>
             <label class="switch">
                 <input type="checkbox" id="editStarsToggle">
                 <span class="slider round"></span>
             </label>
-            <label for="showStarsToggle">Freshness in Config</label>
-                <label class="switch">
-                    <input type="checkbox" id="showStarsToggle">
-                    <span class="slider round"></span>
+            <label for="showStarsToggle"
+                hoverTitle="Show Freshness"
+                hoverDesc="Toggle the applitity to show freshness in the Weapon Section, auto enabled if Edit Freshness is on (WIP)">
+                Freshness in Config</label>
+            <label class="switch">
+                <input type="checkbox" id="showStarsToggle">
+                <span class="slider round"></span>
             </label>
-            <label for="showResultStars">Result Freshness</label>
-                <label class="switch">
-                    <input type="checkbox" id="showResultStars">
-                    <span class="slider round"></span>
+            <label for="showResultStars"
+                hoverTitle="Show Freshness"
+                hoverDesc="Toggle the applitity to show freshness in the Result Section (WIP)">
+                Result Freshness</label>
+            <label class="switch">
+                <input type="checkbox" id="showResultStars">
+                <span class="slider round"></span>
             </label>
-            <label for="exactStarsFilter">Exact Stars Filter</label>
+            <label for="exactStarsFilter"
+                hoverTitle="Exact Stars Filter"
+                hoverDesc="Toggle the applitity to filter weapons by their exact number of stars. If disabled generator will filter by stars greater than or equal to the value (WIP)">
+                Exact Stars Filter</label>
             <label class="switch">
                 <input type="checkbox" id="exactStarsFilter">
                 <span class="slider round"></span>
             </label>
-            <label for="selectStars">Freshness Filter</label>
+            <label for="selectStars"
+                hoverTitle="Freshness Filter"
+                hoverDesc="Chose the number of stars for the filter chosed (WIP)">
+                Freshness Filter</label>
             <select id="selectStars">
                 <option value="0">☆☆☆☆☆</option>
                 <option value="1">★☆☆☆☆</option>
@@ -111,22 +158,34 @@
         </div>
         <div>
             <h3>UI Config</h3>
-            <label for="aniGenButton">Animated Button</label>
+            <label for="aniGenButton"
+                hoverTitle="Animated Generator Button"
+                hoverDesc="Toggle the applitity to animate the generator button">
+                Animated Button</label>
             <label class="switch">
                 <input type="checkbox" id="aniGenButton">
                 <span class="slider round"></span>
             </label>
-            <label for="rainbowBackground">Rainbow Background</label>
+            <label for="rainbowBackground"
+                hoverTitle="Rainbow Background"
+                hoverDesc="Toggle the applitity to have a rainbow background">
+                Rainbow Background</label>
             <label class="switch">
                 <input type="checkbox" id="rainbowBackground">
                 <span class="slider round"></span>
             </label>
-            <label for="rainbowButton">Rainbow Button</label>
+            <label for="rainbowButton"
+                hoverTitle="Rainbow Button"
+                hoverDesc="Toggle the applitity to have a rainbow button">
+                Rainbow Button</label>
             <label class="switch">
                 <input type="checkbox" id="rainbowButton">
                 <span class="slider round"></span>
             </label>
-            <label for="invertSplat">Invert Splat Toggle</label>
+            <label for="invertSplat"
+                hoverTitle="Invert Splat Icon"
+                hoverDesc="Toggle the applitity to invert the splat icons, if Bravo is chosen, it will show Alpha as the splat color, and vice versa">
+                Invert Splat Toggle</label>
             <label class="switch">
                 <input type="checkbox" id="invertSplat">
                 <span class="slider round"></span>
@@ -134,25 +193,50 @@
         </div>
         <div>
             <h3>Advanced Config</h3>
-            <label for="autoURL">Automaticly Update URL</label>
+            <label for="autoURL"
+                hoverTitle="Automaticly Update URL"
+                hoverDesc="Toggle the applitity to automaticly update the URL when the config is changed. Disabling this will not save any changes">
+                Automaticly Update URL</label>
             <label class="switch">
                 <input type="checkbox" id="autoURL">
                 <span class="slider round"></span>
             </label>
-            <label for="permaHide">Permanently hide all UI</label>
+            <label for="permaHide"
+                hoverTitle="Permanently Hide all UI"
+                hoverDesc="Toggle the applitity to permanently hide all UI. URL must be reset to see UI again.">
+                Permanently hide all UI</label>
             <button id="permaHide">Perma Hide UI</button>
-            <button id="resetConfig">Reset config</button>* Weapons not included
+            <label for="resetConfig"
+                hoverTitle="Reset to Default Config"
+                hoverDesc="Reset the config to the default values. This will reset the URL, but the weapon information will not be reset">
+                Reset to Default</label>
+            <button id="resetConfig">Reset config</button>
+            <label for="resetAll"
+                hoverTitle="Reset All Settings"
+                hoverDesc="Reset the config to the default values. This will reset the URL, and the weapon information. Only use if absolutly certain">
+                Reset All Settings</label>
             <button id="resetAll"><b>Reset Everything</b></button>
         </div>
         <div id="colorConfig" hidden>
             <h3>Color Config</h3>
+            <label for="teamColor"
+                hoverTitle="Team Color"
+                hoverDesc="Choose the team color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change">
+                Team Color</label>
             <select id="teamColor">
             </select>
+            <label for="teamSide"
+                hoverTitle="Team Side"
+                hoverDesc="Chose the Team Side based on the Team Color. Alpha is the first color, Bravo is the second color.">
+                Team Side</label>
             <select id="teamSide">
                 <option value="alpha">Alpha</option>
                 <option value="bravo">Bravo</option>
             </select>
-            <span id="colorPreview">Secret</span>
+            <span id="colorPreview"
+                hoverTitle="Color Preview"
+                des="This will display the current color chosen based on the team and side">
+                Secret</span>
             <input type="color" id="customColor" hidden>
         </div>
         <button id="exportToURL">Export to URL</button>
@@ -213,6 +297,10 @@
                 </div>
             </section>
         </div>
+    </div>
+    <div id="hoverInfo">
+        <h4 id="hoverTitle">Title</h4>
+        <p id="hoverDesc">Lorem ipsum odor amet, consectetuer adipiscing elit. Est parturient facilisi, accumsan arcu dignissim feugiat conubia vulputate. Class euismod proin congue aliquam quam imperdiet ac.</p>
     </div>
 </body>
 <script type="module" src="./script/main.js"></script>
