@@ -1,3 +1,4 @@
+import { MainWeapon, MAIN_TYPES } from "./weaponsClass.js";
 
 class Color {
     /**
@@ -139,5 +140,6 @@ function generateStarHex(weaponArray){
     let hex = decimal.toString(16).toUpperCase();
     return hex;
 }
+
 
 export { Color, Team, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex };

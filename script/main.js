@@ -1,7 +1,7 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team} from "./util/general.js";
 import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
-import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS} from "./util/constants.js";
+import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS} from "./util/constants.js";
 
 const CONFIG = {
     autoHide: false,
@@ -400,7 +400,7 @@ function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc){
 
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
-    for (let weapon in MAIN_WEAPONS){
+    for (let weapon in SORTED_WEAPONS){
         let div = document.createElement("div");
         let img = document.createElement("img");
         let starDiv = document.createElement("div");
