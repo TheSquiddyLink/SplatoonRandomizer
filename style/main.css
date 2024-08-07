@@ -205,6 +205,23 @@ header {
     pointer-events: none;
 }
 
+.selectConfigDiv{
+    display: flex;
+    justify-content: space-around;
+}
+
+.selectConfigSpan {
+    display: flex;
+    flex-direction: column;
+}
+.selectConfigSpan > * {
+    margin: 5px;
+}
+
+#selectConfigMenu{
+    font-size: large;
+    text-align: center;
+}
 
 /* Toggle Switch */
 /* The switch - the box around the slider */

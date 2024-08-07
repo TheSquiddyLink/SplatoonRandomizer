@@ -25,15 +25,21 @@
 
     <!-- Config -->
     <div id="config">
-        <select id="selectConfigMenu">
-            <option value="animation">Animation</option>
-            <option value="duration">Duration</option>
-            <option value="extra">Extra Menus</option>
-            <option value="stars">Freshness</option>
-            <option value="ui">UI</option>
-            <option value="advanced">Advanced</option>
-            <option value="all">All</option>
-        </select>
+        <div class="selectConfigDiv">
+            <span class="selectConfigSpan">
+                <label for="selectConfigMenu">Select the configeration menu to view</label>
+                <select id="selectConfigMenu">
+                    <option value="animation">Animation</option>
+                    <option value="duration">Duration</option>
+                    <option value="extra">Extra Menus</option>
+                    <option value="stars">Freshness</option>
+                    <option value="ui">Interface</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="all">All</option>
+                </select>
+            </span>
+        </div>
+       
         <div id="animationConfig">
             <h3>Animation</h3>
             <label for="disableSound"
@@ -166,7 +172,7 @@
             </select>
         </div>
         <div id="uiConfig">
-            <h3>UI Config</h3>
+            <h3>Interface Config</h3>
             <label for="aniGenButton"
                 hoverTitle="Animated Generator Button"
                 hoverDesc="Toggle the applitity to animate the generator button">
