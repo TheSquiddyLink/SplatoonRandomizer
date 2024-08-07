@@ -104,11 +104,11 @@ function toggleHoverInfo(){
 
 function toggleCustomColor(){
     let customColorToggle = document.getElementById("customColorToggle");
-    let customColorInput = document.getElementById("customColor");
+    let customColorSpan = document.getElementById("customColorSpan");
     if(customColorToggle.checked){
-        customColorInput.hidden = false;
+        customColorSpan.hidden = false;
     } else {
-        customColorInput.hidden = true;
+        customColorSpan.hidden = true;
         CONFIG.customColor = null;
     }
 }

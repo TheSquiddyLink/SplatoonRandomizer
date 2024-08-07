@@ -233,17 +233,26 @@
                 <option value="alpha">Alpha</option>
                 <option value="bravo">Bravo</option>
             </select>
-            <!-- TODO: Add hover data -->
-            <lable for="customColorToggle">Custom Color</lable>
+            <lable for="customColorToggle"
+                hoverTitle="Custom Color"
+                hoverDesc="Toggle the applitity to use a custom color instead of the team color (WIP)">
+                Custom Color</lable>
             <label class="switch">
                 <input type="checkbox" id="customColorToggle">
                 <span class="slider round"></span>
             </label>
             <span id="colorPreview"
                 hoverTitle="Color Preview"
-                des="This will display the current color chosen based on the team and side">
+                hoverDesc="This will display the current color chosen based on the team and side">
                 Secret</span>
-            <input type="color" id="customColor" hidden>
+            <span id="customColorSpan" hidden>
+                <label for="customColor"
+                    hoverTitle="Custom Color"
+                    hoverDesc="Choose a custom color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change.  Team side is calculated by the invert of the color.">
+                    Custom Color Input</label>
+                <input style="height: 20px" type="color" id="customColor">
+            </span>
+
         </div>
         <button id="exportToURL">Export to URL</button>
         <button id="hideConfig">Hide UI</button>
