@@ -22,6 +22,7 @@ const CONFIG = {
     permaHide: false,
     rainbowBackground: false,
     rainbowButton: false,
+    obsFriendly: false,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -78,7 +79,14 @@ document.getElementById("resetAll").addEventListener("click", () => resetAll())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
+document.addEventListener("click", (e) => handleClick(e));
 
+function handleClick(event){
+    if(CONFIG.obsFriendly){
+        event.preventDefault();
+        generate();
+    }
+}
 function resetAll(){
     let result = confirm("Are you sure you want to reset all settings including weapons?");
     if(!result) return;
@@ -237,6 +245,7 @@ function loadUrlConfig(){
     if(params.get("permaHide") == "true") permaHideConfig(); 
     if(params.get("rainbowBackground") !== null) CONFIG.rainbowBackground = params.get("rainbowBackground") == "true";
     if(params.get("rainbowButton") !== null) CONFIG.rainbowButton = params.get("rainbowButton") == "true";
+    if(params.get("obsFriendly") !== null) CONFIG.obsFriendly = params.get("obsFriendly") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
