@@ -310,6 +310,7 @@ function loadUrlConfig(){
     if(params.get("obsFriendly") !== null) CONFIG.obsFriendly = params.get("obsFriendly") == "true";
     if(params.get("invertSplat") !== null) CONFIG.invertSplat = params.get("invertSplat") == "true";
     if(params.get("hideHoverInfo") !== null) CONFIG.hideHoverInfo = params.get("hideHoverInfo") == "true";
+    if(params.get("customColor") !== null) CONFIG.customColor = Color.hex(params.get("customColor"));
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -530,6 +531,10 @@ function generateURL(){
             url.searchParams.set(setting, CONFIG[setting].name);
             continue;
         }
+        if(setting == "customColor"){
+            url.searchParams.set(setting, CONFIG[setting].toHex());
+            continue;
+        }
         url.searchParams.set(setting, CONFIG[setting]);
     }
     url.searchParams.set("weaponConfig", generateWeaponConfigHex());
@@ -634,6 +639,11 @@ function setDefaultConfig(){
     document.getElementById("hideHoverInfo").checked = CONFIG.hideHoverInfo;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
+    }
+    if(CONFIG.customColor != null){
+        document.getElementById("customColor").value = CONFIG.customColor;
+        document.getElementById("customColorToggle").checked = true;
+        toggleCustomColor();
     }
     setBackground();
 }

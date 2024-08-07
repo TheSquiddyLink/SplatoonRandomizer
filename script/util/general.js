@@ -30,6 +30,9 @@ class Color {
     invert(){
         return new Color(255-this.r, 255-this.g, 255-this.b);
     }
+    toHex(){
+        return "#"+this.r.toString(16).padStart(2, "0")+this.g.toString(16).padStart(2, "0")+this.b.toString(16).padStart(2, "0");
+    }
 }
 class Team {
 
