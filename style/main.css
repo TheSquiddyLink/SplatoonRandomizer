@@ -147,6 +147,9 @@ header {
     background-color: inherit;
     border-radius: 20px;
 }
+#config > div > * {
+    margin-right: 5px;
+}
 .star {
     height: 25px;
     width: auto;
