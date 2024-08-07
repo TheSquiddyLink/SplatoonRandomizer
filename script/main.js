@@ -140,7 +140,7 @@ function setBackground(){
         button.style.animation = "movingBackground 500s linear infinite";
     } else {
         setAniBackground();
-        applyColorAll();
+        applyColorAll(getTeam());
     }
   
 }
