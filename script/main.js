@@ -87,6 +87,7 @@ document.getElementById("invertSplat").addEventListener("click", () => toggleSpl
 document.getElementById("hideHoverInfo").addEventListener("click", () => toggleHoverInfo())
 document.getElementById("customColorToggle").addEventListener("change", () => toggleCustomColor())
 
+document.getElementById("selectConfigMenu").addEventListener("change", () => selectConfigMenu())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -98,6 +99,25 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function selectConfigMenu(){
+    const configMenu = document.getElementById("selectConfigMenu");
+    const configMenuValue = configMenu.value;
+    // if(configMenuValue == "all") {
+    //     showAllConfigMenus();
+    //     return;
+    // }
+    for(let i=0; i<configMenu.children.length; i++){
+        let configMenuOption = configMenu.children.item(i);
+        console.log(configMenuOption)
+        let configEle = document.getElementById(configMenuOption.value+"Config");
+        if(configMenuOption.value == "all") continue;
+        if(configMenuValue == "all") configEle.hidden = false;
+        else if(configMenuOption.value == configMenuValue) configEle.hidden = false;
+        else configEle.hidden = true;
+    }
+}
+
 function toggleHoverInfo(){
     CONFIG.hideHoverInfo = document.getElementById("hideHoverInfo").checked;
 }
@@ -663,7 +683,6 @@ function generateAnyConfigHex(weaponArr){
     for (let weaponKey in weaponArr) {
         let weapon = weaponArr[weaponKey];
         binary += weapon.enabled ? "1" : "0";
-        console.log(weapon.name + " enabled: " + weapon.enabled);
     }
     console.log(binary);
     let decimal = BigInt("0b" + binary);

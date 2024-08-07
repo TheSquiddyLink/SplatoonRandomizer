@@ -25,8 +25,16 @@
 
     <!-- Config -->
     <div id="config">
-        <!-- TODO: Add config option drop down -->
-        <div>
+        <select id="selectConfigMenu">
+            <option value="animation">Animation</option>
+            <option value="duration">Duration</option>
+            <option value="extra">Extra Menus</option>
+            <option value="stars">Freshness</option>
+            <option value="ui">UI</option>
+            <option value="advanced">Advanced</option>
+            <option value="all">All</option>
+        </select>
+        <div id="animationConfig">
             <h3>Animation</h3>
             <label for="disableSound"
                 hoverTitle="Disable Sound Effect" 
@@ -52,7 +60,7 @@
                 Iterations</label>
             <input id="iterations" type="number" style="width: 5%;">
         </div>
-        <div>
+        <div id="durationConfig">
             <h3>Duration</h3>
             <label for="autoHide"
                 hoverTitle="Auto Hide"
@@ -75,7 +83,7 @@
                 <input style="width: 4%;" type="number" id="showLen">
             </span>
         </div>
-        <div>
+        <div id="extraConfig">
             <h3>Extra config menus</h3>
             <label for="colorToggle"
                 hoverTitle="Color Config Toggle"
@@ -110,7 +118,7 @@
                 <span class="slider round"></span>
             </label>
         </div>
-        <div>
+        <div id="starsConfig">
             <h3>Freshness (Stars)</h3>
             <label for="editStarsToggle"
                 hoverTitle="Edit Freshness"
@@ -157,7 +165,7 @@
                 <option value="5">★★★★★</option>
             </select>
         </div>
-        <div>
+        <div id="uiConfig">
             <h3>UI Config</h3>
             <label for="aniGenButton"
                 hoverTitle="Animated Generator Button"
@@ -192,7 +200,7 @@
                 <span class="slider round"></span>
             </label>
         </div>
-        <div>
+        <div id="advancedConfig">
             <h3>Advanced Config</h3>
             <label for="autoURL"
                 hoverTitle="Automaticly Update URL"
