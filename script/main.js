@@ -781,6 +781,12 @@ async function generate(){
     WEAPON_SPLAT_CANVAS.hidden = true;
     mainWeapoonStars.innerHTML = "";
     console.log(weapon);
+    if(weapon == undefined){
+        alert("No weapons left to generate! Please adjust your filters and try again");
+        animationPlaying = false;
+        generateButton.disabled = false;
+        return;
+    }
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
     let weaponImage = document.getElementById("mainWeaponImage");
