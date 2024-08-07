@@ -25,6 +25,7 @@ const CONFIG = {
     obsFriendly: false,
     invertSplat: true,
     hideHoverInfo: false,
+    customColor: null
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -51,7 +52,7 @@ document.getElementById("teamColor").addEventListener("change", () => selectTeam
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
 document.getElementById("subWeapon").addEventListener("change", () => selectSub());
 document.getElementById("specialWeapon").addEventListener("change", () => selectSpecial());
-document.getElementById("customColor").addEventListener("change", () => customColor());
+document.getElementById("customColor").addEventListener("change", () => applyCustomColor());
 document.getElementById("mainWeapon").addEventListener("change", () => selectMainWeapon());
 document.getElementById("generate").addEventListener("click", () => generate());
 document.getElementById("hide").addEventListener("click", () => hide());
@@ -84,6 +85,8 @@ document.getElementById("rainbowButton").addEventListener("click", () => setBack
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("invertSplat").addEventListener("click", () => toggleSplatConfig())
 document.getElementById("hideHoverInfo").addEventListener("click", () => toggleHoverInfo())
+document.getElementById("customColorToggle").addEventListener("change", () => toggleCustomColor())
+
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -98,6 +101,18 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
 function toggleHoverInfo(){
     CONFIG.hideHoverInfo = document.getElementById("hideHoverInfo").checked;
 }
+
+function toggleCustomColor(){
+    let customColorToggle = document.getElementById("customColorToggle");
+    let customColorInput = document.getElementById("customColor");
+    if(customColorToggle.checked){
+        customColorInput.hidden = false;
+    } else {
+        customColorInput.hidden = true;
+        CONFIG.customColor = null;
+    }
+}
+
 /**
  * 
  * @param {MouseEvent} event 
@@ -778,11 +793,12 @@ function applyMain(main){
     document.getElementById("mainWeaponImage").src = main.primaryTexture;
 }
 
-function customColor(){
+function applyCustomColor(){
     let color = document.getElementById("customColor").value;
     let customColor = Color.hex(color);
-    console.log(customColor);
+    CONFIG.customColor = customColor;
     applyColorAll(customColor);
+
 }
 async function testMainWeapons(){
     const image = document.getElementById("mainWeaponImage");
@@ -920,12 +936,13 @@ async function applyColor(color, imageID, canvas){
  * @param {Color} color 
  */
 function applyColorAll(color){
+    if(CONFIG.customColor != null) color = CONFIG.customColor;
     applyColor(color, "subColor", WEAPON_INK_CANVAS);
     applyColor(color, "specialColor", SPECIAL_INK_CANVAS);
     let team = getAllTeams();
 
-    let color1 = team.alpha;
-    let color2 = team.bravo;
+    let color1 = CONFIG.customColor ? CONFIG.customColor : team.alpha;
+    let color2 = CONFIG.customColor ? CONFIG.customColor.invert() : team.bravo;
     console.log(CONFIG.teamSide)
     let splatColor;
     if(CONFIG.invertSplat){

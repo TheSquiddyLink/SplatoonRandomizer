@@ -27,6 +27,9 @@ class Color {
     toString(){
         return "rgb("+this.r+","+this.g+","+this.b+")";
     }
+    invert(){
+        return new Color(255-this.r, 255-this.g, 255-this.b);
+    }
 }
 class Team {
 

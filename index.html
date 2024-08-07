@@ -233,6 +233,12 @@
                 <option value="alpha">Alpha</option>
                 <option value="bravo">Bravo</option>
             </select>
+            <!-- TODO: Add hover data -->
+            <lable for="customColorToggle">Custom Color</lable>
+            <label class="switch">
+                <input type="checkbox" id="customColorToggle">
+                <span class="slider round"></span>
+            </label>
             <span id="colorPreview"
                 hoverTitle="Color Preview"
                 des="This will display the current color chosen based on the team and side">
@@ -306,7 +312,7 @@
             </section>
         </div>
     </div>
-    <div id="hoverInfo">
+    <div id="hoverInfo" hidden>
         <h4 id="hoverTitle">Title</h4>
         <p id="hoverDesc">Lorem ipsum odor amet, consectetuer adipiscing elit. Est parturient facilisi, accumsan arcu dignissim feugiat conubia vulputate. Class euismod proin congue aliquam quam imperdiet ac.</p>
     </div>
