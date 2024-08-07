@@ -1,5 +1,5 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team} from "./util/general.js";
-import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
+import {MAIN_TYPES, MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
 
@@ -86,7 +86,7 @@ document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("invertSplat").addEventListener("click", () => toggleSplatConfig())
 document.getElementById("hideHoverInfo").addEventListener("click", () => toggleHoverInfo())
 document.getElementById("customColorToggle").addEventListener("change", () => toggleCustomColor())
-
+document.getElementById("typeToggle").addEventListener("change", () => toggleTypeConfig())
 document.getElementById("selectConfigMenu").addEventListener("change", () => selectConfigMenu())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
@@ -100,6 +100,10 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
 
+function toggleTypeConfig(){
+    let value = document.getElementById("typeToggle").checked;
+    document.getElementById("typeConfig").style.display = value ? "flex" : "none";
+}
 
 function selectConfigMenu(){
     const configMenu = document.getElementById("selectConfigMenu");
@@ -342,8 +346,21 @@ function loadUrlConfig(){
     generateWeaponConfig();
     generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
+    generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
 }
 
+function toggleType(typeStr){
+    let type = MAIN_TYPES[typeStr];
+    type.toggleEnabled();
+    setTypeOpacity(typeStr);
+}
+function setTypeOpacity(typeStr){
+    console.log(typeStr)
+    let weaponEl = document.getElementById(typeStr+"_");
+    console.log(weaponEl)
+    if(MAIN_TYPES[typeStr].enabled) weaponEl.style.opacity = 1;
+    else weaponEl.style.opacity = 0.5;
+}
 async function testSplatImgs(){
     const PATH  = "/assets/svg/splat/";
     const weaponSplatImg = document.getElementById("weaponSplatImg");
@@ -491,7 +508,7 @@ function setWeaponOpacity(weaponStr){
         }
     }
 }
-function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc){
+function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc, prefix=""){
     let config = document.getElementById(id);
     for (let item in array){
         let div = document.createElement("div");
@@ -500,7 +517,7 @@ function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc){
         let img = document.createElement("img");
         img.src = weapon.primaryTexture;
         img.classList.add("weaponConfigImg");
-        img.id = item;
+        img.id = item+prefix;
         img.addEventListener("click", () => eventFunc(item));
         div.appendChild(img);
         config.appendChild(div);
@@ -844,10 +861,11 @@ async function testMainWeapons(){
 }
 applyColorAll(TEAMS.BlueYellow.alpha);
 function updateDropDowns(){
-    let teamColor = document.getElementById("teamColor");
-    let subWeapon = document.getElementById("subWeapon");
-    let specialWeapon = document.getElementById("specialWeapon");
-    let mainWeapon = document.getElementById("mainWeapon");
+    const teamColor = document.getElementById("teamColor");
+    const subWeapon = document.getElementById("subWeapon");
+    const specialWeapon = document.getElementById("specialWeapon");
+    const mainWeapon = document.getElementById("mainWeapon");
+    const weaponType = document.getElementById("weaponTypeFilter");
     for (let team in TEAMS) {
         let option = document.createElement("option");
         option.value = team;

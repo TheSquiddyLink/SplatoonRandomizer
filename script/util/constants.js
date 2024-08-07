@@ -197,9 +197,9 @@ export const MAIN_WEAPONS = {
     ZinkMiniSplatling: new MainWeapon("Zink Mini Splatling", MAIN_TYPES.Splatling, "zink_mini_splatling", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.BigBubbler),
 }
 
-// TODO: Group/Filter by weapon type
+// Group/Filter by weapon type
 export const SORTED_WEAPONS = Object.entries(MAIN_WEAPONS)
-  .sort((a, b) => a[1].type.localeCompare(b[1].type))
+  .sort((a, b) => a[1].type.name.localeCompare(b[1].type.name))
   .reduce((acc, [key, value]) => {
     acc[key] = value;
     return acc;

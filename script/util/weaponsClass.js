@@ -68,7 +68,7 @@ class MainWeapon extends BaseWeapon {
         return WEAPON_TEXTURES;
     }
     getEnabled() {
-        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled;
+        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled;
     }
     increaseStars() {
         if(this.stars < 5) this.stars++;
@@ -79,18 +79,32 @@ class MainWeapon extends BaseWeapon {
     }
 }
 
+class WeaponType {
+    name;
+    primaryTexture;
+    enabled = true;
+    constructor(name) {
+        this.name = name;
+        this.primaryTexture = "./assets/weapon_type/"+name+".png";
+    }
+    toggleEnabled(){
+        this.enabled = !this.enabled;
+    }
+}
+
+
 const MAIN_TYPES = {
-    Blaster: "blaster",
-    Brella: "brella",
-    Brush: "brush",
-    Charger: "charger",
-    Dualies: "dualies",
-    Roller: "roller",
-    Shooter: "shooter",
-    Slosher: "slosher",
-    Splatana: "splatana",
-    Splatling: "splatling",
-    Stringer: "stringer",
+    Blaster: new WeaponType("blaster"),
+    Brella: new WeaponType("brella"),
+    Brush: new WeaponType("brush"),
+    Charger: new WeaponType("charger"),
+    Dualies: new WeaponType("dualies"),
+    Roller: new WeaponType("roller"),
+    Shooter: new WeaponType("shooter"),
+    Slosher: new WeaponType("slosher"),
+    Splatana: new WeaponType("splatana"),
+    Splatling: new WeaponType("splatling"),
+    Stringer: new WeaponType("stringer"),
 }
 
 export { SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES };

@@ -85,7 +85,7 @@ header {
     width: 50%;
 }
 
-#weaponConfig, #subConfig, #specialConfig {
+#weaponConfig, #subConfig, #specialConfig, #typeConfig {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
