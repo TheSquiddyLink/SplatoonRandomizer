@@ -221,6 +221,7 @@ header {
 #selectConfigMenu{
     font-size: large;
     text-align: center;
+    border-radius: 20px;
 }
 
 /* Toggle Switch */
