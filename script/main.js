@@ -89,6 +89,7 @@ document.addEventListener("click", (e) => handleClick(e));
 function toggleSplatConfig(){
     let value = document.getElementById("invertSplat").checked;
     CONFIG.invertSplat = value;
+    applyColorAll(getTeam());
 }
 
 function handleClick(event){
@@ -671,9 +672,10 @@ async function generate(){
     let specialWeaponName = document.getElementById("specialWeaponName");
     let mainWeapoonStars = document.getElementById("mainWeaponStars");
     let weaponSplatImg = document.getElementById("weaponSplatImg");
-    let randomSplatIndex = Math.round(Math.random()*WEAPON_SPLAT.length);
+    let randomSplatIndex = Math.round(Math.random()*(WEAPON_SPLAT.length - 1));
     const SPLATPATH = "assets/svg/splat/"
     weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
+    WEAPON_SPLAT_CANVAS.hidden = true;
     mainWeapoonStars.innerHTML = "";
     console.log(weapon);
     applySub(weapon.subWeapon);
@@ -718,6 +720,8 @@ async function generate(){
     subSpecial.item(1).hidden = false;
     subSpecial.item(0).style.animation = `finish ${lengthS}s`
     subSpecial.item(1).style.animation = `finish ${lengthS}s`;
+    WEAPON_SPLAT_CANVAS.style.animation = `finish ${lengthS}s`;
+    WEAPON_SPLAT_CANVAS.hidden = false;
     if(CONFIG.autoHide){
         await sleep(CONFIG.showDuration*1000);
         hide();
