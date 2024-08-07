@@ -96,6 +96,7 @@ function handleKeyPress(event){
     console.log("Key Pressed: ");
     console.log(event.code);
     if(INPUT_KEYS.includes(event.code)){
+        event.preventDefault();
         generate();
     }
 
