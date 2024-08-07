@@ -24,6 +24,7 @@ const CONFIG = {
     rainbowButton: false,
     obsFriendly: false,
     invertSplat: true,
+    hideHoverInfo: false,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -82,6 +83,7 @@ document.getElementById("rainbowBackground").addEventListener("click", () => set
 document.getElementById("rainbowButton").addEventListener("click", () => setBackground())
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("invertSplat").addEventListener("click", () => toggleSplatConfig())
+document.getElementById("hideHoverInfo").addEventListener("click", () => toggleHoverInfo())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -93,12 +95,15 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
-
+function toggleHoverInfo(){
+    CONFIG.hideHoverInfo = document.getElementById("hideHoverInfo").checked;
+}
 /**
  * 
  * @param {MouseEvent} event 
  */
 function handleHover(event) {
+    if(CONFIG.hideHoverInfo) return;
     const hoverInfo = document.getElementById("hoverInfo");
     const hoverTitle = document.getElementById("hoverTitle");
     const hoverDesc = document.getElementById("hoverDesc");
@@ -289,6 +294,7 @@ function loadUrlConfig(){
     if(params.get("rainbowButton") !== null) CONFIG.rainbowButton = params.get("rainbowButton") == "true";
     if(params.get("obsFriendly") !== null) CONFIG.obsFriendly = params.get("obsFriendly") == "true";
     if(params.get("invertSplat") !== null) CONFIG.invertSplat = params.get("invertSplat") == "true";
+    if(params.get("hideHoverInfo") !== null) CONFIG.hideHoverInfo = params.get("hideHoverInfo") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -610,6 +616,7 @@ function setDefaultConfig(){
     document.getElementById("rainbowBackground").checked = CONFIG.rainbowBackground;
     document.getElementById("rainbowButton").checked = CONFIG.rainbowButton;
     document.getElementById("invertSplat").checked = CONFIG.invertSplat;
+    document.getElementById("hideHoverInfo").checked = CONFIG.hideHoverInfo;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
