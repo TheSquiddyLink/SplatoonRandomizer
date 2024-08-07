@@ -205,4 +205,35 @@ export const SORTED_WEAPONS = Object.entries(MAIN_WEAPONS)
   }, {});
 
 
+  export const ALL_SPLAT_IMGS = [
+    'splat_01.svg',
+    'splat_02.svg',
+    'splat_03.svg',
+    'splat_04.svg',
+    'splat_05.svg',
+    'splat_06.svg',
+    'splat_07.svg',
+    'splat_08.svg',
+    'splat_09.svg',    
+    'splat_10.svg',
+    'splat_11.svg',
+    'splat_12.svg',
+    'splat_13.svg',
+    'splat_14.svg',
+    'splat_15.svg',
+    'splat_16.svg',
+    'splat_17.svg',
+    'splat_18.svg',
+  ]
+export const WEAPON_SPLAT = [
+  ALL_SPLAT_IMGS[1],
+  ALL_SPLAT_IMGS[3],
+  ALL_SPLAT_IMGS[6],
+  ALL_SPLAT_IMGS[8],
+  ALL_SPLAT_IMGS[11],
+  ALL_SPLAT_IMGS[12],
+  ALL_SPLAT_IMGS[13],
+  ALL_SPLAT_IMGS[14],
+  ALL_SPLAT_IMGS[15],
+]
 console.log(randomObject(MAIN_WEAPONS))

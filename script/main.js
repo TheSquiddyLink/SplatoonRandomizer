@@ -1,7 +1,7 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team} from "./util/general.js";
 import {MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
-import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS} from "./util/constants.js";
+import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
 
 const CONFIG = {
     autoHide: false,
@@ -252,6 +252,18 @@ function loadUrlConfig(){
     generateWeaponConfig();
     generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
+    generate();
+}
+
+async function testSplatImgs(){
+    const PATH  = "/assets/svg/splat/";
+    const weaponSplatImg = document.getElementById("weaponSplatImg");
+    for(let i = 0; i< WEAPON_SPLAT.length; i++){
+        let splat = WEAPON_SPLAT[i];
+        console.log(splat)
+        weaponSplatImg.src = PATH+splat;
+        await sleep(1000)
+    } 
 }
 function setTeamColor(teamColor){
     let keys = Object.keys(TEAMS);
@@ -646,6 +658,7 @@ async function generate(){
     let subWeaponName = document.getElementById("subWeaponName");
     let specialWeaponName = document.getElementById("specialWeaponName");
     let mainWeapoonStars = document.getElementById("mainWeaponStars");
+    let weaponSplatImg = document.getElementById("weaponSplatImg");
     mainWeapoonStars.innerHTML = "";
     console.log(weapon);
     applySub(weapon.subWeapon);
@@ -678,6 +691,9 @@ async function generate(){
     applyMain(weapon)
     selectTeam();
     generateStars(weapon, mainWeapoonStars);
+    let randomSplatIndex = Math.round(Math.random()*WEAPON_SPLAT.length);
+    const SPLATPATH = "assets/svg/splat/"
+    weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
