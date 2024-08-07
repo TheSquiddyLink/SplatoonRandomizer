@@ -100,6 +100,7 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
 
+
 function selectConfigMenu(){
     const configMenu = document.getElementById("selectConfigMenu");
     const configMenuValue = configMenu.value;
@@ -142,13 +143,17 @@ function handleHover(event) {
     const hoverInfo = document.getElementById("hoverInfo");
     const hoverTitle = document.getElementById("hoverTitle");
     const hoverDesc = document.getElementById("hoverDesc");
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
         let title = event.target.getAttribute('hoverTitle');
         let dec = event.target.getAttribute('hoverDesc');
         if(!title) {
+            hoverInfo.style.animation = "fadeOut 0.2s";
+            await sleep(200);
             hoverInfo.hidden = true;
+            hoverInfo.style.animation = "none";
             return;
         }
+        hoverInfo.style.animation = "fadeIn 0.2s"
         hoverInfo.hidden = false;
         hoverInfo.style.position = "absolute";
         hoverInfo.style.left = (event.clientX + window.scrollX + 10) + "px";
