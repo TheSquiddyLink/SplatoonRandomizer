@@ -23,6 +23,7 @@ const CONFIG = {
     rainbowBackground: false,
     rainbowButton: false,
     obsFriendly: false,
+    invertSplat: true,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -36,6 +37,10 @@ const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
  */
 const SPECIAL_INK_CANVAS = document.getElementById("specialInk");
 
+/**
+ * @type {HTMLCanvasElement}
+ */
+const WEAPON_SPLAT_CANVAS = document.getElementById("weaponSplatCanvas");
 
 const AUDIO = new Audio("./assets/audio/randomizer.mp3");
 
@@ -659,6 +664,9 @@ async function generate(){
     let specialWeaponName = document.getElementById("specialWeaponName");
     let mainWeapoonStars = document.getElementById("mainWeaponStars");
     let weaponSplatImg = document.getElementById("weaponSplatImg");
+    let randomSplatIndex = Math.round(Math.random()*WEAPON_SPLAT.length);
+    const SPLATPATH = "assets/svg/splat/"
+    weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
     mainWeapoonStars.innerHTML = "";
     console.log(weapon);
     applySub(weapon.subWeapon);
@@ -691,9 +699,6 @@ async function generate(){
     applyMain(weapon)
     selectTeam();
     generateStars(weapon, mainWeapoonStars);
-    let randomSplatIndex = Math.round(Math.random()*WEAPON_SPLAT.length);
-    const SPLATPATH = "assets/svg/splat/"
-    weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
@@ -847,6 +852,10 @@ async function applyColor(color, imageID, canvas){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     await sleep(50);
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    if(imageID == "weaponSplatImg"){
+        console.log(canvas.width);
+        console.log(image.width);
+    }
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < imageData.data.length; i += 4) {
         const threashold = 115;
@@ -869,7 +878,15 @@ function applyColorAll(color){
 
     let color1 = team.alpha;
     let color2 = team.bravo;
+    console.log(CONFIG.teamSide)
+    let splatColor;
+    if(CONFIG.invertSplat){
+        splatColor = CONFIG.teamSide == "alpha" ? color2 : color1;
+    } else {
+        splatColor = CONFIG.teamSide == "alpha" ? color1 : color2;
+    }
 
+    applyColor(splatColor, "weaponSplatImg", WEAPON_SPLAT_CANVAS);
     if(!CONFIG.rainbowButton)  {
         let backgroundImage = `linear-gradient(45deg, ${color1.toString()}, ${color2.toString()})`;
         console.log(backgroundImage);

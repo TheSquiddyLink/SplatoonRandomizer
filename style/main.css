@@ -181,10 +181,11 @@ header {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-#weaponSplatImg {
+#weaponSplatCanvas {
     position: absolute;
     height: inherit;
     z-index: -1;
+    width: 200px;
 }
 
 
