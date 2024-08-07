@@ -81,10 +81,15 @@ document.getElementById("resetConfig").addEventListener("click", () => resetConf
 document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
 document.getElementById("rainbowButton").addEventListener("click", () => setBackground())
 document.getElementById("resetAll").addEventListener("click", () => resetAll())
+document.getElementById("invertSplat").addEventListener("click", () => toggleSplatConfig())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
+function toggleSplatConfig(){
+    let value = document.getElementById("invertSplat").checked;
+    CONFIG.invertSplat = value;
+}
 
 function handleClick(event){
     if(CONFIG.obsFriendly){
@@ -251,6 +256,7 @@ function loadUrlConfig(){
     if(params.get("rainbowBackground") !== null) CONFIG.rainbowBackground = params.get("rainbowBackground") == "true";
     if(params.get("rainbowButton") !== null) CONFIG.rainbowButton = params.get("rainbowButton") == "true";
     if(params.get("obsFriendly") !== null) CONFIG.obsFriendly = params.get("obsFriendly") == "true";
+    if(params.get("invertSplat") !== null) CONFIG.invertSplat = params.get("invertSplat") == "true";
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -572,6 +578,7 @@ function setDefaultConfig(){
     document.getElementById("autoURL").checked = CONFIG.autoURL;
     document.getElementById("rainbowBackground").checked = CONFIG.rainbowBackground;
     document.getElementById("rainbowButton").checked = CONFIG.rainbowButton;
+    document.getElementById("invertSplat").checked = CONFIG.invertSplat;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
