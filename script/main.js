@@ -528,7 +528,7 @@ function generateURL(){
     for(let setting in CONFIG){
         if(ORGINAL_CONFIG[setting] == CONFIG[setting]) continue;
         if(setting == "teamColor") {
-            url.searchParams.set(setting, CONFIG[setting].name);
+            url.searchParams.set(setting, CONFIG[setting].name.replace(" ", ""));
             continue;
         }
         if(setting == "customColor"){
@@ -624,7 +624,7 @@ function setDefaultConfig(){
     document.getElementById("disableSound").checked = CONFIG.disableSound;
     document.getElementById("iterations").value = CONFIG.iterations;
     document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
-    document.getElementById("teamColor").value = CONFIG.teamColor.name;
+    document.getElementById("teamColor").value = CONFIG.teamColor.name.replaceAll(" ", "");
     document.getElementById("teamSide").value = CONFIG.teamSide;
     document.getElementById("editStarsToggle").checked = CONFIG.editStars;
     document.getElementById("showStarsToggle").checked = CONFIG.displayStars;
@@ -827,7 +827,7 @@ function updateDropDowns(){
     for (let team in TEAMS) {
         let option = document.createElement("option");
         option.value = team;
-        option.innerText = team;
+        option.innerText = TEAMS[team].name;
         teamColor.appendChild(option);
     }
     for (let sub in SUB_WEAPONS) {

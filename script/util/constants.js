@@ -39,16 +39,16 @@ export const SUB_WEAPONS = {
     ToxicMist: new SubWeapon("Toxic Mist", "toxic_mist"),
 }
 export const TEAMS = {
-    BlueYellow: new Team("BlueYellow", "Splatoon 3", new Color(26,26,174), new Color(227,141,36)),
-    GreenPurple: new Team("GreenPurple", "Splatoon 3", new Color(160,201,55), new Color(174,0,174)),
-    LimegreenPurple: new Team("LimegreenPurple", "Splatoon 3", new Color(190,205,65), new Color(99,37,205)),
-    OrangeBlue: new Team("OrangeBlue", "Splatoon 1", new Color(222, 102, 36), new Color(52,59,196)),
-    OrangePurple: new Team("OrangePurple", "Splatoon 3", new Color(222, 102, 36), new Color(110,4,182)),
-    PinkGreen: new Team("PinkGreen", "Splatoon 2", new Color(193,45,116), new Color(44,183,33)),
-    TurquoisePink: new Team("TurquoisePink", "Splatoon 3", new Color(27,190,171), new Color(196,58,110)),
-    TurquoiseRed: new Team("TurquoiseRed", "Splatoon 3", new Color(30,192,173), new Color(215,75,49)),
-    YellowBlue: new Team("YellowBlue", "Splatoon 3", new Color(208,190,8), new Color(58,12,205)),
-    YellowPurple: new Team("YellowPurple", "Splatoon 3", new Color(206,177,33), new Color(144,37,198)),
+    BlueYellow: new Team("Blue Yellow", "Splatoon 3", new Color(26,26,174), new Color(227,141,36)),
+    GreenPurple: new Team("Green Purple", "Splatoon 3", new Color(160,201,55), new Color(174,0,174)),
+    LimegreenPurple: new Team("Limegreen Purple", "Splatoon 3", new Color(190,205,65), new Color(99,37,205)),
+    OrangeBlue: new Team("Orange Blue", "Splatoon 1", new Color(222, 102, 36), new Color(52,59,196)),
+    OrangePurple: new Team("Orange Purple", "Splatoon 3", new Color(222, 102, 36), new Color(110,4,182)),
+    PinkGreen: new Team("Pink Green", "Splatoon 2", new Color(193,45,116), new Color(44,183,33)),
+    TurquoisePink: new Team("Turquoise Pink", "Splatoon 3", new Color(27,190,171), new Color(196,58,110)),
+    TurquoiseRed: new Team("Turquoise Red", "Splatoon 3", new Color(30,192,173), new Color(215,75,49)),
+    YellowBlue: new Team("Yellow Blue", "Splatoon 3", new Color(208,190,8), new Color(58,12,205)),
+    YellowPurple: new Team("Yellow Purple", "Splatoon 3", new Color(206,177,33), new Color(144,37,198)),
 }
 
 export const MAIN_WEAPONS = {
