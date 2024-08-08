@@ -6,7 +6,7 @@ import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEA
 const CONFIG = {
     autoHide: false,
     hideLen: 2.5,
-    showDuration: 2.5,
+    showLen: 2.5,
     disableSound: false,
     iterations: 25,
     disableAnimation: false, 
@@ -352,7 +352,7 @@ function loadUrlConfig(){
     const params = new URLSearchParams(window.location.search);
     if (params.get("autoHide") !== null) CONFIG.autoHide = params.get("autoHide") === "true";
     if (params.get("hideLen") !== null) CONFIG.hideLen = parseFloat(params.get("hideLen"));
-    if (params.get("showDuration") !== null) CONFIG.showDuration = parseFloat(params.get("showDuration"));
+    if (params.get("showLen") !== null) CONFIG.showLen = parseFloat(params.get("showLen"));
     if (params.get("disableSound") !== null) CONFIG.disableSound = params.get("disableSound") == "true";
     if (params.get("disableAnimation") !== null) CONFIG.disableAnimation = params.get("disableAnimation") == "true";
     if (params.get("hideConfig")  !== null) hideConfig();
@@ -681,13 +681,13 @@ function updateConfig(){
     console.log("updating config");
     let autoHide = document.getElementById("autoHide").checked;
     let hideDuration = document.getElementById("hideLen").value;
-    let showDuration = document.getElementById("showLen").value;
+    let showLen = document.getElementById("showLen").value;
     let disableMusic = document.getElementById("disableSound").checked;
     let iterations = document.getElementById("iterations").value;
     let disableAnimation = document.getElementById("disableAnimation").checked;
     CONFIG.autoHide = autoHide;
     CONFIG.hideLen = hideDuration;
-    CONFIG.showDuration = showDuration;
+    CONFIG.showLen = showLen;
     CONFIG.disableSound = disableMusic;
     CONFIG.iterations = iterations;
     CONFIG.disableAnimation = disableAnimation;
@@ -701,39 +701,45 @@ function updateConfig(){
 
 function setDefaultConfig(){
     console.log(CONFIG)
-    document.getElementById("autoHide").checked = CONFIG.autoHide;
-    document.getElementById("hideLen").value = CONFIG.hideLen;
-    document.getElementById("showLen").value = CONFIG.showDuration;
-    document.getElementById("disableSound").checked = CONFIG.disableSound;
-    document.getElementById("iterations").value = CONFIG.iterations;
-    document.getElementById("disableAnimation").checked = CONFIG.disableAnimation;
-    document.getElementById("teamColor").value = CONFIG.teamColor.name.replaceAll(" ", "");
-    document.getElementById("teamSide").value = CONFIG.teamSide;
-    document.getElementById("editStarsToggle").checked = CONFIG.editStars;
-    document.getElementById("showStarsToggle").checked = CONFIG.displayStars;
-    document.getElementById("showResultStars").checked = CONFIG.resultStars;
-    document.getElementById("exactStarsFilter").checked = CONFIG.exactStarsFilter;
-    document.getElementById("selectStars").value = CONFIG.starsFilter;
-    document.getElementById("aniGenButton").checked = CONFIG.aniGenButton;
-    document.getElementById("autoURL").checked = CONFIG.autoURL;
-    document.getElementById("rainbowBackground").checked = CONFIG.rainbowBackground;
-    document.getElementById("rainbowButton").checked = CONFIG.rainbowButton;
-    document.getElementById("invertSplat").checked = CONFIG.invertSplat;
-    document.getElementById("hideHoverInfo").checked = CONFIG.hideHoverInfo;
-    document.getElementById("weaponQueueSize").value = CONFIG.weaponQueueSize;
-    document.getElementById("subQueueSize").value = CONFIG.subQueueSize;
-    document.getElementById("specialQueueSize").value = CONFIG.specialQueueSize;
-    document.getElementById("typeQueueSize").value = CONFIG.typeQueueSize;
+    
+    const specialCases = {
+        editStars: "editStarsToggle",
+        displayStars: "showStarsToggle",
+        resultStars: "showResultStars",
+        starsFilter: "selectStars"
+    }
+    for(let setting in CONFIG){
+        if(setting == "obsFriendly") continue;
+        if(setting == "teamColor"){
+            document.getElementById(setting).value = CONFIG[setting].name.replace(" ", "");
+            continue;
+        }
+        if(typeof CONFIG[setting] == "boolean"){
+            if(setting in specialCases){
+                document.getElementById(specialCases[setting]).checked = CONFIG[setting];
+                continue;
+            }
+            document.getElementById(setting).checked = CONFIG[setting];
+            continue;
+        } else {
+            if(setting in specialCases){
+                document.getElementById(specialCases[setting]).value = CONFIG[setting];
+                continue;
+            }
+            document.getElementById(setting).value = CONFIG[setting];
+            continue;
+        }
+    }
     MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
     SUB_QUEUE.maxSize = CONFIG.subQueueSize;
     SPECIAL_QUEUE.maxSize = CONFIG.specialQueueSize;
-    if(CONFIG.editStars){
-        document.getElementById("showStarsToggle").checked = true;
-    }
     if(CONFIG.customColor != null){
         document.getElementById("customColor").value = CONFIG.customColor;
         document.getElementById("customColorToggle").checked = true;
         toggleCustomColor();
+    }
+    if(CONFIG.editStars){
+        document.getElementById("showStarsToggle").checked = true;
     }
     setBackground();
 }
@@ -880,7 +886,7 @@ async function generate(){
     WEAPON_SPLAT_CANVAS.style.animation = `finish ${lengthS}s`;
     WEAPON_SPLAT_CANVAS.hidden = false;
     if(CONFIG.autoHide){
-        await sleep(CONFIG.showDuration*1000);
+        await sleep(CONFIG.showLen*1000);
         hide();
     }
     console.log(AUDIO.duration)
