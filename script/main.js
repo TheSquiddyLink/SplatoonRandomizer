@@ -312,7 +312,7 @@ function loadUrlConfig(){
     const params = new URLSearchParams(window.location.search);
     if (params.get("autoHide") !== null) CONFIG.autoHide = params.get("autoHide") === "true";
     if (params.get("hideLen") !== null) CONFIG.hideLen = parseFloat(params.get("hideLen"));
-    if (params.get("showLen") !== null) CONFIG.showDuration = parseFloat(params.get("showLen"));
+    if (params.get("showDuration") !== null) CONFIG.showDuration = parseFloat(params.get("showDuration"));
     if (params.get("disableSound") !== null) CONFIG.disableSound = params.get("disableSound") == "true";
     if (params.get("disableAnimation") !== null) CONFIG.disableAnimation = params.get("disableAnimation") == "true";
     if (params.get("hideConfig")  !== null) hideConfig();
