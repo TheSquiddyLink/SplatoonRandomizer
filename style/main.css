@@ -175,7 +175,7 @@ header {
     height: 50px;
     width: 50px;
     margin: 10px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
  
 .weaponConfigImg:hover {
