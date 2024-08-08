@@ -28,9 +28,13 @@
         <div class="selectConfigDiv">
             <span class="selectConfigSpan">
                 <h3><label for="selectConfigMenu">Select the configeration menu to view</label></h3>                <select id="selectConfigMenu">
+                    <option value="weapon">Main Weapon</option>
+                    <option value="sub">Sub Weapon</option>
+                    <option value="special">Special Weapon</option>
+                    <option value="type">Weapon Type</option>
+                    <option value="color">Color</option>
                     <option value="animation">Animation</option>
                     <option value="duration">Duration</option>
-                    <option value="extra">Extra Menus</option>
                     <option value="stars">Freshness</option>
                     <option value="ui">Interface</option>
                     <option value="advanced">Advanced</option>
@@ -88,48 +92,9 @@
                 <input style="width: 4%;" type="number" id="showLen">
             </span>
         </div>
+        <!-- TODO: Move Extra Menus to own config menu -->
         <div id="extraConfig">
             <h3>Extra config menus</h3>
-            <label for="colorToggle"
-                hoverTitle="Color Config Toggle"
-                hoverDesc="Toggle the color section">
-                Color Toggle</label>
-            <label class="switch">
-                <input type="checkbox" id="colorToggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="weaponToggle"
-                hoverTitle="Weapon Config Toggle"
-                hoverDesc="Toggle the weapon section">
-                Weapon Toggle</label>
-            <label class="switch">
-                <input type="checkbox" id="weaponToggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="subToggle"
-                hoverTitle="Sub Weapon Config Toggle"
-                hoverDesc="Toggle the sub weapon section">
-                Sub Toggle</label>
-            <label class="switch">
-                <input type="checkbox" id="subToggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="specialToggle"
-                hoverTitle="Special Weapon Config Toggle"
-                hoverDesc="Toggle the special weapon section">
-                Special Toggle</label>
-            <label class="switch">
-                <input type="checkbox" id="specialToggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="typeToggle"
-                hoverTitle="Weapon Type Config Toggle"
-                hoverDesc="Toggle the main weapon type section">
-                Type Toggle</label>
-            <label class="switch">
-                <input type="checkbox" id="typeToggle">
-                <span class="slider round"></span>
-            </label>
             <label for="weaponQueueSize"
                 hoverTitle="Repeat Size"
                 hoverDesc="Number of times a weapon can be generate before a duplicate is generated">
@@ -281,6 +246,10 @@
             </span>
 
         </div>
+        <div id="weaponConfig" style="display: none;"></div>
+        <div id="subConfig" style="display: none;"> </div>
+        <div id="specialConfig" style="display: none;"></div>
+        <div id="typeConfig" style="display: none;"></div>
         <button id="exportToURL">Export to URL</button>
         <button id="hideConfig">Hide UI</button>
         <label for="hideHoverInfo">
@@ -295,21 +264,8 @@
     <div id="basicControls">
         <input type="button" id="hide" value="Hide" hidden>
         <button hidden id="showConfig">Show UI</button>
-
-    </div>
-    <div id="weaponConfig" style="display: none;">
-
-    </div>
-    <div id="subConfig" style="display: none;">
-        
     </div>
 
-    <div id="specialConfig" style="display: none;">
-
-    </div>
-    <div id="typeConfig" style="display: none;">
-
-    </div>
     <div class="generateDiv">
         <button id="generate">Generate</button>
     </div>

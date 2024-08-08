@@ -70,12 +70,12 @@ document.getElementById("iterations").addEventListener("change", () => updateCon
 document.getElementById("disableAnimation").addEventListener("change", () => updateConfig());
 
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
-document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
+// document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
-document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
-document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
-document.getElementById("specialToggle").addEventListener("click", () => toggleSpecialConfig());
+// document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
+// document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
+// document.getElementById("specialToggle").addEventListener("click", () => toggleSpecialConfig());
 document.getElementById("editStarsToggle").addEventListener("click", () => toggleEditStarsConfig());
 document.getElementById("showStarsToggle").addEventListener("click", () => toggleShowStarsConfig());
 document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
@@ -91,7 +91,7 @@ document.getElementById("resetAll").addEventListener("click", () => resetAll())
 document.getElementById("invertSplat").addEventListener("click", () => toggleSplatConfig())
 document.getElementById("hideHoverInfo").addEventListener("click", () => toggleHoverInfo())
 document.getElementById("customColorToggle").addEventListener("change", () => toggleCustomColor())
-document.getElementById("typeToggle").addEventListener("change", () => toggleTypeConfig())
+// document.getElementById("typeToggle").addEventListener("change", () => toggleTypeConfig())
 document.getElementById("selectConfigMenu").addEventListener("change", () => selectConfigMenu())
 document.getElementById("weaponQueueSize").addEventListener("change", () => setQueueSize())
 
@@ -119,16 +119,15 @@ function toggleTypeConfig(){
 function selectConfigMenu(){
     const configMenu = document.getElementById("selectConfigMenu");
     const configMenuValue = configMenu.value;
-    // if(configMenuValue == "all") {
-    //     showAllConfigMenus();
-    //     return;
-    // }
+    const weaponOptions = ["weapon", "sub", "special", "type"];
     for(let i=0; i<configMenu.children.length; i++){
         let configMenuOption = configMenu.children.item(i);
         console.log(configMenuOption)
         let configEle = document.getElementById(configMenuOption.value+"Config");
         if(configMenuOption.value == "all") continue;
         if(configMenuValue == "all") configEle.hidden = false;
+        else if(configMenuOption.value == configMenuValue && weaponOptions.includes(configMenuOption.value)) configEle.style.display = "flex";
+        else if(weaponOptions.includes(configMenuOption.value)) configEle.style.display = "none";
         else if(configMenuOption.value == configMenuValue) configEle.hidden = false;
         else configEle.hidden = true;
     }
