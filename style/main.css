@@ -63,6 +63,17 @@ header {
     position: absolute;
     text-align: center;
 }
+
+#mainWeaponName, .subSpecialName {
+    color: #fff;
+    text-shadow:
+    -1px -1px 0 #000,
+    0px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    0px 1px 0 #000,
+    1px 1px 0 #000;
+}
 .subSpecialName {
     margin-top: auto;
     text-align: center;
