@@ -111,6 +111,7 @@ document.getElementById("weaponQueueSize").addEventListener("change", () => setQ
 document.getElementById("subQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
+
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
@@ -121,18 +122,29 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
-
+function capSize(idStr){
+    console.log("capSize", idStr);
+    const input = document.getElementById(idStr);
+    const max = parseInt(input.getAttribute("max"));
+    if(input.value > max){
+        console.log("Setting to max")
+        input.value = max;
+    } else if (input.value < 0){
+        input.value = 0;
+    }
+    return input.value;
+}
 function setQueueSize(){
-    CONFIG.weaponQueueSize = document.getElementById("weaponQueueSize").value;
+    CONFIG.weaponQueueSize = capSize("weaponQueueSize");
     MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
 
-    CONFIG.subQueueSize = document.getElementById("subQueueSize").value;
+    CONFIG.subQueueSize = capSize("subQueueSize");
     SUB_QUEUE.maxSize = CONFIG.subQueueSize;
 
-    CONFIG.specialQueueSize = document.getElementById("specialQueueSize").value;
+    CONFIG.specialQueueSize = capSize("specialQueueSize");
     SPECIAL_QUEUE.maxSize = CONFIG.specialQueueSize;
 
-    CONFIG.typeQueueSize = document.getElementById("typeQueueSize").value;
+    CONFIG.typeQueueSize = capSize("typeQueueSize");
     TYPE_QUEUE.maxSize = CONFIG.typeQueueSize;
 }   
 
@@ -384,6 +396,10 @@ function loadUrlConfig(){
     if(params.get("subQueueSize") !== null) CONFIG.subQueueSize = parseInt(params.get("subQueueSize"));
     if(params.get("specialQueueSize") !== null) CONFIG.specialQueueSize = parseInt(params.get("specialQueueSize"));
     if(params.get("typeQueueSize") !== null) CONFIG.typeQueueSize = parseInt(params.get("typeQueueSize"));
+    
+    document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
+    document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
+    document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
