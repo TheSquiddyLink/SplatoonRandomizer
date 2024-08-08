@@ -28,6 +28,7 @@
         <div class="selectConfigDiv">
             <span class="selectConfigSpan">
                 <h3><label for="selectConfigMenu">Select the configeration menu to view</label></h3>                <select id="selectConfigMenu">
+                    <option value="all">All</option>
                     <option value="weapon">Main Weapon</option>
                     <option value="sub">Sub Weapon</option>
                     <option value="special">Special Weapon</option>
@@ -38,7 +39,6 @@
                     <option value="stars">Freshness</option>
                     <option value="ui">Interface</option>
                     <option value="advanced">Advanced</option>
-                    <option value="all">All</option>
                 </select>
             </span>
         </div>
@@ -91,15 +91,6 @@
                     Show Duration</label>
                 <input style="width: 4%;" type="number" id="showLen">
             </span>
-        </div>
-        <!-- TODO: Move Extra Menus to own config menu -->
-        <div id="extraConfig">
-            <h3>Extra config menus</h3>
-            <label for="weaponQueueSize"
-                hoverTitle="Repeat Size"
-                hoverDesc="Number of times a weapon can be generate before a duplicate is generated">
-                Repeat Size</label>
-            <input type="number" id="weaponQueueSize">
         </div>
         <div id="starsConfig">
             <h3>Freshness (Stars)</h3>
@@ -209,7 +200,7 @@
                 Reset All Settings</label>
             <button id="resetAll"><b>Reset Everything</b></button>
         </div>
-        <div id="colorConfig" hidden>
+        <div id="colorConfig">
             <h3>Color Config</h3>
             <label for="teamColor"
                 hoverTitle="Team Color"
@@ -246,7 +237,16 @@
             </span>
 
         </div>
-        <div id="weaponConfig" style="display: none;"></div>
+        <div id="weaponConfig" style="display: none;">
+            <div style="width: 100%;">
+                <h3>Weapon Config</h3>
+                <label for="weaponQueueSize"
+                    hoverTitle="Repeat Size"
+                    hoverDesc="Number of times a weapon can be generate before a duplicate is generated">
+                    Repeat Size</label>
+                <input type="number" id="weaponQueueSize">
+            </div>
+        </div>
         <div id="subConfig" style="display: none;"> </div>
         <div id="specialConfig" style="display: none;"></div>
         <div id="typeConfig" style="display: none;"></div>
