@@ -190,8 +190,18 @@ function handleHover(event) {
         hoverInfo.style.animation = "fadeIn 0.2s"
         hoverInfo.hidden = false;
         hoverInfo.style.position = "absolute";
-        hoverInfo.style.left = (event.clientX + window.scrollX + 10) + "px";
-        hoverInfo.style.top = (event.clientY + window.scrollY + 10) + "px";        
+        if((event.clientX + window.scrollX + 50 + hoverInfo.offsetWidth) > window.innerWidth){
+            hoverInfo.style.left = (event.clientX + window.scrollX - hoverInfo.offsetWidth - 10) + "px";
+        } else {
+            hoverInfo.style.left = (event.clientX + window.scrollX + 10) + "px";
+        
+        }
+        if((event.clientY + 50 +  hoverInfo.offsetHeight)> window.innerHeight){
+            console.log("Outside")
+            hoverInfo.style.top = (event.clientY + window.scrollY - hoverInfo.offsetHeight - 10) + "px";
+        } else {
+            hoverInfo.style.top = (event.clientY + window.scrollY + 10) + "px";
+        }
         hoverTitle.innerHTML = title;
         hoverDesc.innerHTML = dec;
     });
