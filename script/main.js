@@ -1,4 +1,4 @@
-import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue} from "./util/general.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll} from "./util/general.js";
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
@@ -111,6 +111,7 @@ document.getElementById("weaponQueueSize").addEventListener("change", () => setQ
 document.getElementById("subQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
+document.getElementById("invertWeapons").addEventListener("click", () => invertWeapons());
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -122,6 +123,13 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function invertWeapons(){
+    toggleAll(MAIN_WEAPONS);
+    for(let weapon in MAIN_WEAPONS){
+        setWeaponOpacity(weapon);
+    }
+}
 function capSize(idStr){
     console.log("capSize", idStr);
     const input = document.getElementById(idStr);

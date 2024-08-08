@@ -1,4 +1,4 @@
-import { MainWeapon, MAIN_TYPES } from "./weaponsClass.js";
+import { MainWeapon, MAIN_TYPES, BaseWeapon } from "./weaponsClass.js";
 
 class Color {
     /**
@@ -147,6 +147,16 @@ function generateStarHex(weaponArray){
     return hex;
 }
 
+/**
+ * 
+ * @param {Array<BaseWeapon>} weapons 
+ */
+function toggleAll(weapons){
+    for(let weapon in weapons){
+        let weaponObj = weapons[weapon];
+        weaponObj.toggleEnabled();
+    }
+}
 
 /**
  * A generic queue data structure.
@@ -186,4 +196,4 @@ class Queue {
         return this.queue.length;
     }
 }
-export { Color, Team, Queue, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex };
+export { Color, Team, Queue, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex, toggleAll };
