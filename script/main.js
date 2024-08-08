@@ -112,6 +112,9 @@ document.getElementById("subQueueSize").addEventListener("change", () => setQueu
 document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("invertWeapons").addEventListener("click", () => invertWeapons());
+document.getElementById("invertSubs").addEventListener("click", () => invertSubs());
+document.getElementById("invertSpecials").addEventListener("click", () => invertSpecials());
+document.getElementById("invertTypes").addEventListener("click", () => invertTypes());
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -128,6 +131,26 @@ function invertWeapons(){
     toggleAll(MAIN_WEAPONS);
     for(let weapon in MAIN_WEAPONS){
         setWeaponOpacity(weapon);
+    }
+}
+
+function invertSubs(){
+    toggleAll(SUB_WEAPONS);
+    for(let weapon in SUB_WEAPONS){
+        setSubOpacity(weapon);
+    }
+}
+
+function invertSpecials(){
+    toggleAll(SPECIAL_WEAPONS);
+    for(let weapon in SPECIAL_WEAPONS){
+        setSpecialOpacity(weapon);
+    }
+}
+function invertTypes(){
+    toggleAll(MAIN_TYPES);
+    for(let weapon in MAIN_TYPES){
+        setTypeOpacity(weapon);
     }
 }
 function capSize(idStr){
