@@ -1,5 +1,5 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue} from "./util/general.js";
-import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon} from "./util/weaponsClass.js";
+import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
 
@@ -65,6 +65,12 @@ const SUB_QUEUE = new Queue(CONFIG.subQueueSize);
  */
 const SPECIAL_QUEUE = new Queue(CONFIG.specialQueueSize);
 
+/**
+ * @type {Queue<WeaponType>}
+ */
+const TYPE_QUEUE = new Queue(CONFIG.typeQueueSize);
+
+
 var animationPlaying = false;
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
@@ -104,7 +110,7 @@ document.getElementById("selectConfigMenu").addEventListener("change", () => sel
 document.getElementById("weaponQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("subQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
-// document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
+document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
@@ -125,6 +131,9 @@ function setQueueSize(){
 
     CONFIG.specialQueueSize = document.getElementById("specialQueueSize").value;
     SPECIAL_QUEUE.maxSize = CONFIG.specialQueueSize;
+
+    CONFIG.typeQueueSize = document.getElementById("typeQueueSize").value;
+    TYPE_QUEUE.maxSize = CONFIG.typeQueueSize;
 }   
 
 function selectConfigMenu(){
@@ -364,6 +373,7 @@ function loadUrlConfig(){
     if(params.get("weaponQueueSize") !== null) CONFIG.weaponQueueSize = parseInt(params.get("weaponQueueSize"));
     if(params.get("subQueueSize") !== null) CONFIG.subQueueSize = parseInt(params.get("subQueueSize"));
     if(params.get("specialQueueSize") !== null) CONFIG.specialQueueSize = parseInt(params.get("specialQueueSize"));
+    if(params.get("typeQueueSize") !== null) CONFIG.typeQueueSize = parseInt(params.get("typeQueueSize"));
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -374,7 +384,9 @@ function loadUrlConfig(){
 }
 
 function toggleType(typeStr){
+    console.log("TOGGLE TYPE")
     let type = MAIN_TYPES[typeStr];
+    console.log(type)
     type.toggleEnabled();
     setTypeOpacity(typeStr);
 }
@@ -685,6 +697,7 @@ function setDefaultConfig(){
     document.getElementById("weaponQueueSize").value = CONFIG.weaponQueueSize;
     document.getElementById("subQueueSize").value = CONFIG.subQueueSize;
     document.getElementById("specialQueueSize").value = CONFIG.specialQueueSize;
+    document.getElementById("typeQueueSize").value = CONFIG.typeQueueSize;
     MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
     SUB_QUEUE.maxSize = CONFIG.subQueueSize;
     SPECIAL_QUEUE.maxSize = CONFIG.specialQueueSize;
@@ -851,8 +864,17 @@ async function generate(){
     if(CONFIG.weaponQueueSize > 0) mainEnqueue(weapon);
     if(CONFIG.subQueueSize > 0) subEnqueue(weapon.subWeapon);
     if(CONFIG.specialQueueSize > 0) specialEnqueue(weapon.specialWeapon);
+    if(CONFIG.typeQueueSize > 0) typeEnqueue(weapon.type);
 }
 
+/**
+ * @param {WeaponType} type
+ */
+function typeEnqueue(type){
+    anyWeaponEnqueue(type, TYPE_QUEUE);
+    console.log("Type Queue:")
+    console.log(TYPE_QUEUE.queue);
+}
 /**
  * 
  * @param {SpecialWeapon} special 
