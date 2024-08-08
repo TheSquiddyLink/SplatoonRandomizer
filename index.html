@@ -242,12 +242,21 @@
                 <h3>Weapon Config</h3>
                 <label for="weaponQueueSize"
                     hoverTitle="Repeat Size"
-                    hoverDesc="Number of times a weapon can be generate before a duplicate is generated">
-                    Repeat Size</label>
+                    hoverDesc="Number of times a weapon can be generated before a duplicate is generated">
+                    Main Repeat Size</label>
                 <input type="number" id="weaponQueueSize">
             </div>
         </div>
-        <div id="subConfig" style="display: none;"> </div>
+        <div id="subConfig" style="display: none;">
+            <div style="width: 100%;">
+                <h3>Sub Weapon Config</h3>
+                <label for="subQueueSize"
+                    hoverTitle="Repeat Size"
+                    hoverDesc="Number of times a sub weapon can be generated before a duplicate is generated">
+                    Sub Repeat Size</label>
+                <input type="number" id="subQueueSize">
+            </div>
+         </div>
         <div id="specialConfig" style="display: none;"></div>
         <div id="typeConfig" style="display: none;"></div>
         <button id="exportToURL">Export to URL</button>

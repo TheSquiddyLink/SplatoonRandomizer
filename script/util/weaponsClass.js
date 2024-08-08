@@ -107,4 +107,4 @@ const MAIN_TYPES = {
     Stringer: new WeaponType("stringer"),
 }
 
-export { SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES };
+export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES };
