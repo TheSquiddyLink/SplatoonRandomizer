@@ -148,4 +148,42 @@ function generateStarHex(weaponArray){
 }
 
 
-export { Color, Team, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex };
+/**
+ * A generic queue data structure.
+ * @template T The type of elements in the queue.
+ */
+class Queue {
+    /** @type {T[]} */
+    queue = [];
+    maxSize = 0;
+    constructor(maxSize) {
+        this.maxSize = maxSize;
+    }
+    /**
+     * Adds an item to the end of the queue.
+     * @param {T} item The item to enqueue.
+     * @returns {T | undefined} The item that was removed from the front of the queue, or undefined if the queue was full.
+     */
+    enqueue(item) {
+        this.queue.push(item);
+        if(this.queue.length > this.maxSize){
+            return this.dequeue();
+        }
+    }
+
+    /**
+     * Removes and returns the item at the front of the queue.
+     * @returns {T | undefined} The dequeued item, or undefined if the queue is empty.
+     */
+    dequeue() {
+        return this.queue.shift();
+    }
+
+    /**
+     * @return {number} The number of items in the queue.
+     */
+    get size(){
+        return this.queue.length;
+    }
+}
+export { Color, Team, Queue, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex };

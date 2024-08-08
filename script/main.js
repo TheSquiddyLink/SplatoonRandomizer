@@ -1,4 +1,4 @@
-import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team} from "./util/general.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue} from "./util/general.js";
 import {MAIN_TYPES, MainWeapon, SubWeapon} from "./util/weaponsClass.js";
 
 import { SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
@@ -25,7 +25,8 @@ const CONFIG = {
     obsFriendly: false,
     invertSplat: true,
     hideHoverInfo: false,
-    customColor: null
+    customColor: null,
+    weaponQueueSize: 3,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -46,6 +47,10 @@ const WEAPON_SPLAT_CANVAS = document.getElementById("weaponSplatCanvas");
 
 const AUDIO = new Audio("./assets/audio/randomizer.mp3");
 
+/**
+ * @type {Queue<MainWeapon>}
+ */
+const MAIN_QUEUE = new Queue(CONFIG.weaponQueueSize);
 
 var animationPlaying = false;
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
@@ -88,6 +93,7 @@ document.getElementById("hideHoverInfo").addEventListener("click", () => toggleH
 document.getElementById("customColorToggle").addEventListener("change", () => toggleCustomColor())
 document.getElementById("typeToggle").addEventListener("change", () => toggleTypeConfig())
 document.getElementById("selectConfigMenu").addEventListener("change", () => selectConfigMenu())
+document.getElementById("weaponQueueSize").addEventListener("change", () => setQueueSize())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -99,6 +105,11 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function setQueueSize(){
+    CONFIG.weaponQueueSize = document.getElementById("weaponQueueSize").value;
+    MAIN_QUEUE.setSize(CONFIG.weaponQueueSize);
+}
 
 function toggleTypeConfig(){
     let value = document.getElementById("typeToggle").checked;
@@ -340,6 +351,7 @@ function loadUrlConfig(){
     if(params.get("invertSplat") !== null) CONFIG.invertSplat = params.get("invertSplat") == "true";
     if(params.get("hideHoverInfo") !== null) CONFIG.hideHoverInfo = params.get("hideHoverInfo") == "true";
     if(params.get("customColor") !== null) CONFIG.customColor = Color.hex(params.get("customColor"));
+    if(params.get("maxWeaponSize") !== null) CONFIG.weaponQueueSize = parseInt(params.get("maxWeaponSize"));
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -679,6 +691,8 @@ function setDefaultConfig(){
     document.getElementById("rainbowButton").checked = CONFIG.rainbowButton;
     document.getElementById("invertSplat").checked = CONFIG.invertSplat;
     document.getElementById("hideHoverInfo").checked = CONFIG.hideHoverInfo;
+    document.getElementById("weaponQueueSize").value = CONFIG.weaponQueueSize;
+    MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
@@ -839,8 +853,23 @@ async function generate(){
     await sleep(AUDIO.duration*1000 - totalLenght)
     animationPlaying = false;
     generateButton.disabled = false;
+    mainEnqueue(weapon);
 }
-
+/**
+ * 
+ * @param {MainWeapon} weapon 
+ */
+function mainEnqueue(weapon){
+    weapon.enabled = false;
+    let removedWeapon = MAIN_QUEUE.enqueue(weapon)
+    console.log(MAIN_QUEUE.size)
+    console.log(MAIN_QUEUE.maxSize)
+    if(removedWeapon != undefined){
+        removedWeapon.enabled = true;
+        console.log("Eneabled weapon: " + removedWeapon.name);
+    }
+    console.log(MAIN_QUEUE.queue)
+}
 function selectMainWeapon(){
     let main = document.getElementById("mainWeapon").value;
     applyMain(MAIN_WEAPONS[main]);
