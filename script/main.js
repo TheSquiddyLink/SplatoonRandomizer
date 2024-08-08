@@ -60,6 +60,11 @@ const MAIN_QUEUE = new Queue(CONFIG.weaponQueueSize);
  */
 const SUB_QUEUE = new Queue(CONFIG.subQueueSize);
 
+/**
+ * @type {Queue<SpecialWeapon>}
+ */
+const SPECIAL_QUEUE = new Queue(CONFIG.specialQueueSize);
+
 var animationPlaying = false;
 document.getElementById("teamColor").addEventListener("change", () => selectTeam());
 document.getElementById("teamSide").addEventListener("change", () => selectTeam());
@@ -98,7 +103,7 @@ document.getElementById("customColorToggle").addEventListener("change", () => to
 document.getElementById("selectConfigMenu").addEventListener("change", () => selectConfigMenu())
 document.getElementById("weaponQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("subQueueSize").addEventListener("change", () => setQueueSize())
-// document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
+document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
 // document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -117,6 +122,9 @@ function setQueueSize(){
 
     CONFIG.subQueueSize = document.getElementById("subQueueSize").value;
     SUB_QUEUE.maxSize = CONFIG.subQueueSize;
+
+    CONFIG.specialQueueSize = document.getElementById("specialQueueSize").value;
+    SPECIAL_QUEUE.maxSize = CONFIG.specialQueueSize;
 }   
 
 function selectConfigMenu(){
@@ -355,6 +363,7 @@ function loadUrlConfig(){
     if(params.get("customColor") !== null) CONFIG.customColor = Color.hex(params.get("customColor"));
     if(params.get("weaponQueueSize") !== null) CONFIG.weaponQueueSize = parseInt(params.get("weaponQueueSize"));
     if(params.get("subQueueSize") !== null) CONFIG.subQueueSize = parseInt(params.get("subQueueSize"));
+    if(params.get("specialQueueSize") !== null) CONFIG.specialQueueSize = parseInt(params.get("specialQueueSize"));
     updateDropDowns();
     setDefaultConfig();
     updateConfig();
@@ -675,7 +684,10 @@ function setDefaultConfig(){
     document.getElementById("hideHoverInfo").checked = CONFIG.hideHoverInfo;
     document.getElementById("weaponQueueSize").value = CONFIG.weaponQueueSize;
     document.getElementById("subQueueSize").value = CONFIG.subQueueSize;
+    document.getElementById("specialQueueSize").value = CONFIG.specialQueueSize;
     MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
+    SUB_QUEUE.maxSize = CONFIG.subQueueSize;
+    SPECIAL_QUEUE.maxSize = CONFIG.specialQueueSize;
     if(CONFIG.editStars){
         document.getElementById("showStarsToggle").checked = true;
     }
@@ -838,6 +850,17 @@ async function generate(){
     generateButton.disabled = false;
     if(CONFIG.weaponQueueSize > 0) mainEnqueue(weapon);
     if(CONFIG.subQueueSize > 0) subEnqueue(weapon.subWeapon);
+    if(CONFIG.specialQueueSize > 0) specialEnqueue(weapon.specialWeapon);
+}
+
+/**
+ * 
+ * @param {SpecialWeapon} special 
+ */
+function specialEnqueue(special){
+    anyWeaponEnqueue(special, SPECIAL_QUEUE);
+    console.log("Special Queue:")
+    console.log(SPECIAL_QUEUE.queue);
 }
 /**
  * 
