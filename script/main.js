@@ -523,6 +523,15 @@ function setWeaponOpacity(weaponStr){
         }
     }
 }
+
+/**
+ * 
+ * @param {string} id 
+ * @param {Array<BaseWeapon>} array 
+ * @param {Function} eventFunc 
+ * @param {Function} opacityFunc 
+ * @param {String} prefix 
+ */
 function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc, prefix=""){
     let config = document.getElementById(id);
     for (let item in array){
@@ -534,6 +543,8 @@ function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc, prefix=""){
         img.classList.add("weaponConfigImg");
         img.id = item+prefix;
         img.addEventListener("click", () => eventFunc(item));
+        div.setAttribute("hoverTitle", weapon.name);
+        img.setAttribute("hoverTitle", weapon.name);
         div.appendChild(img);
         config.appendChild(div);
         opacityFunc(item);
@@ -555,6 +566,11 @@ function generateWeaponConfig(){
         img.id = weapon;
         img.addEventListener("click", () => clickWeapon(weapon));
         img.addEventListener("contextmenu", (e) => rightClickWeapon(e, weapon));
+        div.setAttribute("hoverTitle", MAIN_WEAPONS[weapon].name);
+        div.setAttribute("hoverDesc", `${MAIN_WEAPONS[weapon].subWeapon.name} | ${MAIN_WEAPONS[weapon].specialWeapon.name}`);
+        img.setAttribute("hoverTitle", MAIN_WEAPONS[weapon].name);
+        img.setAttribute("hoverDesc", `${MAIN_WEAPONS[weapon].subWeapon.name} | ${MAIN_WEAPONS[weapon].specialWeapon.name}`);
+        console.log(div)
         div.appendChild(img);
         div.appendChild(starDiv);
         weaponConfig.appendChild(div);
