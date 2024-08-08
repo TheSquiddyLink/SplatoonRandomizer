@@ -70,12 +70,8 @@ document.getElementById("iterations").addEventListener("change", () => updateCon
 document.getElementById("disableAnimation").addEventListener("change", () => updateConfig());
 
 document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
-// document.getElementById("colorToggle").addEventListener("click", () => toggleColorConfig()); 
 document.getElementById("showConfig").addEventListener("click", () => showConfig());
 document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
-// document.getElementById("weaponToggle").addEventListener("click", () => toggleWeaponConfig());
-// document.getElementById("subToggle").addEventListener("click", () => toggleSubConfig());
-// document.getElementById("specialToggle").addEventListener("click", () => toggleSpecialConfig());
 document.getElementById("editStarsToggle").addEventListener("click", () => toggleEditStarsConfig());
 document.getElementById("showStarsToggle").addEventListener("click", () => toggleShowStarsConfig());
 document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
@@ -109,11 +105,6 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
 function setQueueSize(){
     CONFIG.weaponQueueSize = document.getElementById("weaponQueueSize").value;
     MAIN_QUEUE.setSize(CONFIG.weaponQueueSize);
-}
-
-function toggleTypeConfig(){
-    let value = document.getElementById("typeToggle").checked;
-    document.getElementById("typeConfig").style.display = value ? "flex" : "none";
 }
 
 function selectConfigMenu(){
@@ -473,27 +464,6 @@ function setSpecialOpacity(weaponStr){
     else weaponEl.style.opacity = 0.5;
 }
 
-
-function toggleSpecialConfig(){
-    let specialConfig = document.getElementById("specialConfig");
-    if(specialConfig.style.display === "none"){
-        specialConfig.style.display = "flex";
-    }
-    else{
-        specialConfig.style.display = "none";
-    }
-    console.log(specialConfig.hidden);
-}
-function toggleSubConfig(){
-    let subConfig = document.getElementById("subConfig");
-    if(subConfig.style.display === "none"){
-        subConfig.style.display = "flex";
-    }
-    else{
-        subConfig.style.display = "none";
-    }
-    console.log(subConfig.hidden);
-}
 function createConfigStar(_class = "configStar"){
     let star = document.createElement("img");
     star.src = "assets/svg/star.svg";
