@@ -1,4 +1,4 @@
-import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll} from "./util/general.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType} from "./util/general.js";
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
@@ -30,6 +30,7 @@ const CONFIG = {
     subQueueSize: 0,
     specialQueueSize: 0,
     typeQueueSize: 0,
+    smartGen: false,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -115,6 +116,7 @@ document.getElementById("invertWeapons").addEventListener("click", () => invertW
 document.getElementById("invertSubs").addEventListener("click", () => invertSubs());
 document.getElementById("invertSpecials").addEventListener("click", () => invertSpecials());
 document.getElementById("invertTypes").addEventListener("click", () => invertTypes());
+document.getElementById("smartGen").addEventListener("click", () => toggleSmartGen());
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -126,6 +128,11 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function toggleSmartGen(){
+    let value = document.getElementById("smartGen").checked;
+    CONFIG.smartGen = value;
+}
 
 function invertWeapons(){
     toggleAll(MAIN_WEAPONS);
@@ -427,7 +434,7 @@ function loadUrlConfig(){
     if(params.get("subQueueSize") !== null) CONFIG.subQueueSize = parseInt(params.get("subQueueSize"));
     if(params.get("specialQueueSize") !== null) CONFIG.specialQueueSize = parseInt(params.get("specialQueueSize"));
     if(params.get("typeQueueSize") !== null) CONFIG.typeQueueSize = parseInt(params.get("typeQueueSize"));
-    
+    if(params.get("smartGen") !== null) CONFIG.smartGen = params.get("smartGen") == "true";
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
@@ -868,7 +875,23 @@ async function generate(){
     }
     console.log("Filtered Weapons:")
     console.log(filteredWeapons)
-    let key = randomObject(filteredWeapons);
+   
+    let key;
+    if(CONFIG.smartGen){
+        console.log("Using Smart Gen")
+        let randomType = randomObject(MAIN_TYPES);
+        console.log(randomType)
+        let filteredTypes = filterByType(filteredWeapons, randomType);
+        console.log(filteredTypes)
+        key = randomObject(filteredTypes);
+        if(key == undefined) {
+            console.log("Smart gen was unable to work")
+            console.log(filteredWeapons)
+            key = randomObject(filteredWeapons);
+        }
+    }else {
+        key = randomObject(filteredWeapons);
+    }
     let weapon = filteredWeapons[key];
     console.log("Selected Weapon:");
     let mainWeaponName = document.getElementById("mainWeaponName");
