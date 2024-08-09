@@ -68,17 +68,17 @@ header {
 #mainWeaponName, .subSpecialName {
     color: #fff;
     text-shadow:
-    -1px -1px 0 #000,
-    0px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    0px 1px 0 #000,
-    1px 1px 0 #000;
+    -2px -2px 0 #000,
+    0px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0px 2px 0 #000,
+    2px 2px 0 #000;    font-size: large;
 }
 .subSpecialName {
     margin-top: auto;
     text-align: center;
-    width: var(--sub_special_size);
+    width: var(--sub_special_size+25px);
     font-family: "Splatoon";
 }
 
