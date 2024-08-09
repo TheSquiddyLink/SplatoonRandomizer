@@ -26,6 +26,7 @@ const CONFIG = {
     invertSplat: true,
     hideHoverInfo: false,
     customColor: null,
+    customBravoColor: null,
     weaponQueueSize: 3,
     subQueueSize: 0,
     specialQueueSize: 0,
@@ -117,6 +118,8 @@ document.getElementById("invertSubs").addEventListener("click", () => invertSubs
 document.getElementById("invertSpecials").addEventListener("click", () => invertSpecials());
 document.getElementById("invertTypes").addEventListener("click", () => invertTypes());
 document.getElementById("smartGen").addEventListener("click", () => toggleSmartGen());
+document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
+document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -124,11 +127,22 @@ document.addEventListener("click", (e) => handleClick(e));
 
 let hoverTimeout;
 
+
 document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
 
+function applyCustomBravoColor(){
+    let value = document.getElementById("customBravoColor").value;
+    CONFIG.customBravoColor = Color.hex(value);
+    applyColorAll(CONFIG.customColor);
+}
+function toggleCustomBravo(){
+    let value = document.getElementById("customBravoToggle").checked;
+    document.getElementById("customBravoSpan").hidden = !value;
+    if(!value) CONFIG.customBravoColor = null;
+}
 function toggleSmartGen(){
     let value = document.getElementById("smartGen").checked;
     CONFIG.smartGen = value;
@@ -210,11 +224,14 @@ function toggleHoverInfo(){
 function toggleCustomColor(){
     let customColorToggle = document.getElementById("customColorToggle");
     let customColorSpan = document.getElementById("customColorSpan");
+    let customBravoSpan = document.getElementById("customBravoSpan");
     if(customColorToggle.checked){
         customColorSpan.hidden = false;
     } else {
         customColorSpan.hidden = true;
+        customBravoSpan.hidden = true;
         CONFIG.customColor = null;
+        CONFIG.customBravoColor = null;
     }
 }
 
@@ -436,6 +453,7 @@ function loadUrlConfig(){
     if(params.get("typeQueueSize") !== null) CONFIG.typeQueueSize = parseInt(params.get("typeQueueSize"));
     if(params.get("smartGen") !== null) CONFIG.smartGen = params.get("smartGen") == "true";
     if(params.get("iterations") !== null) CONFIG.iterations = parseInt(params.get("iterations"));
+    if(params.get("customBravoColor") !== null) CONFIG.customBravoColor = Color.hex(params.get("customBravoColor"));
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
@@ -669,7 +687,7 @@ function generateURL(){
             url.searchParams.set(setting, CONFIG[setting].name.replace(" ", ""));
             continue;
         }
-        if(setting == "customColor"){
+        if(setting == "customColor" || setting == "customBravoColor"){
             url.searchParams.set(setting, CONFIG[setting].toHex());
             continue;
         }
@@ -1179,6 +1197,7 @@ function applyColorAll(color){
 
     let color1 = CONFIG.customColor ? CONFIG.customColor : team.alpha;
     let color2 = CONFIG.customColor ? CONFIG.customColor.invert() : team.bravo;
+    color2 = CONFIG.customBravoColor ? CONFIG.customBravoColor : color2
     console.log(CONFIG.teamSide)
     let splatColor;
     if(CONFIG.invertSplat){

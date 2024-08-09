@@ -278,6 +278,10 @@
                         <option value="bravo">Bravo</option>
                     </select>
                 </span>
+                <span id="colorPreview"
+                    hoverTitle="Color Preview"
+                    hoverDesc="This will display the current color chosen based on the team and side">
+                    Secret</span>
                 <span>
                     <lable for="customColorToggle"
                         hoverTitle="Custom Color"
@@ -288,16 +292,27 @@
                         <span class="slider round"></span>
                     </label>
                 </span>
-                <span id="colorPreview"
-                    hoverTitle="Color Preview"
-                    hoverDesc="This will display the current color chosen based on the team and side">
-                    Secret</span>
                 <span id="customColorSpan" hidden>
                     <label for="customColor"
                         hoverTitle="Custom Color"
                         hoverDesc="Choose a custom color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change.  Team side is calculated by the invert of the color.">
                         Custom Color Input</label>
                     <input style="height: 20px" type="color" id="customColor">
+                    <label for="customBravoToggle"
+                        title="Custom Bravo Color"
+                        hoverDesc="Toggle the applitity to use a custom bravo color, instead of inverting the custom color"
+                        >Custom Bravo Toggle</label>
+                    <label class="switch">
+                        <input type="checkbox" id="customBravoToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span id="customBravoSpan" hidden>
+                    <label for="customBravoColor"    
+                    hoverTitle="Custom Color"
+                    hoverDesc="Choose a custom color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change.  This is an override to the inverted color for the team side.">
+                    Custom Bravo Input</label>
+                    <input style="height: 20px" type="color" id="customBravoColor">
                 </span>
             </div>
         </div>
