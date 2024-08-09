@@ -435,6 +435,7 @@ function loadUrlConfig(){
     if(params.get("specialQueueSize") !== null) CONFIG.specialQueueSize = parseInt(params.get("specialQueueSize"));
     if(params.get("typeQueueSize") !== null) CONFIG.typeQueueSize = parseInt(params.get("typeQueueSize"));
     if(params.get("smartGen") !== null) CONFIG.smartGen = params.get("smartGen") == "true";
+    if(params.get("iterations") !== null) CONFIG.iterations = parseInt(params.get("iterations"));
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
