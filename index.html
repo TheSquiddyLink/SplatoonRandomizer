@@ -45,197 +45,250 @@
        
         <div id="animationConfig">
             <h3>Animation</h3>
-            <label for="disableSound"
-                hoverTitle="Disable Sound Effect" 
-                hoverDesc="Disable the sound effect from playing when generating a weapon, animation will still play">
-                Disable Sound
-            </label>
-            <label class="switch">
-                <input type="checkbox" id="disableSound">
-                <span class="slider round"></span>
-            </label>
-            <label for="disableAnimation"
-                hoverTitle="Disable Animation"
-                hoverDesc="Disable the animation from playing when generating a weapon, sound effect will not play (WIP)">
-                Disable Animation
-            </label>
-            <label class="switch">
-                <input type="checkbox" id="disableAnimation">
-                <span class="slider round"></span>
-            </label>
-            <label for="iterations"
-                hoverTitle="Number of Iterations"
-                hoverDesc="Number of times the randomizer will run before displaying the result">
-                Iterations</label>
-            <input id="iterations" type="number" style="width: 5%;">
+            <div class="configOptions">
+                <span>
+                    <label for="disableSound"
+                        hoverTitle="Disable Sound Effect" 
+                        hoverDesc="Disable the sound effect from playing when generating a weapon, animation will still play">
+                        Disable Sound
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="disableSound">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="disableAnimation"
+                        hoverTitle="Disable Animation"
+                        hoverDesc="Disable the animation from playing when generating a weapon, sound effect will not play (WIP)">
+                        Disable Animation
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="disableAnimation">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="iterations"
+                        hoverTitle="Number of Iterations"
+                        hoverDesc="Number of times the randomizer will run before displaying the result">
+                        Iterations</label>
+                    <input id="iterations" type="number" style="width: 50px;">
+                </span>
+            </div>
         </div>
         <div id="durationConfig">
             <h3>Duration</h3>
-            <label for="autoHide"
-                hoverTitle="Auto Hide"
-                hoverDesc="Automatically hide the UI after a set amount of time">
-                Auto Hide</label>
-            <label class="switch">
-                <input type="checkbox" id="autoHide">
-                <span class="slider round"></span>
-            </label>
-            <label for="hideLen"
-                hoverTitle="Hide Duration"
-                hoverDesc="Duration in seconds the UI will be hidden for">
-                Hide Duration</label>
-            <input type="number" id="hideLen" style="width: 4%;">
-            <span hidden id="showControls">
-                <label for="showLen" 
-                    hoverTitle="Show Duration"
-                    hoverDesc="Duration in seconds the UI will be shown for (Only applies if Auto Hide is enabled)">
-                    Show Duration</label>
-                <input style="width: 4%;" type="number" id="showLen">
-            </span>
+            <div class="configOptions">
+                <span>
+                    <label for="autoHide"
+                        hoverTitle="Auto Hide"
+                        hoverDesc="Automatically hide the UI after a set amount of time">
+                        Auto Hide</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoHide">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="hideLen"
+                        hoverTitle="Hide Duration"
+                        hoverDesc="Duration in seconds the UI will be hidden for">
+                        Hide Duration</label>
+                    <input type="number" id="hideLen" style="width: 50px;">
+                </span>
+                <span hidden id="showControls">
+                    <label for="showLen" 
+                        hoverTitle="Show Duration"
+                        hoverDesc="Duration in seconds the UI will be shown for (Only applies if Auto Hide is enabled)">
+                        Show Duration</label>
+                    <input style="width: 4%;" type="number" id="showLen">
+                </span>
+            </div>
         </div>
         <div id="starsConfig">
             <h3>Freshness (Stars)</h3>
-            <label for="editStarsToggle"
-                hoverTitle="Edit Freshness"
-                hoverDesc="Toggle the applitity to edit freshness in the Weapon Section (WIP)">
-                Edit Freshness</label>
-            <label class="switch">
-                <input type="checkbox" id="editStarsToggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="showStarsToggle"
-                hoverTitle="Show Freshness"
-                hoverDesc="Toggle the applitity to show freshness in the Weapon Section, auto enabled if Edit Freshness is on (WIP)">
-                Freshness in Config</label>
-            <label class="switch">
-                <input type="checkbox" id="showStarsToggle">
-                <span class="slider round"></span>
-            </label>
-            <label for="showResultStars"
-                hoverTitle="Show Freshness"
-                hoverDesc="Toggle the applitity to show freshness in the Result Section (WIP)">
-                Result Freshness</label>
-            <label class="switch">
-                <input type="checkbox" id="showResultStars">
-                <span class="slider round"></span>
-            </label>
-            <label for="exactStarsFilter"
-                hoverTitle="Exact Stars Filter"
-                hoverDesc="Toggle the applitity to filter weapons by their exact number of stars. If disabled generator will filter by stars greater than or equal to the value (WIP)">
-                Exact Stars Filter</label>
-            <label class="switch">
-                <input type="checkbox" id="exactStarsFilter">
-                <span class="slider round"></span>
-            </label>
-            <label for="selectStars"
-                hoverTitle="Freshness Filter"
-                hoverDesc="Chose the number of stars for the filter chosed (WIP)">
-                Freshness Filter</label>
-            <select id="selectStars">
-                <option value="0">☆☆☆☆☆</option>
-                <option value="1">★☆☆☆☆</option>
-                <option value="2">★★☆☆☆</option>
-                <option value="3">★★★☆☆</option>
-                <option value="4">★★★★☆</option>
-                <option value="5">★★★★★</option>
-            </select>
+            <div class="configOptions">
+                <span>
+                    <label for="editStarsToggle"
+                        hoverTitle="Edit Freshness"
+                        hoverDesc="Toggle the applitity to edit freshness in the Weapon Section (WIP)">
+                        Edit Freshness</label>
+                    <label class="switch">
+                        <input type="checkbox" id="editStarsToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="showStarsToggle"
+                        hoverTitle="Show Freshness"
+                        hoverDesc="Toggle the applitity to show freshness in the Weapon Section, auto enabled if Edit Freshness is on (WIP)">
+                        Freshness in Config</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showStarsToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="showResultStars"
+                        hoverTitle="Show Freshness"
+                        hoverDesc="Toggle the applitity to show freshness in the Result Section (WIP)">
+                        Result Freshness</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showResultStars">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="exactStarsFilter"
+                        hoverTitle="Exact Stars Filter"
+                        hoverDesc="Toggle the applitity to filter weapons by their exact number of stars. If disabled generator will filter by stars greater than or equal to the value (WIP)">
+                        Exact Stars Filter</label>
+                    <label class="switch">
+                        <input type="checkbox" id="exactStarsFilter">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="selectStars"
+                        hoverTitle="Freshness Filter"
+                        hoverDesc="Chose the number of stars for the filter chosed (WIP)">
+                        Freshness Filter</label>
+                    <select id="selectStars">
+                        <option value="0">☆☆☆☆☆</option>
+                        <option value="1">★☆☆☆☆</option>
+                        <option value="2">★★☆☆☆</option>
+                        <option value="3">★★★☆☆</option>
+                        <option value="4">★★★★☆</option>
+                        <option value="5">★★★★★</option>
+                    </select>
+                </span>
+            </div>
         </div>
         <div id="uiConfig">
             <h3>Interface Config</h3>
-            <label for="aniGenButton"
-                hoverTitle="Animated Generator Button"
-                hoverDesc="Toggle the applitity to animate the generator button">
-                Animated Button</label>
-            <label class="switch">
-                <input type="checkbox" id="aniGenButton">
-                <span class="slider round"></span>
-            </label>
-            <label for="rainbowBackground"
-                hoverTitle="Rainbow Background"
-                hoverDesc="Toggle the applitity to have a rainbow background">
-                Rainbow Background</label>
-            <label class="switch">
-                <input type="checkbox" id="rainbowBackground">
-                <span class="slider round"></span>
-            </label>
-            <label for="rainbowButton"
-                hoverTitle="Rainbow Button"
-                hoverDesc="Toggle the applitity to have a rainbow button">
-                Rainbow Button</label>
-            <label class="switch">
-                <input type="checkbox" id="rainbowButton">
-                <span class="slider round"></span>
-            </label>
-            <label for="invertSplat"
-                hoverTitle="Invert Splat Icon"
-                hoverDesc="Toggle the applitity to invert the splat icons, if Bravo is chosen, it will show Alpha as the splat color, and vice versa">
-                Invert Splat Toggle</label>
-            <label class="switch">
-                <input type="checkbox" id="invertSplat">
-                <span class="slider round"></span>
-            </label>
+            <div class="configOptions">
+                <span>
+                    <label for="aniGenButton"
+                        hoverTitle="Animated Generator Button"
+                        hoverDesc="Toggle the applitity to animate the generator button">
+                        Animated Button</label>
+                    <label class="switch">
+                        <input type="checkbox" id="aniGenButton">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="rainbowBackground"
+                        hoverTitle="Rainbow Background"
+                        hoverDesc="Toggle the applitity to have a rainbow background">
+                        Rainbow Background</label>
+                    <label class="switch">
+                        <input type="checkbox" id="rainbowBackground">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="rainbowButton"
+                        hoverTitle="Rainbow Button"
+                        hoverDesc="Toggle the applitity to have a rainbow button">
+                        Rainbow Button</label>
+                    <label class="switch">
+                        <input type="checkbox" id="rainbowButton">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="invertSplat"
+                        hoverTitle="Invert Splat Icon"
+                        hoverDesc="Toggle the applitity to invert the splat icons, if Bravo is chosen, it will show Alpha as the splat color, and vice versa">
+                        Invert Splat Toggle</label>
+                    <label class="switch">
+                        <input type="checkbox" id="invertSplat">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+            </div>
         </div>
         <div id="advancedConfig">
             <h3>Advanced Config</h3>
-            <label for="autoURL"
-                hoverTitle="Automaticly Update URL"
-                hoverDesc="Toggle the applitity to automaticly update the URL when the config is changed. Disabling this will not save any changes">
-                Automaticly Update URL</label>
-            <label class="switch">
-                <input type="checkbox" id="autoURL">
-                <span class="slider round"></span>
-            </label>
-            <label for="permaHide"
-                hoverTitle="Permanently Hide all UI"
-                hoverDesc="Toggle the applitity to permanently hide all UI. URL must be reset to see UI again.">
-                Permanently hide all UI</label>
-            <button id="permaHide">Perma Hide UI</button>
-            <label for="resetConfig"
-                hoverTitle="Reset to Default Config"
-                hoverDesc="Reset the config to the default values. This will reset the URL, but the weapon information will not be reset">
-                Reset to Default</label>
-            <button id="resetConfig">Reset config</button>
-            <label for="resetAll"
-                hoverTitle="Reset All Settings"
-                hoverDesc="Reset the config to the default values. This will reset the URL, and the weapon information. Only use if absolutly certain">
-                Reset All Settings</label>
-            <button id="resetAll"><b>Reset Everything</b></button>
+            <div class="configOptions">
+                <span>
+                    <label for="autoURL"
+                        hoverTitle="Automaticly Update URL"
+                        hoverDesc="Toggle the applitity to automaticly update the URL when the config is changed. Disabling this will not save any changes">
+                        Automaticly Update URL</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoURL">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="permaHide"
+                        hoverTitle="Permanently Hide all UI"
+                        hoverDesc="Toggle the applitity to permanently hide all UI. URL must be reset to see UI again.">
+                        Permanently hide all UI</label>
+                    <button id="permaHide">Perma Hide UI</button>
+                </span>
+                <span>
+                    <label for="resetConfig"
+                        hoverTitle="Reset to Default Config"
+                        hoverDesc="Reset the config to the default values. This will reset the URL, but the weapon information will not be reset">
+                        Reset to Default</label>
+                    <button id="resetConfig">Reset config</button>
+                </span>
+                <span>
+                    <label for="resetAll"
+                        hoverTitle="Reset All Settings"
+                        hoverDesc="Reset the config to the default values. This will reset the URL, and the weapon information. Only use if absolutly certain">
+                        Reset All Settings</label>
+                    <button id="resetAll"><b>Reset Everything</b></button>
+                </span>
+            </div>
         </div>
         <div id="colorConfig">
             <h3>Color Config</h3>
-            <label for="teamColor"
-                hoverTitle="Team Color"
-                hoverDesc="Choose the team color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change">
-                Team Color</label>
-            <select id="teamColor">
-            </select>
-            <label for="teamSide"
-                hoverTitle="Team Side"
-                hoverDesc="Chose the Team Side based on the Team Color. Alpha is the first color, Bravo is the second color.">
-                Team Side</label>
-            <select id="teamSide">
-                <option value="alpha">Alpha</option>
-                <option value="bravo">Bravo</option>
-            </select>
-            <lable for="customColorToggle"
-                hoverTitle="Custom Color"
-                hoverDesc="Toggle the applitity to use a custom color instead of the team color (WIP)">
-                Custom Color</lable>
-            <label class="switch">
-                <input type="checkbox" id="customColorToggle">
-                <span class="slider round"></span>
-            </label>
-            <span id="colorPreview"
-                hoverTitle="Color Preview"
-                hoverDesc="This will display the current color chosen based on the team and side">
-                Secret</span>
-            <span id="customColorSpan" hidden>
-                <label for="customColor"
-                    hoverTitle="Custom Color"
-                    hoverDesc="Choose a custom color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change.  Team side is calculated by the invert of the color.">
-                    Custom Color Input</label>
-                <input style="height: 20px" type="color" id="customColor">
-            </span>
-
+            <div class="configOptions">
+                <span>
+                    <label for="teamColor"
+                        hoverTitle="Team Color"
+                        hoverDesc="Choose the team color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change">
+                        Team Color</label>
+                    <select id="teamColor">
+                    </select>
+                </span>
+                <span>
+                    <label for="teamSide"
+                        hoverTitle="Team Side"
+                        hoverDesc="Chose the Team Side based on the Team Color. Alpha is the first color, Bravo is the second color.">
+                        Team Side</label>
+                    <select id="teamSide">
+                        <option value="alpha">Alpha</option>
+                        <option value="bravo">Bravo</option>
+                    </select>
+                </span>
+                <span>
+                    <lable for="customColorToggle"
+                        hoverTitle="Custom Color"
+                        hoverDesc="Toggle the applitity to use a custom color instead of the team color (WIP)">
+                        Custom Color</lable>
+                    <label class="switch">
+                        <input type="checkbox" id="customColorToggle">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span id="colorPreview"
+                    hoverTitle="Color Preview"
+                    hoverDesc="This will display the current color chosen based on the team and side">
+                    Secret</span>
+                <span id="customColorSpan" hidden>
+                    <label for="customColor"
+                        hoverTitle="Custom Color"
+                        hoverDesc="Choose a custom color for the sub and special weapons, as well as the splat icon. Images will update as well as the previewer on change.  Team side is calculated by the invert of the color.">
+                        Custom Color Input</label>
+                    <input style="height: 20px" type="color" id="customColor">
+                </span>
+            </div>
         </div>
         <div id="weaponConfig" style="display: none;">
             <div style="width: 100%;">

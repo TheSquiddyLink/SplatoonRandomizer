@@ -8,6 +8,7 @@ body {
     padding: 0;
     min-height: 100vh;
     width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 header {
     font-family: Splatoon;
@@ -158,8 +159,12 @@ header {
     background-color: inherit;
     border-radius: 20px;
 }
-#config > div > * {
-    margin-right: 5px;
+#config > div > h3 {
+    text-align: center;
+}
+.configOptions {
+    display: flex;
+    justify-content: space-around;
 }
 .star {
     height: 25px;
