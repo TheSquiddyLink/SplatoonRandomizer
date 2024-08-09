@@ -304,14 +304,18 @@ border-radius: 50%;
 }
 @keyframes shake {
   0% {
-    translate: 0 -100px;
+    -webkit-transform: translateY(-100px);
+    -ms-transform: translateY(-100px);
+    transform: translateY(-100px);
     opacity: 0;
   }
   50% {
-    opacity: 100%;
+    opacity: 1;
   }
   100% {
-    translate: 0 100px;
+    -webkit-transform: translateY(100px);
+    -ms-transform: translateY(100px);
+    transform: translateY(100px);
     opacity: 0;
   }
 }
