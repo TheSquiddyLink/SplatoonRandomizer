@@ -237,4 +237,3 @@ export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[14],
   ALL_SPLAT_IMGS[15],
 ]
-console.log(randomObject(MAIN_WEAPONS))
