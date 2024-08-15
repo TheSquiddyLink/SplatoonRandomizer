@@ -237,3 +237,13 @@ export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[14],
   ALL_SPLAT_IMGS[15],
 ]
+
+const SideOrderPreset = {
+  customColor: new Color(242, 154, 255),
+  customBravoColor: new Color(213,89,238),
+  weaponHex: "27FF000000000000"
+}
+
+export const PRESETS = {
+  SideOrder: SideOrderPreset
+}
