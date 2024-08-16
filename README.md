@@ -1,1 +1,1 @@
-# SplatoonRandomizer
+# Splatoon Randomizer

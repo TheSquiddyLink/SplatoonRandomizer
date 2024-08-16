@@ -1,7 +1,7 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType} from "./util/general.js";
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
 
-import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS} from "./util/constants.js";
+import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS} from "./util/constants.js";
 
 const CONFIG = {
     autoHide: false,
@@ -454,6 +454,7 @@ function loadUrlConfig(){
     if(params.get("smartGen") !== null) CONFIG.smartGen = params.get("smartGen") == "true";
     if(params.get("iterations") !== null) CONFIG.iterations = parseInt(params.get("iterations"));
     if(params.get("customBravoColor") !== null) CONFIG.customBravoColor = Color.hex(params.get("customBravoColor"));
+    if(params.get("preset") !== null) loadPreset(params.get("preset"))
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
@@ -464,6 +465,21 @@ function loadUrlConfig(){
     generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
     generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
+}
+
+function loadPreset(presetStr){
+    console.log("Loading Preset"+ presetStr)
+    const preset = PRESETS[presetStr];
+    console.log(preset);
+    if(preset == null) return;
+    const keys = Object.keys(preset);
+    for(let key of keys){
+        if(key == "weaponHex") {
+            parseWeaponConfigHex(preset[key])
+            continue;
+        }
+        CONFIG[key] = preset[key]
+    }
 }
 
 function toggleType(typeStr){

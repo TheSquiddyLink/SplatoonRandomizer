@@ -237,4 +237,22 @@ export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[14],
   ALL_SPLAT_IMGS[15],
 ]
-console.log(randomObject(MAIN_WEAPONS))
+
+const SideOrderPreset = {
+  customColor: new Color(242, 154, 255),
+  customBravoColor: new Color(213,89,238),
+  weaponHex: "27FF000000000000"
+}
+
+const NoDLCPreset = {
+  weaponHex: "7FFFFFFFFFFFFFFFFFFFD800FFFFFFFFFFFF"
+}
+
+const OriginalKitsPreset = {
+  weaponHex: "C66AA000EFB0B4AA4F4080B6D2ACFAFF8E8"
+}
+export const PRESETS = {
+  SideOrder: SideOrderPreset,
+  NoDLC: NoDLCPreset,
+  Orginal: OriginalKitsPreset
+}
