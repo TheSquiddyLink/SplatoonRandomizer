@@ -91,27 +91,7 @@ class ColorChip {
     }
 }
 
-class SideOrderWeapon extends BaseWeapon {
-    /**
-     * @type {string}
-     */
-    name;
-    /**
-     * @type {WeaponType}
-     */
-    type;
-    /**
-     * @type {string}
-     */
-    primaryTexture;
-    /**
-     * @type {SubWeapon}
-     */
-    subWeapon;
-    /**
-     * @type {SpecialWeapon}
-     */
-    specialWeapon;
+class SideOrderWeapon extends MainWeapon {
     /**
      * @type {ColorChip}
      */
@@ -121,19 +101,18 @@ class SideOrderWeapon extends BaseWeapon {
      */
     secondaryChip;
     constructor(name, type, primaryTexture, subWeapon, specialWeapon, primaryChip, secondaryChip){
-        this.name = name;
-        this.type = type;
-        this.primaryTexture = this.path+primaryTexture+".png";
-        this.subWeapon = subWeapon;
-        this.specialWeapon = specialWeapon;
+        super(name, type, primaryTexture, subWeapon, specialWeapon);
+        console.log(this.name)
+        console.log(name)
         this.primaryChip = primaryChip;
         this.secondaryChip = secondaryChip;
+        this.enabled = true;
     }
     get path(){
         return WEAPON_TEXTURES;
     }
     getEnabled() {
-        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled && this.primaryChip.enabled && this.secondaryChip.enabled;
+        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled;
     }
 
 }
