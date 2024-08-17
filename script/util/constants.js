@@ -284,8 +284,14 @@ const NoDLCPreset = {
 const OriginalKitsPreset = {
   weaponHex: "C66AA000EFB0B4AA4F4080B6D2ACFAFF8E8"
 }
+
+const AltKitsPreset = {
+  weaponHex: "739955FFF104F4B15B0BF20092D530500717"
+}
+
 export const PRESETS = {
   SideOrder: SideOrderPreset,
   NoDLC: NoDLCPreset,
-  Orginal: OriginalKitsPreset
+  Orginal: OriginalKitsPreset,
+  AltKits: AltKitsPreset
 }
