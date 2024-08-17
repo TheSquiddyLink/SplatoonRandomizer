@@ -1,7 +1,7 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType} from "./util/general.js";
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
-import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS} from "./util/constants.js";
+import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
 
 const CONFIG = {
     autoHide: false,
@@ -918,7 +918,6 @@ async function generate(){
     }
     console.log("Filtered Weapons:")
     console.log(filteredWeapons)
-   
     let key;
     if(CONFIG.smartGen){
         console.log("Using Smart Gen")
@@ -992,7 +991,14 @@ async function generate(){
         }
     }
     applyMain(weapon)
-    selectTeam();
+    if(weapon instanceof SideOrderWeapon){
+        let primaryChip = weapon.primaryChip;
+        let primaryColor = SIDE_ORDER_COLORS[primaryChip.name];
+        selectTeam(primaryColor)
+    } else {
+        selectTeam();
+    }
+
     generateStars(weapon, mainWeapoonStars);
 
     weaponImage.style.animation = `finish ${lengthS}s`;
@@ -1173,7 +1179,11 @@ function getAllTeams(){
     let team = document.getElementById("teamColor").value
     return TEAMS[team]
 }
-function selectTeam(){
+/**
+ * 
+ * @param {Color} sideOrderColor 
+ */
+function selectTeam(sideOrderColor){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
     console.log("Team Changed")
@@ -1182,7 +1192,8 @@ function selectTeam(){
     CONFIG.teamColor = TEAMS[team];
     CONFIG.teamSide = side;
     updateColorPreview();
-    applyColorAll(getTeam());
+    if(sideOrderColor != null) applyColorAll(sideOrderColor);
+    else applyColorAll(getTeam());
 }
 
 /**
@@ -1266,7 +1277,10 @@ function applyColorAll(color){
     color2 = CONFIG.customBravoColor ? CONFIG.customBravoColor : color2
     console.log(CONFIG.teamSide)
     let splatColor;
-    if(CONFIG.invertSplat){
+    if(CONFIG.sideOrderMode){
+        splatColor = color;
+    }
+    else if(CONFIG.invertSplat){
         splatColor = CONFIG.teamSide == "alpha" ? color2 : color1;
     } else {
         splatColor = CONFIG.teamSide == "alpha" ? color1 : color2;

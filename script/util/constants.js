@@ -262,6 +262,15 @@ export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[15],
 ]
 
+export const SIDE_ORDER_COLORS = {
+  Drone:  new Color(112, 245, 186),
+  Lucky: new Color(213, 246, 119),
+  Mobility: new Color(120, 156, 247),
+  Power: new Color(249, 128, 116),
+  Range: new Color(246, 182, 115),
+  Support: new Color(194, 117, 246)
+}
+
 const SideOrderPreset = {
   customColor: new Color(242, 154, 255),
   customBravoColor: new Color(213,89,238),
