@@ -487,6 +487,7 @@ function loadUrlConfig(){
     if(params.get("sideOrderMode") !== null) CONFIG.sideOrderMode = params.get("sideOrderMode") == "true";
     if(params.get("autoChipColor") !== null) CONFIG.autoChipColor = params.get("autoChipColor") == "true";
     if(params.get("averageChipColor") !== null) CONFIG.averageChipColor = params.get("averageChipColor") == "true";
+    if(params.get("showChipResult") !== null) CONFIG.showChipResult = params.get("showChipResult") == "true";
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
