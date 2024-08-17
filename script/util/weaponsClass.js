@@ -1,6 +1,8 @@
 const SUB_TEXTURES = "./assets/subs/";
 const SPECIAL_TEXTURES = "./assets/specials/";
 const WEAPON_TEXTURES = "./assets/weapon_flat/";
+const CHIP_TEXTURES = "./assets/chips/";
+
 class BaseWeapon {
     name;
     primaryTexture;
@@ -79,6 +81,60 @@ class MainWeapon extends BaseWeapon {
     }
 }
 
+class ColorChip {
+    enabled = true;
+    constructor(name){
+        this.name = name;
+    }
+}
+
+class SideOrderWeapon extends BaseWeapon {
+    /**
+     * @type {string}
+     */
+    name;
+    /**
+     * @type {WeaponType}
+     */
+    type;
+    /**
+     * @type {string}
+     */
+    primaryTexture;
+    /**
+     * @type {SubWeapon}
+     */
+    subWeapon;
+    /**
+     * @type {SpecialWeapon}
+     */
+    specialWeapon;
+    /**
+     * @type {ColorChip}
+     */
+    primaryChip;
+    /**
+     * @type {ColorChip}
+     */
+    secondaryChip;
+    constructor(name, type, primaryTexture, subWeapon, specialWeapon, primaryChip, secondaryChip){
+        this.name = name;
+        this.type = type;
+        this.primaryTexture = this.path+primaryTexture+".png";
+        this.subWeapon = subWeapon;
+        this.specialWeapon = specialWeapon;
+        this.primaryChip = primaryChip;
+        this.secondaryChip = secondaryChip;
+    }
+    get path(){
+        return WEAPON_TEXTURES;
+    }
+    getEnabled() {
+        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled && this.primaryChip.enabled && this.secondaryChip.enabled;
+    }
+
+}
+
 class WeaponType {
     name;
     primaryTexture;
@@ -107,4 +163,4 @@ const MAIN_TYPES = {
     Stringer: new WeaponType("stringer"),
 }
 
-export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, MAIN_TYPES };
+export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, SideOrderWeapon, MAIN_TYPES };
