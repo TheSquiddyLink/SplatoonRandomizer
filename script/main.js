@@ -480,6 +480,7 @@ function loadUrlConfig(){
 function loadPreset(presetStr){
     console.log("Loading Preset"+ presetStr)
     const preset = PRESETS[presetStr];
+    document.getElementById("presets").value = presetStr;
     console.log(preset);
     if(preset == null) return;
     const keys = Object.keys(preset);
