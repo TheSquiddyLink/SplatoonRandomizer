@@ -120,6 +120,7 @@ document.getElementById("invertTypes").addEventListener("click", () => invertTyp
 document.getElementById("smartGen").addEventListener("click", () => toggleSmartGen());
 document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
 document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
+document.getElementById("presets").addEventListener("change", () => selectPreset())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -133,6 +134,15 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
 
+function selectPreset(){
+    let value = document.getElementById("presets").value;
+    if(value == "none") return;
+    // TODO: Add Alert to confirm action
+    let oldURL = window.location.href;
+    let newURL = oldURL.split("?")[0];
+    newURL += "?preset=" + value;
+    window.location.href = newURL;
+}
 function applyCustomBravoColor(){
     let value = document.getElementById("customBravoColor").value;
     CONFIG.customBravoColor = Color.hex(value);
