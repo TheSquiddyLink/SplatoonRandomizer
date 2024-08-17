@@ -105,6 +105,7 @@ function filterWeapons(weapons){
     for(
         let weapon in weapons
     ){
+        console.log(weapon)
         if(isWeaponDisabled(weapons[weapon])){
             filteredWeapons[weapon] = weapons[weapon];
         }

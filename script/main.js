@@ -1,7 +1,7 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType} from "./util/general.js";
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
 
-import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS} from "./util/constants.js";
+import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS} from "./util/constants.js";
 
 const CONFIG = {
     autoHide: false,
@@ -32,6 +32,7 @@ const CONFIG = {
     specialQueueSize: 0,
     typeQueueSize: 0,
     smartGen: false,
+    sideOrderMode: false
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -120,6 +121,7 @@ document.getElementById("invertTypes").addEventListener("click", () => invertTyp
 document.getElementById("smartGen").addEventListener("click", () => toggleSmartGen());
 document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
 document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
+document.getElementById("sideOrderMode").addEventListener("click", () => toggleSideOrderMode())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -132,6 +134,11 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function toggleSideOrderMode(){
+    let value = document.getElementById("sideOrderMode").checked;
+    CONFIG.sideOrderMode = value;
+}
 
 function applyCustomBravoColor(){
     let value = document.getElementById("customBravoColor").value;
@@ -903,7 +910,8 @@ async function generate(){
     }
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.hidden = false;
-    let filteredWeapons = filterWeapons(MAIN_WEAPONS);
+    console.log(ORDER_WEAPONS)
+    let filteredWeapons = CONFIG.sideOrderMode ? filterWeapons(ORDER_WEAPONS) : filterWeapons(MAIN_WEAPONS);
     console.log("stars Filter: " + CONFIG.starsFilter);
     if(CONFIG.starsFilter > 0 || CONFIG.exactStarsFilter){
         filteredWeapons = filterWeaponsStars(filteredWeapons, CONFIG.starsFilter, CONFIG.exactStarsFilter);

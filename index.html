@@ -39,6 +39,7 @@
                     <option value="stars">Freshness</option>
                     <option value="ui">Interface</option>
                     <option value="advanced">Advanced</option>
+                    <option value="sideOrder">Side Order</option>
                 </select>
             </span>
         </div>
@@ -370,6 +371,18 @@
                     hoverDesc="Number of times a Weapon Type can be generated before a duplicate is generated">
                     Special Repeat Size</label>
                 <input type="number" min="0" id="typeQueueSize">
+            </div>
+        </div>
+        <div id="sideOrderConfig">
+            <h3>Side Order Config</h3>
+            <div style="width: 100%;" class="configOptions">
+                <span>
+                    <label for="sideOrderMode">Side Order Mode</label>
+                    <label class="switch">
+                        <input type="checkbox" id="sideOrderMode">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
             </div>
         </div>
         <button id="exportToURL">Export to URL</button>
