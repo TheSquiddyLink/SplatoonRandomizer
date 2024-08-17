@@ -137,7 +137,15 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
 function selectPreset(){
     let value = document.getElementById("presets").value;
     if(value == "none") return;
-    // TODO: Add Alert to confirm action
+    let response = confirm("Are you sure you want to apply the preset " + value + "? This will overwrite your current configuration.");
+    if(!response) {
+        let params = new URLSearchParams(window.location.search);
+        let oldPreset = params.get("preset");
+        console.log(oldPreset)
+        if(oldPreset == null) document.getElementById("presets").value = "none";
+        else document.getElementById("presets").value = oldPreset;
+        return
+    };
     let oldURL = window.location.href;
     let newURL = oldURL.split("?")[0];
     newURL += "?preset=" + value;
