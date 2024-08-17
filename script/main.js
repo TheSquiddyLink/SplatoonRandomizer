@@ -943,6 +943,8 @@ async function generate(){
     let mainWeapoonStars = document.getElementById("mainWeaponStars");
     let weaponSplatImg = document.getElementById("weaponSplatImg");
     let randomSplatIndex = Math.round(Math.random()*(WEAPON_SPLAT.length - 1));
+    let primaryChipName = document.getElementById("primaryChipName");
+    let secondaryChipName = document.getElementById("secondaryChipName");
     const SPLATPATH = "assets/svg/splat/"
     weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
     WEAPON_SPLAT_CANVAS.hidden = true;
@@ -969,6 +971,8 @@ async function generate(){
     specialWeaponName.hidden = true;
     primaryChip.hidden = true;
     secondaryChip.hidden = true;
+    primaryChipName.hidden = true;
+    secondaryChipName.hidden = true;
     let totalLenght = 2550;
     let iterations = CONFIG.iterations;
     let lengthMS = totalLenght/iterations;
@@ -1009,6 +1013,8 @@ async function generate(){
         applyChips(weapon.primaryChip, weapon.secondaryChip)
         primaryChip.style.animation = `finish ${lengthS}s`;
         secondaryChip.style.animation = `finish ${lengthS}s`;
+        primaryChipName.style.animation = `finish ${lengthS}s`;
+        secondaryChipName.style.animation = `finish ${lengthS}s`;
     }
     WEAPON_SPLAT_CANVAS.hidden = false;
     if(CONFIG.autoHide){
@@ -1207,11 +1213,16 @@ function applyChips(primary, secondary){
     console.log(primary);
     document.getElementById("primaryChip").src = primary.primaryTexture;
     document.getElementById("secondaryChip").src = secondary.primaryTexture;
+
+    document.getElementById("primaryChipName").innerHTML = primary.name;
+    document.getElementById("secondaryChipName").innerHTML = secondary.name;
 }
 
 function toggleChipResult(){
     document.getElementById("primaryChip").hidden = ! CONFIG.sideOrderMode;
     document.getElementById("secondaryChip").hidden = ! CONFIG.sideOrderMode;
+    document.getElementById("primaryChipName").hidden = ! CONFIG.sideOrderMode;
+    document.getElementById("secondaryChipName").hidden = ! CONFIG.sideOrderMode;
 }
 
 /**
