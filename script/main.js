@@ -475,7 +475,10 @@ function loadUrlConfig(){
     if(params.get("smartGen") !== null) CONFIG.smartGen = params.get("smartGen") == "true";
     if(params.get("iterations") !== null) CONFIG.iterations = parseInt(params.get("iterations"));
     if(params.get("customBravoColor") !== null) CONFIG.customBravoColor = Color.hex(params.get("customBravoColor"));
-    if(params.get("preset") !== null) loadPreset(params.get("preset"))
+    if(params.get("preset") !== null) loadPreset(params.get("preset"));
+    if(params.get("sideOrderMode") !== null) CONFIG.sideOrderMode = params.get("sideOrderMode") == "true";
+    if(params.get("autoChipColor") !== null) CONFIG.autoChipColor = params.get("autoChipColor") == "true";
+    if(params.get("averageChipColor") !== null) CONFIG.averageChipColor = params.get("averageChipColor") == "true";
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
