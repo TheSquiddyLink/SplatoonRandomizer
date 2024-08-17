@@ -86,6 +86,9 @@ class ColorChip {
     constructor(name){
         this.name = name;
     }
+    get path(){
+        return CHIP_TEXTURES;
+    }
 }
 
 class SideOrderWeapon extends BaseWeapon {
@@ -163,4 +166,4 @@ const MAIN_TYPES = {
     Stringer: new WeaponType("stringer"),
 }
 
-export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, SideOrderWeapon, MAIN_TYPES };
+export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, ColorChip, SideOrderWeapon, MAIN_TYPES };
