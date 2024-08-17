@@ -81,10 +81,10 @@ class MainWeapon extends BaseWeapon {
     }
 }
 
-class ColorChip {
+class ColorChip extends BaseWeapon {
     enabled = true;
     constructor(name){
-        this.name = name;
+        super(name, name);
     }
     get path(){
         return CHIP_TEXTURES;
