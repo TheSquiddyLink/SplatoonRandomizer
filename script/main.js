@@ -961,6 +961,7 @@ async function generate(){
     let subSpecial = document.getElementsByClassName("multiImage");
     let primaryChip = document.getElementById("primaryChip");
     let secondaryChip = document.getElementById("secondaryChip");
+    // TODO: Add a fade out for 100ms before the animation starts
     subSpecial.item(0).hidden = true;
     subSpecial.item(1).hidden = true;
     mainWeaponName.hidden = true;
