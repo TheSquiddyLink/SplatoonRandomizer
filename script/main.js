@@ -32,7 +32,8 @@ const CONFIG = {
     specialQueueSize: 0,
     typeQueueSize: 0,
     smartGen: false,
-    sideOrderMode: false
+    sideOrderMode: false,
+    autoChipColor: false,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -122,6 +123,7 @@ document.getElementById("smartGen").addEventListener("click", () => toggleSmartG
 document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
 document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
 document.getElementById("sideOrderMode").addEventListener("click", () => toggleSideOrderMode())
+document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -134,6 +136,11 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function toggleAutoChipColor(){
+    let value = document.getElementById("autoChipColor").checked;
+    CONFIG.autoChipColor = value;
+}
 
 function toggleSideOrderMode(){
     let value = document.getElementById("sideOrderMode").checked;
@@ -991,7 +998,7 @@ async function generate(){
         }
     }
     applyMain(weapon)
-    if(weapon instanceof SideOrderWeapon){
+    if(weapon instanceof SideOrderWeapon && CONFIG.autoChipColor){
         let primaryChip = weapon.primaryChip;
         let primaryColor = SIDE_ORDER_COLORS[primaryChip.name];
         let secondaryChip = weapon.secondaryChip;
