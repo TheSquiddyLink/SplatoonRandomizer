@@ -1,5 +1,5 @@
 import {Team, Color, randomObject} from "./general.js";
-import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES} from "./weaponsClass.js";
+import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES, SideOrderWeapon, ColorChip} from "./weaponsClass.js";
 
 export const SPECIAL_WEAPONS = {
     BigBubbler: new SpecialWeapon("Big Bubbler", "big_bubbler"),
@@ -195,6 +195,30 @@ export const MAIN_WEAPONS = {
     ZnFSplatCharger: new MainWeapon("Z+F Splat Charger", MAIN_TYPES.Charger, "z+f_splat_charger", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.TripleInkstrike),
     ZnFSplatterscope: new MainWeapon("Z+F Splatterscope", MAIN_TYPES.Charger, "z+f_splatterscope", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.TripleInkstrike),
     ZinkMiniSplatling: new MainWeapon("Zink Mini Splatling", MAIN_TYPES.Splatling, "zink_mini_splatling", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.BigBubbler),
+}
+
+export const COLOR_CHIPS = {
+  Drone: new ColorChip("Drone"),
+  Lucky: new ColorChip("Lucky"),
+  Mobility: new ColorChip("Mobility"),
+  Power: new ColorChip("Power"),
+  Range: new ColorChip("Range"),
+  Support: new ColorChip("Support"),
+}
+
+export const ORDER_WEAPONS = {
+  Dualies: new SideOrderWeapon("Order Dualies", MAIN_TYPES.Dualies, "dualies", SUB_WEAPONS.CurlingBomb, SPECIAL_WEAPONS.ReefSlider, COLOR_CHIPS.Lucky, COLOR_CHIPS.Support),
+  Brella: new SideOrderWeapon("Order Brella", MAIN_TYPES.Brella, "brella", SUB_WEAPONS.Sprinkler, SPECIAL_WEAPONS.InkStorm, COLOR_CHIPS.Drone, COLOR_CHIPS.Power),
+  Shot: new SideOrderWeapon("Order Shot", MAIN_TYPES.Shooter, "shot", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.Trizooka, COLOR_CHIPS.Range, COLOR_CHIPS.Mobility),
+  Roller: new SideOrderWeapon("Order Roller", MAIN_TYPES.Roller, "roller", SUB_WEAPONS.BurstBomb, SPECIAL_WEAPONS.KrakenRoyale, COLOR_CHIPS.Power, COLOR_CHIPS.Lucky),
+  Charger: new SideOrderWeapon("Order Charger", MAIN_TYPES.Charger, "charger", SUB_WEAPONS.InkMine, SPECIAL_WEAPONS.TripleInkstrike, COLOR_CHIPS.Support, COLOR_CHIPS.Range),
+  Stringer: new SideOrderWeapon("Order Stringer", MAIN_TYPES.Stringer, "stringer", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.KillerWail, COLOR_CHIPS.Mobility, COLOR_CHIPS.Range),
+  Splatana: new SideOrderWeapon("Order Splatana", MAIN_TYPES.Splatana, "splatana", SUB_WEAPONS.FizzyBomb, SPECIAL_WEAPONS.CrabTank, COLOR_CHIPS.Lucky, COLOR_CHIPS.Drone),
+  Slosher: new SideOrderWeapon("Order Slosher", MAIN_TYPES.Slosher, "slosher", SUB_WEAPONS.SuctionBomb, SPECIAL_WEAPONS.TripleInkstrike, COLOR_CHIPS.Support, COLOR_CHIPS.Drone),
+  Blaster: new SideOrderWeapon("Order Blaster", MAIN_TYPES.Blaster, "blaster", SUB_WEAPONS.CurlingBomb, SPECIAL_WEAPONS.UltraStamp, COLOR_CHIPS.Range, COLOR_CHIPS.Power),
+  Brush: new SideOrderWeapon("Orderbrush", MAIN_TYPES.Brush, "brush", SUB_WEAPONS.InkMine, SPECIAL_WEAPONS.UltraStamp, COLOR_CHIPS.Mobility, COLOR_CHIPS.Lucky),
+  Splatling: new SideOrderWeapon("Order Splatling", MAIN_TYPES.Splatling, "splatling", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.BooyahBomb, COLOR_CHIPS.Drone, COLOR_CHIPS.Support),
+  OctoShot: new SideOrderWeapon("Octo Shot", MAIN_TYPES.Octo, "octo_shot", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.TripleSplashdown, COLOR_CHIPS.Power, COLOR_CHIPS.Mobility),
 }
 
 // Group/Filter by weapon type
