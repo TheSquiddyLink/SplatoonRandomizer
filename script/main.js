@@ -120,6 +120,7 @@ document.getElementById("invertTypes").addEventListener("click", () => invertTyp
 document.getElementById("smartGen").addEventListener("click", () => toggleSmartGen());
 document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
 document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
+document.getElementById("presets").addEventListener("change", () => selectPreset())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -133,6 +134,23 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
 
+function selectPreset(){
+    let value = document.getElementById("presets").value;
+    if(value == "none") return;
+    let response = confirm("Are you sure you want to apply the preset " + value + "? This will overwrite your current configuration.");
+    if(!response) {
+        let params = new URLSearchParams(window.location.search);
+        let oldPreset = params.get("preset");
+        console.log(oldPreset)
+        if(oldPreset == null) document.getElementById("presets").value = "none";
+        else document.getElementById("presets").value = oldPreset;
+        return
+    };
+    let oldURL = window.location.href;
+    let newURL = oldURL.split("?")[0];
+    newURL += "?preset=" + value;
+    window.location.href = newURL;
+}
 function applyCustomBravoColor(){
     let value = document.getElementById("customBravoColor").value;
     CONFIG.customBravoColor = Color.hex(value);
@@ -209,7 +227,10 @@ function selectConfigMenu(){
         console.log(configMenuOption)
         let configEle = document.getElementById(configMenuOption.value+"Config");
         if(configMenuOption.value == "all") continue;
-        if(configMenuValue == "all") configEle.hidden = false;
+        if(configMenuValue == "all") {
+            if(weaponOptions.includes(configMenuOption.value)) configEle.style.display = "none";
+            configEle.hidden = false
+        }
         else if(configMenuOption.value == configMenuValue && weaponOptions.includes(configMenuOption.value)) configEle.style.display = "flex";
         else if(weaponOptions.includes(configMenuOption.value)) configEle.style.display = "none";
         else if(configMenuOption.value == configMenuValue) configEle.hidden = false;
@@ -470,6 +491,7 @@ function loadUrlConfig(){
 function loadPreset(presetStr){
     console.log("Loading Preset"+ presetStr)
     const preset = PRESETS[presetStr];
+    document.getElementById("presets").value = presetStr;
     console.log(preset);
     if(preset == null) return;
     const keys = Object.keys(preset);

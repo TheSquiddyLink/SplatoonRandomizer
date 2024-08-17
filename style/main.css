@@ -165,6 +165,11 @@ header {
 .configOptions {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+.configOptions > * {
+    margin: 5px;
 }
 .star {
     height: 25px;
