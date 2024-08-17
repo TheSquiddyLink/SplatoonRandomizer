@@ -34,7 +34,8 @@ const CONFIG = {
     smartGen: false,
     sideOrderMode: false,
     autoChipColor: false,
-    averageChipColor: false
+    averageChipColor: false,
+    showChipResult: true,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -126,6 +127,7 @@ document.getElementById("customBravoColor").addEventListener("change", () => app
 document.getElementById("sideOrderMode").addEventListener("click", () => toggleSideOrderMode())
 document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
 document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
+document.getElementById("showChipResult").addEventListener("click", () => toggleShowChipResult())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -138,6 +140,12 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function toggleShowChipResult(){
+    let value = document.getElementById("showChipResult").checked;
+    CONFIG.showChipResult = value;
+}
+
 function toggleAverageChipColor(){
     let value = document.getElementById("averageChipColor").checked;
     CONFIG.averageChipColor = value;
@@ -1250,10 +1258,10 @@ function applyChips(primary, secondary){
 }
 
 function toggleChipResult(){
-    document.getElementById("primaryChip").hidden = ! CONFIG.sideOrderMode;
-    document.getElementById("secondaryChip").hidden = ! CONFIG.sideOrderMode;
-    document.getElementById("primaryChipName").hidden = ! CONFIG.sideOrderMode;
-    document.getElementById("secondaryChipName").hidden = ! CONFIG.sideOrderMode;
+    document.getElementById("primaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+    document.getElementById("secondaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+    document.getElementById("primaryChipName").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+    document.getElementById("secondaryChipName").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
 }
 
 /**
