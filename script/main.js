@@ -34,6 +34,7 @@ const CONFIG = {
     smartGen: false,
     sideOrderMode: false,
     autoChipColor: false,
+    averageChipColor: false
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -124,6 +125,7 @@ document.getElementById("customBravoToggle").addEventListener("click", () => tog
 document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
 document.getElementById("sideOrderMode").addEventListener("click", () => toggleSideOrderMode())
 document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
+document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -136,9 +138,14 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+function toggleAverageChipColor(){
+    let value = document.getElementById("averageChipColor").checked;
+    CONFIG.averageChipColor = value;
+}
 
 function toggleAutoChipColor(){
     let value = document.getElementById("autoChipColor").checked;
+    document.getElementById("averageChipColorSpan").style.display = value ? "inline" : "none";
     CONFIG.autoChipColor = value;
 }
 
@@ -1003,8 +1010,8 @@ async function generate(){
         let primaryColor = SIDE_ORDER_COLORS[primaryChip.name];
         let secondaryChip = weapon.secondaryChip;
         let secondaryColor = SIDE_ORDER_COLORS[secondaryChip.name];
-
-        selectTeam(averageColor(primaryColor, secondaryColor, 0.5));
+        if(CONFIG.averageChipColor) selectTeam(averageColor(primaryColor, secondaryColor, 0.5));
+        else selectTeam(primaryColor);
     } else {
         selectTeam();
     }
