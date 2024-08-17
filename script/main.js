@@ -227,7 +227,10 @@ function selectConfigMenu(){
         console.log(configMenuOption)
         let configEle = document.getElementById(configMenuOption.value+"Config");
         if(configMenuOption.value == "all") continue;
-        if(configMenuValue == "all") configEle.hidden = false;
+        if(configMenuValue == "all") {
+            if(weaponOptions.includes(configMenuOption.value)) configEle.style.display = "none";
+            configEle.hidden = false
+        }
         else if(configMenuOption.value == configMenuValue && weaponOptions.includes(configMenuOption.value)) configEle.style.display = "flex";
         else if(weaponOptions.includes(configMenuOption.value)) configEle.style.display = "none";
         else if(configMenuOption.value == configMenuValue) configEle.hidden = false;
