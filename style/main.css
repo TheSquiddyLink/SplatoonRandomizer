@@ -65,7 +65,7 @@ header {
     text-align: center;
 }
 
-#mainWeaponName, .subSpecialName {
+#mainWeaponName, .subSpecialName, .chipName {
     color: #fff;
     text-shadow:
     -2px -2px 0 #000,
@@ -73,9 +73,13 @@ header {
     2px -2px 0 #000,
     -2px 2px 0 #000,
     0px 2px 0 #000,
-    2px 2px 0 #000;    font-size: large;
+    2px 2px 0 #000;    
+    font-size: large;
 }
-.subSpecialName {
+.chipName {
+    font-size: medium;
+}
+.subSpecialName, .chipName {
     margin-top: auto;
     text-align: center;
     width: var(--sub_special_size+25px);
@@ -244,6 +248,16 @@ header {
     text-align: center;
     border-radius: 20px;
 }
+
+#primaryChip {
+    height: 75px;
+}
+#secondaryChip {
+    height: 60px;
+}
+
+
+
 
 /* Toggle Switch */
 /* The switch - the box around the slider */

@@ -1,7 +1,7 @@
-import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType} from "./util/general.js";
-import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
+import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType, averageColor} from "./util/general.js";
+import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
-import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS} from "./util/constants.js";
+import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
 
 const CONFIG = {
     autoHide: false,
@@ -32,6 +32,10 @@ const CONFIG = {
     specialQueueSize: 0,
     typeQueueSize: 0,
     smartGen: false,
+    sideOrderMode: false,
+    autoChipColor: false,
+    averageChipColor: false,
+    showChipResult: true,
 }
 
 const ORGINAL_CONFIG = structuredClone(CONFIG)
@@ -121,6 +125,10 @@ document.getElementById("smartGen").addEventListener("click", () => toggleSmartG
 document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
 document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
 document.getElementById("presets").addEventListener("change", () => selectPreset())
+document.getElementById("sideOrderMode").addEventListener("click", () => toggleSideOrderMode())
+document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
+document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
+document.getElementById("showChipResult").addEventListener("click", () => toggleShowChipResult())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -151,6 +159,27 @@ function selectPreset(){
     newURL += "?preset=" + value;
     window.location.href = newURL;
 }
+function toggleShowChipResult(){
+    let value = document.getElementById("showChipResult").checked;
+    CONFIG.showChipResult = value;
+}
+
+function toggleAverageChipColor(){
+    let value = document.getElementById("averageChipColor").checked;
+    CONFIG.averageChipColor = value;
+}
+
+function toggleAutoChipColor(){
+    let value = document.getElementById("autoChipColor").checked;
+    document.getElementById("averageChipColorSpan").style.display = value ? "inline" : "none";
+    CONFIG.autoChipColor = value;
+}
+
+function toggleSideOrderMode(){
+    let value = document.getElementById("sideOrderMode").checked;
+    CONFIG.sideOrderMode = value;
+}
+
 function applyCustomBravoColor(){
     let value = document.getElementById("customBravoColor").value;
     CONFIG.customBravoColor = Color.hex(value);
@@ -475,7 +504,11 @@ function loadUrlConfig(){
     if(params.get("smartGen") !== null) CONFIG.smartGen = params.get("smartGen") == "true";
     if(params.get("iterations") !== null) CONFIG.iterations = parseInt(params.get("iterations"));
     if(params.get("customBravoColor") !== null) CONFIG.customBravoColor = Color.hex(params.get("customBravoColor"));
-    if(params.get("preset") !== null) loadPreset(params.get("preset"))
+    if(params.get("preset") !== null) loadPreset(params.get("preset"));
+    if(params.get("sideOrderMode") !== null) CONFIG.sideOrderMode = params.get("sideOrderMode") == "true";
+    if(params.get("autoChipColor") !== null) CONFIG.autoChipColor = params.get("autoChipColor") == "true";
+    if(params.get("averageChipColor") !== null) CONFIG.averageChipColor = params.get("averageChipColor") == "true";
+    if(params.get("showChipResult") !== null) CONFIG.showChipResult = params.get("showChipResult") == "true";
     document.getElementById("weaponQueueSize").setAttribute("max", Object.keys(MAIN_WEAPONS).length);
     document.getElementById("subQueueSize").setAttribute("max", Object.keys(SUB_WEAPONS).length);
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
@@ -925,14 +958,14 @@ async function generate(){
     }
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.hidden = false;
-    let filteredWeapons = filterWeapons(MAIN_WEAPONS);
+    console.log(ORDER_WEAPONS)
+    let filteredWeapons = CONFIG.sideOrderMode ? filterWeapons(ORDER_WEAPONS) : filterWeapons(MAIN_WEAPONS);
     console.log("stars Filter: " + CONFIG.starsFilter);
     if(CONFIG.starsFilter > 0 || CONFIG.exactStarsFilter){
         filteredWeapons = filterWeaponsStars(filteredWeapons, CONFIG.starsFilter, CONFIG.exactStarsFilter);
     }
     console.log("Filtered Weapons:")
     console.log(filteredWeapons)
-   
     let key;
     if(CONFIG.smartGen){
         console.log("Using Smart Gen")
@@ -957,6 +990,8 @@ async function generate(){
     let mainWeapoonStars = document.getElementById("mainWeaponStars");
     let weaponSplatImg = document.getElementById("weaponSplatImg");
     let randomSplatIndex = Math.round(Math.random()*(WEAPON_SPLAT.length - 1));
+    let primaryChipName = document.getElementById("primaryChipName");
+    let secondaryChipName = document.getElementById("secondaryChipName");
     const SPLATPATH = "assets/svg/splat/"
     weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
     WEAPON_SPLAT_CANVAS.hidden = true;
@@ -970,13 +1005,21 @@ async function generate(){
     }
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
+
     let weaponImage = document.getElementById("mainWeaponImage");
     let subSpecial = document.getElementsByClassName("multiImage");
+    let primaryChip = document.getElementById("primaryChip");
+    let secondaryChip = document.getElementById("secondaryChip");
+    // TODO: Add a fade out for 100ms before the animation starts
     subSpecial.item(0).hidden = true;
     subSpecial.item(1).hidden = true;
     mainWeaponName.hidden = true;
     subWeaponName.hidden = true;
     specialWeaponName.hidden = true;
+    primaryChip.hidden = true;
+    secondaryChip.hidden = true;
+    primaryChipName.hidden = true;
+    secondaryChipName.hidden = true;
     let totalLenght = 2550;
     let iterations = CONFIG.iterations;
     let lengthMS = totalLenght/iterations;
@@ -996,8 +1039,19 @@ async function generate(){
         }
     }
     applyMain(weapon)
-    selectTeam();
+    if(weapon instanceof SideOrderWeapon && CONFIG.autoChipColor){
+        let primaryChip = weapon.primaryChip;
+        let primaryColor = SIDE_ORDER_COLORS[primaryChip.name];
+        let secondaryChip = weapon.secondaryChip;
+        let secondaryColor = SIDE_ORDER_COLORS[secondaryChip.name];
+        if(CONFIG.averageChipColor) selectTeam(averageColor(primaryColor, secondaryColor, 0.5));
+        else selectTeam(primaryColor);
+    } else {
+        selectTeam();
+    }
+
     generateStars(weapon, mainWeapoonStars);
+
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
@@ -1011,6 +1065,14 @@ async function generate(){
     subSpecial.item(0).style.animation = `finish ${lengthS}s`
     subSpecial.item(1).style.animation = `finish ${lengthS}s`;
     WEAPON_SPLAT_CANVAS.style.animation = `finish ${lengthS}s`;
+    toggleChipResult();
+    if(weapon instanceof SideOrderWeapon){
+        applyChips(weapon.primaryChip, weapon.secondaryChip)
+        primaryChip.style.animation = `finish ${lengthS}s`;
+        secondaryChip.style.animation = `finish ${lengthS}s`;
+        primaryChipName.style.animation = `finish ${lengthS}s`;
+        secondaryChipName.style.animation = `finish ${lengthS}s`;
+    }
     WEAPON_SPLAT_CANVAS.hidden = false;
     if(CONFIG.autoHide){
         await sleep(CONFIG.showLen*1000);
@@ -1168,7 +1230,11 @@ function getAllTeams(){
     let team = document.getElementById("teamColor").value
     return TEAMS[team]
 }
-function selectTeam(){
+/**
+ * 
+ * @param {Color} sideOrderColor 
+ */
+function selectTeam(sideOrderColor){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
     console.log("Team Changed")
@@ -1177,7 +1243,8 @@ function selectTeam(){
     CONFIG.teamColor = TEAMS[team];
     CONFIG.teamSide = side;
     updateColorPreview();
-    applyColorAll(getTeam());
+    if(sideOrderColor != null) applyColorAll(sideOrderColor);
+    else applyColorAll(getTeam());
 }
 
 /**
@@ -1191,12 +1258,35 @@ function selectSub(){
  * 
  * @param {SubWeapon} sub 
  */
-async function applySub(sub){
+function applySub(sub){
     console.log("Look Bellow")
     console.log(sub);
     document.getElementById("subColor").src = sub.primaryTexture;
     document.getElementById("subWhite").src = sub.secondaryTexture;
 }
+
+/**
+ * 
+ * @param {ColorChip} primary 
+ * @param {ColorChip} secondary 
+ */
+function applyChips(primary, secondary){
+    console.log("Applying Chips")
+    console.log(primary);
+    document.getElementById("primaryChip").src = primary.primaryTexture;
+    document.getElementById("secondaryChip").src = secondary.primaryTexture;
+
+    document.getElementById("primaryChipName").innerHTML = primary.name;
+    document.getElementById("secondaryChipName").innerHTML = secondary.name;
+}
+
+function toggleChipResult(){
+    document.getElementById("primaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+    document.getElementById("secondaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+    document.getElementById("primaryChipName").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+    document.getElementById("secondaryChipName").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
+}
+
 /**
  * 
  * @param {Color} color 
@@ -1238,7 +1328,10 @@ function applyColorAll(color){
     color2 = CONFIG.customBravoColor ? CONFIG.customBravoColor : color2
     console.log(CONFIG.teamSide)
     let splatColor;
-    if(CONFIG.invertSplat){
+    if(CONFIG.sideOrderMode){
+        splatColor = color;
+    }
+    else if(CONFIG.invertSplat){
         splatColor = CONFIG.teamSide == "alpha" ? color2 : color1;
     } else {
         splatColor = CONFIG.teamSide == "alpha" ? color1 : color2;

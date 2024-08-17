@@ -105,6 +105,7 @@ function filterWeapons(weapons){
     for(
         let weapon in weapons
     ){
+        console.log(weapon)
         if(isWeaponDisabled(weapons[weapon])){
             filteredWeapons[weapon] = weapons[weapon];
         }
@@ -174,6 +175,16 @@ function filterByType(weapons, type){
     }
     return result;
 }
+
+function averageColor(color1, color2, color2Weight){
+    let color1Weight = 1 - color2Weight;
+    let r = Math.round(color1.r * color1Weight + color2.r * color2Weight);
+    let g = Math.round(color1.g * color1Weight + color2.g * color2Weight);
+    let b = Math.round(color1.b * color1Weight + color2.b * color2Weight);
+    return new Color(r, g, b);
+}
+
+
 /**
  * A generic queue data structure.
  * @template T The type of elements in the queue.
@@ -212,4 +223,4 @@ class Queue {
         return this.queue.length;
     }
 }
-export { Color, Team, Queue, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex, toggleAll, filterByType };
+export { Color, Team, Queue, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex, toggleAll, filterByType, averageColor };
