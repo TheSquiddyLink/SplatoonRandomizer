@@ -240,6 +240,16 @@ header {
     border-radius: 20px;
 }
 
+#primaryChip {
+    height: 75px;
+}
+#secondaryChip {
+    height: 60px;
+}
+
+
+
+
 /* Toggle Switch */
 /* The switch - the box around the slider */
 .switch {

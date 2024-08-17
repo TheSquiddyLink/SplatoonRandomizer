@@ -1,5 +1,5 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType} from "./util/general.js";
-import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType} from "./util/weaponsClass.js";
+import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS} from "./util/constants.js";
 
@@ -956,13 +956,18 @@ async function generate(){
     }
     applySub(weapon.subWeapon);
     applySpecial(weapon.specialWeapon);
+
     let weaponImage = document.getElementById("mainWeaponImage");
     let subSpecial = document.getElementsByClassName("multiImage");
+    let primaryChip = document.getElementById("primaryChip");
+    let secondaryChip = document.getElementById("secondaryChip");
     subSpecial.item(0).hidden = true;
     subSpecial.item(1).hidden = true;
     mainWeaponName.hidden = true;
     subWeaponName.hidden = true;
     specialWeaponName.hidden = true;
+    primaryChip.hidden = true;
+    secondaryChip.hidden = true;
     let totalLenght = 2550;
     let iterations = CONFIG.iterations;
     let lengthMS = totalLenght/iterations;
@@ -984,6 +989,7 @@ async function generate(){
     applyMain(weapon)
     selectTeam();
     generateStars(weapon, mainWeapoonStars);
+
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
     subWeaponName.hidden = false;
@@ -997,6 +1003,12 @@ async function generate(){
     subSpecial.item(0).style.animation = `finish ${lengthS}s`
     subSpecial.item(1).style.animation = `finish ${lengthS}s`;
     WEAPON_SPLAT_CANVAS.style.animation = `finish ${lengthS}s`;
+    toggleChipResult();
+    if(weapon instanceof SideOrderWeapon){
+        applyChips(weapon.primaryChip, weapon.secondaryChip)
+        primaryChip.style.animation = `finish ${lengthS}s`;
+        secondaryChip.style.animation = `finish ${lengthS}s`;
+    }
     WEAPON_SPLAT_CANVAS.hidden = false;
     if(CONFIG.autoHide){
         await sleep(CONFIG.showLen*1000);
@@ -1177,12 +1189,30 @@ function selectSub(){
  * 
  * @param {SubWeapon} sub 
  */
-async function applySub(sub){
+function applySub(sub){
     console.log("Look Bellow")
     console.log(sub);
     document.getElementById("subColor").src = sub.primaryTexture;
     document.getElementById("subWhite").src = sub.secondaryTexture;
 }
+
+/**
+ * 
+ * @param {ColorChip} primary 
+ * @param {ColorChip} secondary 
+ */
+function applyChips(primary, secondary){
+    console.log("Applying Chips")
+    console.log(primary);
+    document.getElementById("primaryChip").src = primary.primaryTexture;
+    document.getElementById("secondaryChip").src = secondary.primaryTexture;
+}
+
+function toggleChipResult(){
+    document.getElementById("primaryChip").hidden = ! CONFIG.sideOrderMode;
+    document.getElementById("secondaryChip").hidden = ! CONFIG.sideOrderMode;
+}
+
 /**
  * 
  * @param {Color} color 
