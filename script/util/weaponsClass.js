@@ -1,6 +1,8 @@
 const SUB_TEXTURES = "./assets/subs/";
 const SPECIAL_TEXTURES = "./assets/specials/";
 const WEAPON_TEXTURES = "./assets/weapon_flat/";
+const CHIP_TEXTURES = "./assets/chips/";
+
 class BaseWeapon {
     name;
     primaryTexture;
@@ -79,6 +81,42 @@ class MainWeapon extends BaseWeapon {
     }
 }
 
+class ColorChip extends BaseWeapon {
+    enabled = true;
+    constructor(name){
+        super(name, name);
+    }
+    get path(){
+        return CHIP_TEXTURES;
+    }
+}
+
+class SideOrderWeapon extends MainWeapon {
+    /**
+     * @type {ColorChip}
+     */
+    primaryChip;
+    /**
+     * @type {ColorChip}
+     */
+    secondaryChip;
+    constructor(name, type, primaryTexture, subWeapon, specialWeapon, primaryChip, secondaryChip){
+        super(name, type, primaryTexture, subWeapon, specialWeapon);
+        console.log(this.name)
+        console.log(name)
+        this.primaryChip = primaryChip;
+        this.secondaryChip = secondaryChip;
+        this.enabled = true;
+    }
+    get path(){
+        return WEAPON_TEXTURES;
+    }
+    getEnabled() {
+        return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled;
+    }
+
+}
+
 class WeaponType {
     name;
     primaryTexture;
@@ -107,4 +145,4 @@ const MAIN_TYPES = {
     Stringer: new WeaponType("stringer"),
 }
 
-export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, MAIN_TYPES };
+export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, ColorChip, SideOrderWeapon, MAIN_TYPES };

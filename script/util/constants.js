@@ -1,5 +1,5 @@
 import {Team, Color, randomObject} from "./general.js";
-import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES} from "./weaponsClass.js";
+import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES, SideOrderWeapon, ColorChip} from "./weaponsClass.js";
 
 export const SPECIAL_WEAPONS = {
     BigBubbler: new SpecialWeapon("Big Bubbler", "big_bubbler"),
@@ -197,6 +197,30 @@ export const MAIN_WEAPONS = {
     ZinkMiniSplatling: new MainWeapon("Zink Mini Splatling", MAIN_TYPES.Splatling, "zink_mini_splatling", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.BigBubbler),
 }
 
+export const COLOR_CHIPS = {
+  Drone: new ColorChip("Drone"),
+  Lucky: new ColorChip("Lucky"),
+  Mobility: new ColorChip("Mobility"),
+  Power: new ColorChip("Power"),
+  Range: new ColorChip("Range"),
+  Support: new ColorChip("Support"),
+}
+
+export const ORDER_WEAPONS = {
+  Dualies: new SideOrderWeapon("Order Dualies", MAIN_TYPES.Dualies, "order_dualie_replicas", SUB_WEAPONS.CurlingBomb, SPECIAL_WEAPONS.ReefSlider, COLOR_CHIPS.Lucky, COLOR_CHIPS.Support),
+  Brella: new SideOrderWeapon("Order Brella", MAIN_TYPES.Brella, "order_brella_replica", SUB_WEAPONS.Sprinkler, SPECIAL_WEAPONS.InkStorm, COLOR_CHIPS.Drone, COLOR_CHIPS.Power),
+  Shot: new SideOrderWeapon("Order Shot", MAIN_TYPES.Shooter, "order_shot_replica", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.Trizooka, COLOR_CHIPS.Range, COLOR_CHIPS.Mobility),
+  Roller: new SideOrderWeapon("Order Roller", MAIN_TYPES.Roller, "order_roller_replica", SUB_WEAPONS.BurstBomb, SPECIAL_WEAPONS.KrakenRoyale, COLOR_CHIPS.Power, COLOR_CHIPS.Lucky),
+  Charger: new SideOrderWeapon("Order Charger", MAIN_TYPES.Charger, "order_charger_replica", SUB_WEAPONS.InkMine, SPECIAL_WEAPONS.TripleInkstrike, COLOR_CHIPS.Support, COLOR_CHIPS.Range),
+  Stringer: new SideOrderWeapon("Order Stringer", MAIN_TYPES.Stringer, "order_stringer_replica", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.KillerWail, COLOR_CHIPS.Mobility, COLOR_CHIPS.Range),
+  Splatana: new SideOrderWeapon("Order Splatana", MAIN_TYPES.Splatana, "order_splatana_replica", SUB_WEAPONS.FizzyBomb, SPECIAL_WEAPONS.CrabTank, COLOR_CHIPS.Lucky, COLOR_CHIPS.Drone),
+  Slosher: new SideOrderWeapon("Order Slosher", MAIN_TYPES.Slosher, "order_slosher_replica", SUB_WEAPONS.SuctionBomb, SPECIAL_WEAPONS.TripleInkstrike, COLOR_CHIPS.Support, COLOR_CHIPS.Drone),
+  Blaster: new SideOrderWeapon("Order Blaster", MAIN_TYPES.Blaster, "order_blaster_replica", SUB_WEAPONS.CurlingBomb, SPECIAL_WEAPONS.UltraStamp, COLOR_CHIPS.Range, COLOR_CHIPS.Power),
+  Brush: new SideOrderWeapon("Orderbrush", MAIN_TYPES.Brush, "order_brush_replica", SUB_WEAPONS.InkMine, SPECIAL_WEAPONS.UltraStamp, COLOR_CHIPS.Mobility, COLOR_CHIPS.Lucky),
+  Splatling: new SideOrderWeapon("Order Splatling", MAIN_TYPES.Splatling, "order_splatling_replica", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.BooyahBomb, COLOR_CHIPS.Drone, COLOR_CHIPS.Support),
+  OctoShot: new SideOrderWeapon("Octo Shot", MAIN_TYPES.Shooter, "octo_shot_replica", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.TripleSplashdown, COLOR_CHIPS.Power, COLOR_CHIPS.Mobility)
+}
+console.log(ORDER_WEAPONS)
 // Group/Filter by weapon type
 export const SORTED_WEAPONS = Object.entries(MAIN_WEAPONS)
   .sort((a, b) => a[1].type.name.localeCompare(b[1].type.name))
@@ -237,6 +261,15 @@ export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[14],
   ALL_SPLAT_IMGS[15],
 ]
+
+export const SIDE_ORDER_COLORS = {
+  Drone:  new Color(112, 245, 186),
+  Lucky: new Color(213, 246, 119),
+  Mobility: new Color(120, 156, 247),
+  Power: new Color(249, 128, 116),
+  Range: new Color(246, 182, 115),
+  Support: new Color(194, 117, 246)
+}
 
 const SideOrderPreset = {
   customColor: new Color(242, 154, 255),

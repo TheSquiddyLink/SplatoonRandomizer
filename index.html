@@ -39,6 +39,7 @@
                     <option value="stars">Freshness</option>
                     <option value="ui">Interface</option>
                     <option value="advanced">Advanced</option>
+                    <option value="sideOrder">Side Order</option>
                 </select>
             </span>
         </div>
@@ -379,6 +380,49 @@
                 <input type="number" min="0" id="typeQueueSize">
             </div>
         </div>
+        <div id="sideOrderConfig">
+            <h3>Side Order Config</h3>
+            <div style="width: 100%;" class="configOptions">
+                <span>
+                    <label for="sideOrderMode"
+                        hoverTitle="Side Order Mode"
+                        hoverDesc="Toggle Side Order Mode, this will randomize weapons based on the DLC Side Order. The Result will have the color chips related to the weapon, and will use the kits in the DLC">
+                        Side Order Mode</label>
+                    <label class="switch">
+                        <input type="checkbox" id="sideOrderMode">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <!-- TODO: Add Hover Info -->
+                    <label for="showChipResult">Show Chip Result</label>
+                    <label class="switch">
+                        <input type="checkbox" id="showChipResult">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span>
+                    <label for="autoChipColor"
+                        hoverTitle="Automatic Chip Color"
+                        hoverDesc="Toggle Automaticly changing the color based on the color chip of the weapon">
+                        Automatic Chip Color</label>
+                    <label class="switch">
+                        <input type="checkbox" id="autoChipColor">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span id="averageChipColorSpan" style="display: none;">
+                    <label for="averageChipColor"
+                        hoverTitle="Average Chip Color"
+                        hoverDesc="Toggle Automaticly changing the color based on the average of both color chips of the weapon">
+                        Average Chip Color</label>
+                    <label class="switch">
+                        <input type="checkbox" id="averageChipColor">
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+            </div>
+        </div>
         <button id="exportToURL">Export to URL</button>
         <button id="hideConfig">Hide UI</button>
         <label for="hideHoverInfo">
@@ -413,7 +457,16 @@
                 <div id="mainWeaponStars" hidden>
                 </div>
             </div>
-
+            <section class="subSpecial" id="chipResult">
+                <div>
+                    <img id="primaryChip" draggable="false" hidden>
+                    <p class="chipName" id="primaryChipName"></p>
+                </div>
+                <div>
+                    <img id="secondaryChip" draggable="false" hidden>
+                    <p class="chipName" id="secondaryChipName"></p>
+                </div>
+            </section>
             <section class="subSpecial">
                 <div>
                     <div class="multiImage subWeapon" hidden>
