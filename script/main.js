@@ -2,42 +2,14 @@ import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex,
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
+import Config from "./util/config.js";
 
-const CONFIG = {
-    autoHide: false,
-    hideLen: 2.5,
-    showLen: 2.5,
-    disableSound: false,
-    iterations: 25,
-    disableAnimation: false, 
-    teamColor: TEAMS.BlueYellow,
-    teamSide: "alpha",
-    editStars: false,
-    displayStars: false,
-    resultStars: false,
-    starsFilter: 0,
-    exactStarsFilter: false,
-    aniGenButton: true,
-    autoURL: true,
-    permaHide: false,
-    rainbowBackground: false,
-    rainbowButton: false,
-    obsFriendly: false,
-    invertSplat: true,
-    hideHoverInfo: false,
-    customColor: null,
-    customBravoColor: null,
-    weaponQueueSize: 3,
-    subQueueSize: 0,
-    specialQueueSize: 0,
-    typeQueueSize: 0,
-    smartGen: false,
-    sideOrderMode: false,
-    autoChipColor: false,
-    averageChipColor: false,
-    showChipResult: true,
-}
+const CONFIG = new Config();
+CONFIG.setDefault();
 
+/**
+ * @deprecated
+ */
 const ORGINAL_CONFIG = structuredClone(CONFIG)
 
 /**
@@ -430,9 +402,7 @@ function setBackground(){
   
 }
 function resetConfig(){
-    for(let setting in CONFIG){
-        CONFIG[setting] = ORGINAL_CONFIG[setting]
-    }
+    CONFIG.setDefault();
     updateURL();
     setDefaultConfig();
 }
@@ -801,7 +771,7 @@ function hideAllControls(){
 function generateURL(){
     let url = new URL(window.location.href);
     for(let setting in CONFIG){
-        if(ORGINAL_CONFIG[setting] == CONFIG[setting]) continue;
+        if(CONFIG.isDefault(setting)) continue;
         if(setting == "teamColor") {
             url.searchParams.set(setting, CONFIG[setting].name.replace(" ", ""));
             continue;
