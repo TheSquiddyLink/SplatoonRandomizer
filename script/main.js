@@ -1292,7 +1292,7 @@ function toggleChipResult(){
  * @param {Color} color 
  */
 async function applyColor(color, imageID, canvas){
-    let ctx = canvas.getContext("2d");
+    let ctx = canvas.getContext("2d", { willReadFrequently: true });
     console.log(imageID)
     let image = document.getElementById(imageID);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
