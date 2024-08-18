@@ -108,11 +108,23 @@ let hoverTimeout;
 
 
 document.getElementById("addConfig").addEventListener("change", (e) => addConfigJSON(e));
+document.getElementById("exportPackage").addEventListener("click", (e) => exportPackage());
 
 document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function exportPackage(){
+    console.log(PACKAGE)
+    let json = PACKAGE.toJSON();
+    let blob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"});
+    let url = URL.createObjectURL(blob);
+    let link = document.createElement("a");
+    link.href = url;
+    link.download = "package.json";
+    link.click();
+}
 
 /**
  * @param {Event} event

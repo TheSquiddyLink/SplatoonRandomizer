@@ -27,6 +27,29 @@ export class Package {
     get length() {
         return this.configs.length
     }
+
+    loadPackageJSON(json){
+        this.name = json.name;
+        this.description = json.description;
+        this.author = json.author;
+        this.version = json.version;
+        this.date = json.date;
+        this.configs = json.configs.map(config => {
+            const configObj = new Config();
+            configObj.parseJSON(config);
+            return configObj;
+        });
+    }
+    toJSON(){
+        return {
+            name: this.name,
+            description: this.description,
+            author: this.author,
+            version: this.version,
+            date: this.date,
+            configs: this.configs.map(config => config.prepareJSON())
+        }
+    }
 }
 
 export class Config {
@@ -208,6 +231,16 @@ export class Config {
     setInfo(name, description) {
         this.metaData.name = name;
         this.metaData.description = description;
+    }
+    
+    prepareJSON(){
+        const JSON_CONFIG = structuredClone(this);
+        console.log(JSON_CONFIG);
+        JSON_CONFIG.teamColor = this.teamColor.name.replace(" ", "");
+        console.log(JSON_CONFIG.customColor)
+        if(JSON_CONFIG.customColor) JSON_CONFIG.customColor = this.customColor.toHex();
+        if(JSON_CONFIG.customBravoColor) JSON_CONFIG.customBravoColor = this.customBravoColor.toHex();
+        return JSON_CONFIG;
     }
     
 
