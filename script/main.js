@@ -8,11 +8,6 @@ const CONFIG = new Config();
 CONFIG.setDefault();
 
 /**
- * @deprecated
- */
-const ORGINAL_CONFIG = structuredClone(CONFIG)
-
-/**
  * @type {HTMLCanvasElement}
  */
 const WEAPON_INK_CANVAS = document.getElementById("weaponInk");
