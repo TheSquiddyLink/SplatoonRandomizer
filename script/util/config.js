@@ -14,7 +14,7 @@ export class Package {
     date;
 
     /** @type {Array<Config>} */
-    configs;
+    configs = [];
 
     /**
      * 

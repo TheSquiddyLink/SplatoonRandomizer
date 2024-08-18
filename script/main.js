@@ -124,6 +124,8 @@ async function addConfigJSON(event){
         let raw = await file.text();
         let json = JSON.parse(raw);
         console.log(json)
+        PACKAGE.addConfig(Config.parseJSON(json));
+        document.getElementById("addConfig").value = "";
     }
 
 }
