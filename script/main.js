@@ -119,13 +119,18 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
  */
 async function addConfigJSON(event){
     const files = event.target.files;
+    const selection = document.getElementById("configSelector");
     for(let i = 0; i < files.length; i++){
         let file = files[i];
         let raw = await file.text();
         let json = JSON.parse(raw);
         console.log(json)
-        PACKAGE.addConfig(Config.parseJSON(json));
+        let index = PACKAGE.addConfig(Config.parseJSON(json));
         document.getElementById("addConfig").value = "";
+        let option = document.createElement("option");
+        option.value = index;
+        option.text = json.metaData.name;
+        selection.appendChild(option);
     }
 
 }

@@ -22,6 +22,7 @@ export class Package {
      */
     addConfig(config){
         this.configs.push(config);
+        return this.length;
     }
     get length() {
         return this.configs.length
