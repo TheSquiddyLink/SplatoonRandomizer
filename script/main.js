@@ -129,6 +129,7 @@ document.getElementById("sideOrderMode").addEventListener("click", () => toggleS
 document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
 document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
 document.getElementById("showChipResult").addEventListener("click", () => toggleShowChipResult())
+document.getElementById("exportToJSON").addEventListener("click", () => exportToJSON())
 
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
@@ -141,6 +142,16 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function exportToJSON(){
+    let json = JSON.stringify(CONFIG);
+    let blob = new Blob([json], {type: "application/json"});
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = "config.json";
+    a.click();
+}
 
 function selectPreset(){
     let value = document.getElementById("presets").value;
