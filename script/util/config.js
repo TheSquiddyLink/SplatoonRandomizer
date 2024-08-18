@@ -125,6 +125,11 @@ export class Config {
     /** @type {boolean} */
     showChipResult;
     
+    metaData = {
+        name: "Default",
+        description: "Default config",
+    }
+
     setDefault() {
         this.autoHide = false;
         this.hideLen = 2.5;
@@ -199,6 +204,10 @@ export class Config {
         return config;
     }
 
+    setInfo(name, description) {
+        this.metaData.name = name;
+        this.metaData.description = description;
+    }
     
 
 }

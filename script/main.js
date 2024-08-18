@@ -865,6 +865,7 @@ function setDefaultConfig(){
         starsFilter: "selectStars"
     }
     for(let setting in CONFIG){
+        if(setting == "metaData") continue;
         if(setting == "obsFriendly") continue;
         if(setting == "teamColor"){
             document.getElementById(setting).value = CONFIG[setting].name.replace(" ", "");
