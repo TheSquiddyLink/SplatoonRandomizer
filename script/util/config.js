@@ -1,4 +1,4 @@
-import { Team } from "./general.js";
+import { Team, Color } from "./general.js";
 import { TEAMS } from "./constants.js";
 
 export class Package {
@@ -15,6 +15,17 @@ export class Package {
 
     /** @type {Array<Config>} */
     configs;
+
+    /**
+     * 
+     * @param {Config} config 
+     */
+    addConfig(config){
+        this.configs.push(config);
+    }
+    get length() {
+        return this.configs.length
+    }
 }
 
 export class Config {
@@ -156,4 +167,38 @@ export class Config {
         defaultConfig.setDefault();
         return this[property] === defaultConfig[property];
     }
+    parseJSON(json){
+        const KEYS = Object.keys(this);
+        let undefinedCount = 0;
+        for(let key in json){
+            console.log("Loading " + key + " from JSON");
+            if(key == "customColor" || key == "customBravoColor"){
+                if(json[key] == null) continue;
+                this.customColor = Color.hex(json[key]);
+                continue;
+            } 
+            if(key == "teamColor"){
+                this.teamColor = TEAMS[json[key]];
+                continue;
+            }
+            if(!(KEYS.includes(key))) {
+                console.warn(`${key} is not a valid config value.`);
+                console.log(`Value attempted to load: ${JSON[key]}`);
+                undefinedCount++;
+                continue;
+            }
+            this[key] = json[key];
+        }
+        if(undefinedCount > 0){
+            alert(`${undefinedCount} values were not valid for this config format. Please check the console for more information.`);
+        }
+    }
+    static parseJSON(json) {
+        const config = new Config();
+        config.parseJSON(json);
+        return config;
+    }
+
+    
+
 }

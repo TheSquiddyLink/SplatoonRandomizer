@@ -2,7 +2,9 @@ import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex,
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
-import { Config } from "./util/config.js";
+import { Config, Package } from "./util/config.js";
+
+const PACKAGE = new Package();
 
 const CONFIG = new Config();
 CONFIG.setDefault();
@@ -105,10 +107,26 @@ document.addEventListener("click", (e) => handleClick(e));
 let hoverTimeout;
 
 
+document.getElementById("addConfig").addEventListener("change", (e) => addConfigJSON(e));
+
 document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+/**
+ * @param {Event} event
+ */
+async function addConfigJSON(event){
+    const files = event.target.files;
+    for(let i = 0; i < files.length; i++){
+        let file = files[i];
+        let raw = await file.text();
+        let json = JSON.parse(raw);
+        console.log(json)
+    }
+
+}
 
 /**
  * @param {Event} e - File Upload Event
@@ -118,29 +136,8 @@ async function importFromJSON(event){
     console.log(file)
     let raw = await file.text();
     let json = JSON.parse(raw);
-    let undefinedCount = 0;
-    for(let key in json){
-        console.log("Loading " + key + " from JSON");
-        if(key == "customColor" || key == "customBravoColor"){
-            if(json[key] == null) continue;
-            CONFIG.customColor = Color.hex(json[key]);
-            continue;
-        } 
-        if(key == "teamColor"){
-            CONFIG.teamColor = TEAMS[json[key]];
-            continue;
-        }
-        if(CONFIG[key] == undefined) {
-            console.warn(`${key} is not a valid config value.`);
-            console.log(`Value attempted to load: ${JSON[key]}`);
-            undefinedCount++;
-            continue;
-        }
-        CONFIG[key] = json[key];
-    }
-    if(undefinedCount > 0){
-        alert(`${undefinedCount} values were not valid for this config format. Please check the console for more information.`);
-    }
+    CONFIG.parseJSON(json)
+    setDefaultConfig();
 }
 function exportToJSON(){
     const JSON_CONFIG = structuredClone(CONFIG);
