@@ -154,9 +154,18 @@ async function importFromJSON(event){
     let undefinedCount = 0;
     for(let key in json){
         console.log("Loading " + key + " from JSON");
-        // BUG: Custom Colors do not work
+        if(key == "customColor" || key == "customBravoColor"){
+            if(json[key] == null) continue;
+            CONFIG.customColor = Color.hex(json[key]);
+            continue;
+        } 
+        if(key == "teamColor"){
+            CONFIG.teamColor = TEAMS[json[key]];
+            continue;
+        }
         if(CONFIG[key] == undefined) {
             console.warn(`${key} is not a valid config value.`);
+            console.log(`Value attempted to load: ${JSON[key]}`);
             undefinedCount++;
             continue;
         }
@@ -167,7 +176,12 @@ async function importFromJSON(event){
     }
 }
 function exportToJSON(){
-    let json = JSON.stringify(CONFIG);
+    const JSON_CONFIG = structuredClone(CONFIG);
+    JSON_CONFIG.teamColor = CONFIG.teamColor.name.replace(" ", "");
+    console.log(JSON_CONFIG.customColor)
+    if(JSON_CONFIG.customColor !== null) JSON_CONFIG.customColor = CONFIG.customColor.toHex();
+    if(JSON_CONFIG.customBravoColor !== null) JSON_CONFIG.customBravoColor = CONFIG.customBravoColor.toHex();
+    let json = JSON.stringify(JSON_CONFIG);
     let blob = new Blob([json], {type: "application/json"});
     let url = URL.createObjectURL(blob);
     let a = document.createElement("a");
