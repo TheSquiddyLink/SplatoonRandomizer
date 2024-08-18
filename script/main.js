@@ -116,6 +116,12 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
 });
 
 function exportPackage(){
+    PACKAGE.name = document.getElementById("packageName").value;
+    PACKAGE.description = document.getElementById("packageDescription").value;
+    PACKAGE.author = document.getElementById("packageAuthor").value;
+    PACKAGE.version = document.getElementById("packageVersion").value;
+    PACKAGE.date = document.getElementById("packageDate").value;
+
     console.log(PACKAGE)
     let json = PACKAGE.toJSON();
     let blob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"});

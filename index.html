@@ -445,7 +445,14 @@
     <div id="packageEditor">
         <input type="file" id="importPackage" accept=".json">
         <input type="file" id="addConfig" accept=".json">
-        <button id="exportPackage">Export Package</button>
+        <form>
+            <input text="text" id="packageName" placeholder="Package Name">
+            <input type="text" id="packageDescription" placeholder="Package Description">
+            <input type="text" id="packageAuthor" placeholder="Package Author">
+            <input type="text" id="packageVersion" placeholder="Package Version">
+            <input type="date" id="packageDate" placeholder="Package Date">
+            <button id="exportPackage">Export Package</button>
+        </form>
         <select id="configSelector"></select>
     </div>
 
