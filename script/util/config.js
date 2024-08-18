@@ -1,7 +1,23 @@
 import { Team } from "./general.js";
 import { TEAMS } from "./constants.js";
 
-export default class Config {
+export class Package {
+    /** @type {string} */
+    name;
+    /** @type {string} */
+    description;
+    /** @type {string} */
+    author;
+    /** @type {string} */
+    version;
+    /** @type {string} */
+    date;
+
+    /** @type {Array<Config>} */
+    configs;
+}
+
+export class Config {
     /** @type {boolean} */
     autoHide;
 

@@ -2,7 +2,7 @@ import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex,
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
-import Config from "./util/config.js";
+import { Config } from "./util/config.js";
 
 const CONFIG = new Config();
 CONFIG.setDefault();
