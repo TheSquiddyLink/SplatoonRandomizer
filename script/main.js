@@ -130,7 +130,7 @@ document.getElementById("autoChipColor").addEventListener("click", () => toggleA
 document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
 document.getElementById("showChipResult").addEventListener("click", () => toggleShowChipResult())
 document.getElementById("exportToJSON").addEventListener("click", () => exportToJSON())
-
+document.getElementById("importFromJSON").addEventListener("change", (e) => importFromJSON(e))
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
@@ -143,6 +143,29 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
 
+/**
+ * @param {Event} e - File Upload Event
+ */
+async function importFromJSON(event){
+    let file = event.target.files[0];
+    console.log(file)
+    let raw = await file.text();
+    let json = JSON.parse(raw);
+    let undefinedCount = 0;
+    for(let key in json){
+        console.log("Loading " + key + " from JSON");
+        // BUG: Custom Colors do not work
+        if(CONFIG[key] == undefined) {
+            console.warn(`${key} is not a valid config value.`);
+            undefinedCount++;
+            continue;
+        }
+        CONFIG[key] = json[key];
+    }
+    if(undefinedCount > 0){
+        alert(`${undefinedCount} values were not valid for this config format. Please check the console for more information.`);
+    }
+}
 function exportToJSON(){
     let json = JSON.stringify(CONFIG);
     let blob = new Blob([json], {type: "application/json"});
