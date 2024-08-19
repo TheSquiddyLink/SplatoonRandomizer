@@ -135,6 +135,12 @@ async function importPackage(e){
         console.log(json)
         PACKAGE.loadPackageJSON(json);
         console.log(PACKAGE)
+        document.getElementById("packageInfo").hidden = false
+        document.getElementById("pkgName").innerHTML = PACKAGE.name;
+        document.getElementById("pkgAuthor").innerHTML = PACKAGE.author;
+        document.getElementById("pkgDescription").innerHTML = PACKAGE.description;
+        document.getElementById("pkgVersion").innerHTML = PACKAGE.version;
+        document.getElementById("pkgDate").innerHTML = PACKAGE.date;
     }
     updateConfigSelector();
 }
