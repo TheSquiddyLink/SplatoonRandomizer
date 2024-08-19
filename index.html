@@ -243,16 +243,21 @@
                         Permanently hide all UI</label>
                     <button id="permaHide">Perma Hide UI</button>
                 </span>
-                <!-- TODO: Add Hover Text -->
-                <label for="presets">Presets</label>
-                <select id="presets">
-                    <option value="none">None</option>
-                    <option value="SideOrder">Side Order</option>
-                    <option value="NoDLC">No DLC</option>
-                    <option value="Orginal">Orginal Kits</option>
-                    <option value="AltKits">Alternate Kits</option>
-                    <option value="CustomKits">Custom Branded Kits</option>
-                </select>
+                <span>
+                    <label for="presets"
+                        hoverTitle="Presets"
+                        hoverDesc="Choose a preset to load. This will overwrite your current config. If you want to keep your current config, you must save it first.">
+                        Presets</label>
+                    <select id="presets">
+                        <option value="none">None</option>
+                        <option value="SideOrder">Side Order</option>
+                        <option value="NoDLC">No DLC</option>
+                        <option value="Orginal">Orginal Kits</option>
+                        <option value="AltKits">Alternate Kits</option>
+                        <option value="CustomKits">Custom Branded Kits</option>
+                    </select>
+                </span>
+                
                 <span>
                     <label for="resetConfig"
                         hoverTitle="Reset to Default Config"
