@@ -150,8 +150,8 @@ export class Config {
     showChipResult;
     
     metaData = {
-        name: "Default",
-        description: "Default config",
+        name: "",
+        description: ""
     }
 
     setDefault() {
@@ -207,6 +207,9 @@ export class Config {
                 continue;
             } 
             if(key == "teamColor"){
+                console.log("Loading team color from JSON");
+                console.log("Team color: " + json[key]);
+                console.log(TEAMS[json[key]]);
                 this.teamColor = TEAMS[json[key]];
                 continue;
             }
@@ -214,6 +217,12 @@ export class Config {
                 console.warn(`${key} is not a valid config value.`);
                 console.log(`Value attempted to load: ${JSON[key]}`);
                 undefinedCount++;
+                continue;
+            }
+            if(key == "metaData"){
+                this.metaData.name = json[key].name;
+                this.metaData.description = json[key].description;
+                console.log("Loading metadata from JSON");
                 continue;
             }
             this[key] = json[key];
@@ -226,6 +235,12 @@ export class Config {
         const config = new Config();
         config.parseJSON(json);
         return config;
+    }
+    cloneFrom(config) {
+        for(let key in config) {
+            if(config[key] == null) continue;
+            this[key] = config[key];
+        }
     }
 
     setInfo(name, description) {

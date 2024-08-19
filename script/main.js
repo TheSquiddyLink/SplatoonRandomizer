@@ -109,11 +109,47 @@ let hoverTimeout;
 
 document.getElementById("addConfig").addEventListener("change", (e) => addConfigJSON(e));
 document.getElementById("exportPackage").addEventListener("click", (e) => exportPackage());
+document.getElementById("importPackage").addEventListener("change", (e) => importPackage(e));
+document.getElementById("importPackage2").addEventListener("change", (e) => importPackage(e));
+document.getElementById("configSelector").addEventListener("change", (e) => selectConfig(e));
 
 document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function selectConfig(e){
+    CONFIG.cloneFrom(PACKAGE.configs[e.target.value]);
+    setDefaultConfig();
+}
+
+/**
+ * @param {Event} e
+ */
+async function importPackage(e){
+    console.log("Importing Package")
+    const file = e.target.files[0];
+    if(file){
+        let raw = await file.text();
+        let json = JSON.parse(raw);
+        console.log(json)
+        PACKAGE.loadPackageJSON(json);
+        console.log(PACKAGE)
+    }
+    updateConfigSelector();
+}
+
+function updateConfigSelector(){
+    const selctor = document.getElementById("configSelector");
+    selctor.innerHTML = "";
+    for(let i = 0; i < PACKAGE.configs.length; i++){
+        console.log(PACKAGE.configs[i].metaData.name)
+        let option = document.createElement("option");
+        option.value = i;
+        option.innerHTML = PACKAGE.configs[i].metaData.name == "" ? "Unnamed Config "+i : PACKAGE.configs[i].metaData.name;
+        selctor.appendChild(option);
+    }
+}
 
 function exportPackage(){
     PACKAGE.name = document.getElementById("packageName").value;
@@ -889,6 +925,7 @@ function setDefaultConfig(){
         starsFilter: "selectStars"
     }
     for(let setting in CONFIG){
+        console.log(setting)
         if(setting == "metaData") continue;
         if(setting == "obsFriendly") continue;
         if(setting == "teamColor"){
