@@ -142,6 +142,11 @@ async function importPackage(e){
 function updateConfigSelector(){
     const selctor = document.getElementById("configSelector");
     selctor.innerHTML = "";
+    const palceholder = document.createElement("option");
+    palceholder.innerHTML = "Select Config";
+    palceholder.setAttribute("disabled", "true");
+    palceholder.setAttribute("selected", "true");
+    selctor.appendChild(palceholder);
     for(let i = 0; i < PACKAGE.configs.length; i++){
         console.log(PACKAGE.configs[i].metaData.name)
         let option = document.createElement("option");
