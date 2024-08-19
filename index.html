@@ -40,6 +40,8 @@
                     <option value="ui">Interface</option>
                     <option value="advanced">Advanced</option>
                     <option value="sideOrder">Side Order</option>
+                    <option value="packageEditor">Package Editor</option>
+                    <option value="packageSelector">Config Selector</option>
                 </select>
             </span>
         </div>
@@ -425,7 +427,7 @@
                 </span>
             </div>
         </div>
-        <div id="packageEditor">
+        <div id="packageEditorConfig" hidden>
             <h3>Package Editor</h3>
             <div class="configOptions">
                 <span>
@@ -447,7 +449,7 @@
                 </form>
             </div>
         </div>
-        <div id="packageSelector">
+        <div id="packageSelectorConfig" hidden>
             <h3>Config Selector</h3>
             <input type="file" id="importPackage2" accept=".json">
             <select id="configSelector" ></select>
