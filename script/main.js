@@ -125,11 +125,16 @@ function selectConfig(e){
 }
 
 /**
- * @param {Event} e
+ * Handles importing a package from a file
+ * - This will display the package info and update the config selector
+ * @param {Event} e - The event that triggered this function
+ * @see {@link Package.loadPackageJSON}
+ * @see {@link updateConfigSelector}
  */
 async function importPackage(e){
     console.log("Importing Package")
-    const file = e.target.files[0];
+    const target = /** @type {HTMLInputElement} */ (e.target);
+    const file = target.files[0];
     if(file){
         let raw = await file.text();
         let json = JSON.parse(raw);
@@ -146,6 +151,10 @@ async function importPackage(e){
     updateConfigSelector();
 }
 
+/**
+ * Update the config selection drop down menu with the configs in the package
+ * @see {@link PACKAGE}
+ */
 function updateConfigSelector(){
     const selctor = document.getElementById("configSelector");
     selctor.innerHTML = "";
@@ -163,6 +172,10 @@ function updateConfigSelector(){
     }
 }
 
+/**
+ * Export the current package to a file
+ * @see {@link PACKAGE}
+ */
 function exportPackage(){
     PACKAGE.name = document.getElementById("packageName").value;
     PACKAGE.description = document.getElementById("packageDescription").value;
@@ -181,10 +194,13 @@ function exportPackage(){
 }
 
 /**
+ * Add a config JSON to the package
+ * - This will add the config(s) to the package
  * @param {Event} event
  */
 async function addConfigJSON(event){
-    const files = event.target.files;
+    const target = /** @type {HTMLInputElement} */ (event.target);
+    const files = target.files;
     const selection = document.getElementById("configSelector");
     for(let i = 0; i < files.length; i++){
         let file = files[i];
@@ -202,10 +218,12 @@ async function addConfigJSON(event){
 }
 
 /**
- * @param {Event} e - File Upload Event
+ * Import a singular config from JSON
+ * @param {Event} event - File Upload Event
  */
 async function importFromJSON(event){
-    let file = event.target.files[0];
+    const target = /** @type {HTMLInputElement} */ (event.target);
+    let file = target.files[0];
     console.log(file)
     let raw = await file.text();
     let json = JSON.parse(raw);
