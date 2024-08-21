@@ -386,6 +386,12 @@ function invertTypes(){
         setTypeOpacity(weapon);
     }
 }
+
+/**
+ * Cap the size of an input field using the max attribute
+ * @param {String} idStr - The id of the input field
+ * @returns {number} The new value of the input field
+ */
 function capSize(idStr){
     console.log("capSize", idStr);
     const input = document.getElementById(idStr);
@@ -398,6 +404,10 @@ function capSize(idStr){
     }
     return input.value;
 }
+/**
+ * Set the queue size for weapons
+ * @see {@link CONFIG}
+ */
 function setQueueSize(){
     CONFIG.weaponQueueSize = capSize("weaponQueueSize");
     MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
@@ -412,6 +422,10 @@ function setQueueSize(){
     TYPE_QUEUE.maxSize = CONFIG.typeQueueSize;
 }   
 
+/**
+ * Toggle the visibility of config menu options based on the selection
+ * @see {@link CONFIG}
+ */
 function selectConfigMenu(){
     const configMenu = document.getElementById("selectConfigMenu");
     const configMenuValue = configMenu.value;
@@ -432,10 +446,17 @@ function selectConfigMenu(){
     }
 }
 
+/**
+ * Toggle the visibility of the hover info
+ * @see {@link CONFIG}
+ */
 function toggleHoverInfo(){
     CONFIG.hideHoverInfo = document.getElementById("hideHoverInfo").checked;
 }
 
+/**
+ * Toggle the custom color setting
+ */
 function toggleCustomColor(){
     let customColorToggle = document.getElementById("customColorToggle");
     let customColorSpan = document.getElementById("customColorSpan");
@@ -451,8 +472,9 @@ function toggleCustomColor(){
 }
 
 /**
- * 
+ * Handel hovering for hover info
  * @param {MouseEvent} event 
+ * @see {@link CONFIG}
  */
 function handleHover(event) {
     if(CONFIG.hideHoverInfo) return;
@@ -488,18 +510,30 @@ function handleHover(event) {
         hoverDesc.innerHTML = dec;
     });
 }
+/**
+ * Toggle the invert splat color setting
+ */
 function toggleSplatConfig(){
     let value = document.getElementById("invertSplat").checked;
     CONFIG.invertSplat = value;
     applyColorAll(getTeam());
 }
 
+/**
+ * Handle clicking when OBS friendly is enabled
+ * @param {MouseEvent} event 
+ */
 function handleClick(event){
     if(CONFIG.obsFriendly){
         event.preventDefault();
         generate();
     }
 }
+
+/**
+ * Confirm the user wants to reset all settings
+ * @returns {void}
+ */
 function resetAll(){
     let result = confirm("Are you sure you want to reset all settings including weapons?");
     if(!result) return;
@@ -510,7 +544,8 @@ function resetAll(){
 
 const INPUT_KEYS = ["Space", "Enter"]
 /**
- * 
+ * Handle pressing a key in {@link INPUT_KEYS}
+ * - If conditions are met it will generate a new weapon
  * @param {KeyboardEvent} event 
  */
 function handleKeyPress(event){
@@ -524,7 +559,14 @@ function handleKeyPress(event){
 
 }
 
-// setRainbowBackground();
+/**
+ * Set the background to the current setting
+ * - Rainbow background
+ * - Rainbow button
+ * - Normal Background
+ * - Normal button
+ * @see {@link CONFIG}
+ */
 function setBackground(){
     CONFIG.rainbowBackground = document.getElementById("rainbowBackground").checked
     CONFIG.rainbowButton = document.getElementById("rainbowButton").checked;
@@ -547,6 +589,11 @@ function setBackground(){
     }
   
 }
+
+/**
+ * Reset the current config to the default values
+ * @see {@link CONFIG.setDefault}
+ */
 function resetConfig(){
     CONFIG.setDefault();
     updateURL();
