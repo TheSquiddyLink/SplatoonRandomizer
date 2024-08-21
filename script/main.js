@@ -563,6 +563,8 @@ function loadUrlConfig(){
     else enableAllSubs();
     if(params.get("specialConfig") !== null) parseSpecialConfigHex(params.get("specialConfig"));
     else enableAllSpecials();
+    if(params.get("typeConfig") !== null) parseTypeConfigHex(params.get("typeConfig"));
+    else enableAllTypes();
     if(params.get("teamColor") !== null) setTeamColor(params.get("teamColor"));
     if(params.get("teamSide") !== null) setTeamSide(params.get("teamSide"));
     if(params.get("editStars") !== null) CONFIG.editStars = params.get("editStars") == "true";
@@ -603,6 +605,17 @@ function loadUrlConfig(){
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
     generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
 }
+
+function enableAllTypes(){
+    for(let type of MAIN_TYPES){
+        type.enabled = true;
+    }
+}
+
+function parseTypeConfigHex(hex){
+    parseAnyWeaponFromHex(hex, MAIN_TYPES);
+}
+
 
 function loadPreset(presetStr){
     console.log("Loading Preset"+ presetStr)
@@ -855,6 +868,7 @@ function generateURL(){
     url.searchParams.set("subConfig", generateSubConfigHex());
     url.searchParams.set("specialConfig", generateSpecialConfigHex());
     url.searchParams.set("starConfig", generateStarHex(MAIN_WEAPONS));
+    url.searchParams.set("typeConfig", generateAnyConfigHex(MAIN_TYPES));
     return url
 }
 function exportToURL(){
