@@ -607,7 +607,8 @@ function loadUrlConfig(){
 }
 
 function enableAllTypes(){
-    for(let type of MAIN_TYPES){
+    for(let key in MAIN_TYPES){
+        let type = MAIN_TYPES[key]
         type.enabled = true;
     }
 }
