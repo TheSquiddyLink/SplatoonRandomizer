@@ -1042,6 +1042,9 @@ async function generate(){
         generateButton.disabled = true;
     }
     let randomizerResult = document.getElementById("randomizerResult");
+    randomizerResult.style.animation = `fadeOut 0.25s`;
+    await sleep(250);
+    randomizerResult.style.animation = "";
     randomizerResult.hidden = false;
     console.log(ORDER_WEAPONS)
     let filteredWeapons = CONFIG.sideOrderMode ? filterWeapons(ORDER_WEAPONS) : filterWeapons(MAIN_WEAPONS);
@@ -1095,7 +1098,6 @@ async function generate(){
     let subSpecial = document.getElementsByClassName("multiImage");
     let primaryChip = document.getElementById("primaryChip");
     let secondaryChip = document.getElementById("secondaryChip");
-    // TODO: Add a fade out for 100ms before the animation starts
     subSpecial.item(0).hidden = true;
     subSpecial.item(1).hidden = true;
     mainWeaponName.hidden = true;
