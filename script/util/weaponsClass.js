@@ -45,8 +45,19 @@ class BaseWeapon {
         this.enabled = !this.enabled;
     }
 }
+/**
+ * The is a weapon class that has a secondary texture, it is not directly used by the randomizer.
+ */
 class SecondaryTextureWeapon extends BaseWeapon {
+    /**
+     * @type {string} - The file name of the weapon's secondary texture, excluding path and file extension
+     */
     secondaryTexture;
+    /**
+     * 
+     * @param {String} name - Name of the weapon
+     * @param {String} primaryTexture - The file name of the weapon's primary texture, excluding path and file extension as well as the file number "_1"
+     */
     constructor(name, primaryTexture) {
         super(name, primaryTexture);
         this.primaryTexture = this.path+primaryTexture+"_1.png";
