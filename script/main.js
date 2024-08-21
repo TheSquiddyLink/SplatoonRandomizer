@@ -2,43 +2,12 @@ import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex,
 import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
+import { Config, Package } from "./util/config.js";
 
-const CONFIG = {
-    autoHide: false,
-    hideLen: 2.5,
-    showLen: 2.5,
-    disableSound: false,
-    iterations: 25,
-    disableAnimation: false, 
-    teamColor: TEAMS.BlueYellow,
-    teamSide: "alpha",
-    editStars: false,
-    displayStars: false,
-    resultStars: false,
-    starsFilter: 0,
-    exactStarsFilter: false,
-    aniGenButton: true,
-    autoURL: true,
-    permaHide: false,
-    rainbowBackground: false,
-    rainbowButton: false,
-    obsFriendly: false,
-    invertSplat: true,
-    hideHoverInfo: false,
-    customColor: null,
-    customBravoColor: null,
-    weaponQueueSize: 3,
-    subQueueSize: 0,
-    specialQueueSize: 0,
-    typeQueueSize: 0,
-    smartGen: false,
-    sideOrderMode: false,
-    autoChipColor: false,
-    averageChipColor: false,
-    showChipResult: true,
-}
+const PACKAGE = new Package();
 
-const ORGINAL_CONFIG = structuredClone(CONFIG)
+const CONFIG = new Config();
+CONFIG.setDefault();
 
 /**
  * @type {HTMLCanvasElement}
@@ -129,7 +98,8 @@ document.getElementById("sideOrderMode").addEventListener("click", () => toggleS
 document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
 document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
 document.getElementById("showChipResult").addEventListener("click", () => toggleShowChipResult())
-
+document.getElementById("exportToJSON").addEventListener("click", () => exportToJSON())
+document.getElementById("importFromJSON").addEventListener("change", (e) => importFromJSON(e))
 document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
@@ -137,10 +107,124 @@ document.addEventListener("click", (e) => handleClick(e));
 let hoverTimeout;
 
 
+document.getElementById("addConfig").addEventListener("change", (e) => addConfigJSON(e));
+document.getElementById("exportPackage").addEventListener("click", (e) => exportPackage());
+document.getElementById("importPackage").addEventListener("change", (e) => importPackage(e));
+document.getElementById("importPackage2").addEventListener("change", (e) => importPackage(e));
+document.getElementById("configSelector").addEventListener("change", (e) => selectConfig(e));
+
 document.getElementById("config").addEventListener("mousemove", (e) => {
     clearTimeout(hoverTimeout);
     hoverTimeout = setTimeout(() => handleHover(e), 10);
 });
+
+function selectConfig(e){
+    CONFIG.cloneFrom(PACKAGE.configs[e.target.value]);
+    setDefaultConfig();
+}
+
+/**
+ * @param {Event} e
+ */
+async function importPackage(e){
+    console.log("Importing Package")
+    const file = e.target.files[0];
+    if(file){
+        let raw = await file.text();
+        let json = JSON.parse(raw);
+        console.log(json)
+        PACKAGE.loadPackageJSON(json);
+        console.log(PACKAGE)
+        document.getElementById("packageInfo").hidden = false
+        document.getElementById("pkgName").innerHTML = PACKAGE.name;
+        document.getElementById("pkgAuthor").innerHTML = PACKAGE.author;
+        document.getElementById("pkgDescription").innerHTML = PACKAGE.description;
+        document.getElementById("pkgVersion").innerHTML = PACKAGE.version;
+        document.getElementById("pkgDate").innerHTML = PACKAGE.date;
+    }
+    updateConfigSelector();
+}
+
+function updateConfigSelector(){
+    const selctor = document.getElementById("configSelector");
+    selctor.innerHTML = "";
+    const palceholder = document.createElement("option");
+    palceholder.innerHTML = "Select Config";
+    palceholder.setAttribute("disabled", "true");
+    palceholder.setAttribute("selected", "true");
+    selctor.appendChild(palceholder);
+    for(let i = 0; i < PACKAGE.configs.length; i++){
+        console.log(PACKAGE.configs[i].metaData.name)
+        let option = document.createElement("option");
+        option.value = i;
+        option.innerHTML = PACKAGE.configs[i].metaData.name == "" ? "Unnamed Config "+i : PACKAGE.configs[i].metaData.name;
+        selctor.appendChild(option);
+    }
+}
+
+function exportPackage(){
+    PACKAGE.name = document.getElementById("packageName").value;
+    PACKAGE.description = document.getElementById("packageDescription").value;
+    PACKAGE.author = document.getElementById("packageAuthor").value;
+    PACKAGE.version = document.getElementById("packageVersion").value;
+    PACKAGE.date = document.getElementById("packageDate").value;
+
+    console.log(PACKAGE)
+    let json = PACKAGE.toJSON();
+    let blob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"});
+    let url = URL.createObjectURL(blob);
+    let link = document.createElement("a");
+    link.href = url;
+    link.download = "package.json";
+    link.click();
+}
+
+/**
+ * @param {Event} event
+ */
+async function addConfigJSON(event){
+    const files = event.target.files;
+    const selection = document.getElementById("configSelector");
+    for(let i = 0; i < files.length; i++){
+        let file = files[i];
+        let raw = await file.text();
+        let json = JSON.parse(raw);
+        console.log(json)
+        let index = PACKAGE.addConfig(Config.parseJSON(json));
+        document.getElementById("addConfig").value = "";
+        let option = document.createElement("option");
+        option.value = index;
+        option.text = json.metaData.name;
+        selection.appendChild(option);
+    }
+
+}
+
+/**
+ * @param {Event} e - File Upload Event
+ */
+async function importFromJSON(event){
+    let file = event.target.files[0];
+    console.log(file)
+    let raw = await file.text();
+    let json = JSON.parse(raw);
+    CONFIG.parseJSON(json)
+    setDefaultConfig();
+}
+function exportToJSON(){
+    const JSON_CONFIG = structuredClone(CONFIG);
+    JSON_CONFIG.teamColor = CONFIG.teamColor.name.replace(" ", "");
+    console.log(JSON_CONFIG.customColor)
+    if(JSON_CONFIG.customColor !== null) JSON_CONFIG.customColor = CONFIG.customColor.toHex();
+    if(JSON_CONFIG.customBravoColor !== null) JSON_CONFIG.customBravoColor = CONFIG.customBravoColor.toHex();
+    let json = JSON.stringify(JSON_CONFIG);
+    let blob = new Blob([json], {type: "application/json"});
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = "config.json";
+    a.click();
+}
 
 function selectPreset(){
     let value = document.getElementById("presets").value;
@@ -352,6 +436,7 @@ function handleKeyPress(event){
     console.log("Key Pressed: ");
     console.log(event.code);
     if(INPUT_KEYS.includes(event.code)){
+        if(event.target.tagName.toLowerCase() === "input") return;
         event.preventDefault();
         generate();
     }
@@ -382,9 +467,7 @@ function setBackground(){
   
 }
 function resetConfig(){
-    for(let setting in CONFIG){
-        CONFIG[setting] = ORGINAL_CONFIG[setting]
-    }
+    CONFIG.setDefault();
     updateURL();
     setDefaultConfig();
 }
@@ -480,6 +563,8 @@ function loadUrlConfig(){
     else enableAllSubs();
     if(params.get("specialConfig") !== null) parseSpecialConfigHex(params.get("specialConfig"));
     else enableAllSpecials();
+    if(params.get("typeConfig") !== null) parseTypeConfigHex(params.get("typeConfig"));
+    else enableAllTypes();
     if(params.get("teamColor") !== null) setTeamColor(params.get("teamColor"));
     if(params.get("teamSide") !== null) setTeamSide(params.get("teamSide"));
     if(params.get("editStars") !== null) CONFIG.editStars = params.get("editStars") == "true";
@@ -520,6 +605,17 @@ function loadUrlConfig(){
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
     generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
 }
+
+function enableAllTypes(){
+    for(let type of MAIN_TYPES){
+        type.enabled = true;
+    }
+}
+
+function parseTypeConfigHex(hex){
+    parseAnyWeaponFromHex(hex, MAIN_TYPES);
+}
+
 
 function loadPreset(presetStr){
     console.log("Loading Preset"+ presetStr)
@@ -753,7 +849,11 @@ function hideAllControls(){
 function generateURL(){
     let url = new URL(window.location.href);
     for(let setting in CONFIG){
-        if(ORGINAL_CONFIG[setting] == CONFIG[setting]) continue;
+        if(setting == "metaData") continue;
+        if(CONFIG.isDefault(setting)) {
+            url.searchParams.delete(setting);
+            continue;
+        }
         if(setting == "teamColor") {
             url.searchParams.set(setting, CONFIG[setting].name.replace(" ", ""));
             continue;
@@ -768,6 +868,7 @@ function generateURL(){
     url.searchParams.set("subConfig", generateSubConfigHex());
     url.searchParams.set("specialConfig", generateSpecialConfigHex());
     url.searchParams.set("starConfig", generateStarHex(MAIN_WEAPONS));
+    url.searchParams.set("typeConfig", generateAnyConfigHex(MAIN_TYPES));
     return url
 }
 function exportToURL(){
@@ -853,6 +954,8 @@ function setDefaultConfig(){
         starsFilter: "selectStars"
     }
     for(let setting in CONFIG){
+        console.log(setting)
+        if(setting == "metaData") continue;
         if(setting == "obsFriendly") continue;
         if(setting == "teamColor"){
             document.getElementById(setting).value = CONFIG[setting].name.replace(" ", "");
@@ -957,6 +1060,9 @@ async function generate(){
         generateButton.disabled = true;
     }
     let randomizerResult = document.getElementById("randomizerResult");
+    randomizerResult.style.animation = `fadeOut 0.25s`;
+    await sleep(250);
+    randomizerResult.style.animation = "";
     randomizerResult.hidden = false;
     console.log(ORDER_WEAPONS)
     let filteredWeapons = CONFIG.sideOrderMode ? filterWeapons(ORDER_WEAPONS) : filterWeapons(MAIN_WEAPONS);
@@ -1010,7 +1116,6 @@ async function generate(){
     let subSpecial = document.getElementsByClassName("multiImage");
     let primaryChip = document.getElementById("primaryChip");
     let secondaryChip = document.getElementById("secondaryChip");
-    // TODO: Add a fade out for 100ms before the animation starts
     subSpecial.item(0).hidden = true;
     subSpecial.item(1).hidden = true;
     mainWeaponName.hidden = true;

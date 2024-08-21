@@ -284,8 +284,37 @@ const NoDLCPreset = {
 const OriginalKitsPreset = {
   weaponHex: "C66AA000EFB0B4AA4F4080B6D2ACFAFF8E8"
 }
+
+const AltKitsPreset = {
+  weaponHex: "739955FFF104F4B15B0BF20092D530500717"
+}
+const CustomBrandKitsPreset = {
+  weaponHex: "1FFA000000000000000000000000000"
+}
+
+const ScopedPreset = {
+  weaponHex: "200010000000000000000000040002"
+}
+
+const HeavyPreset = {
+  weaponHex: "180000BAA23A040200000004E00000600C08"
+}
+
+const ShortRangePreset = {
+  weaponHex: "3060001800000181C084000060001821B1"
+}
+
+const RetroPreset = {
+  weaponHex: "4001840180000001E1E1C0046"
+}
 export const PRESETS = {
   SideOrder: SideOrderPreset,
   NoDLC: NoDLCPreset,
-  Orginal: OriginalKitsPreset
+  Orginal: OriginalKitsPreset,
+  AltKits: AltKitsPreset,
+  CustomKits: CustomBrandKitsPreset,
+  Scoped: ScopedPreset,
+  Heavy: HeavyPreset,
+  ShortRange: ShortRangePreset,
+  Retro: RetroPreset
 }
