@@ -1,4 +1,4 @@
-import { BaseWeapon } from "./weaponsClass.js";
+import { BaseWeapon, MainWeapon, WeaponType } from "./weaponsClass.js";
 /**
  * Class for a color
  * - Handles RGB and HEX colors
@@ -82,10 +82,21 @@ class Team {
     }
 }
 
+/**
+ * Sleep for a given amount of time in milliseconds
+ * @param {number} ms - Milliseconds to sleep for
+ * @returns {Promise<void>} - Promise that resolves when the sleep is done
+ */
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// TODO: Change to retrive an object rather than key
+/**
+ * Get a random key from an object
+ * @param {Object} object - Object to get a random key from
+ * @returns {string} - Random key from the object
+ */
 function randomObject(object){
     let arr = Object.keys(object);
     let index = Math.floor(Math.random()*(arr.length))
@@ -93,6 +104,15 @@ function randomObject(object){
     return arr[index];
 }
 
+
+/**
+ * Runs a function repeatedly at a given interval for a specified number of times.
+ * @param {function} func - The function to be executed on each interval.
+ * @param {number} ms - The interval in milliseconds between each function call.
+ * @param {number} length - The number of times to execute the function.
+ * @returns {Promise<void>} - A Promise that resolves when the interval has completed.
+ * @deprecated - Unused
+ */
 function intervalFor(func, ms, length) {
     return new Promise((resolve) => {
         let i = 0;
@@ -107,13 +127,21 @@ function intervalFor(func, ms, length) {
     });
 }
 
+
 /**
- * 
+ * Check if a weapon is disabled
+ * @param {MainWeapon} weapon - Weapon to check
+ * @returns {boolean} - True if the weapon is disabled, false otherwise
  */
 function isWeaponDisabled(weapon){
     return weapon.getEnabled();
 }
 
+/**
+ * Check if a weapon is disabled
+ * @param {Record<string, MainWeapon>} weapons - Weapons to check
+ * @returns {Record<string, MainWeapon>} - Weapons that are not disabled
+ */
 function filterWeapons(weapons){
     let filteredWeapons = {};
     for(
@@ -126,6 +154,14 @@ function filterWeapons(weapons){
     }
     return filteredWeapons;
 }
+filterByType
+/**
+ * Filter weapons based on stars
+ * @param {Record<string, MainWeapon>} weapons - Weapons to filter
+ * @param {number} min - Minimum stars (0 | 1 | 2 | 3 | 4 | 5)
+ * @param {Boolean|null} exact - If true, only weapons with the exact number of stars will be returned. If false or null (default), weapons with more stars than the minimum will be returned.
+ * @returns {Record<string, MainWeapon>} - Filtered weapons
+ */
 function filterWeaponsStars(weapons, min, exact){
     console.log("Exact filter: "+exact);
     console.log("Min: "+min);
@@ -147,6 +183,11 @@ function filterWeaponsStars(weapons, min, exact){
     return result;
 }
 
+/**
+ * Generate Star Hex Code
+ * @param {Array<MainWeapon>} weaponArray - Array of weapons
+ * @returns {string} - Hex code of the star pattern
+ */
 function generateStarHex(weaponArray){
     let binaryString = "";
     for(let weapon in weaponArray){
@@ -163,10 +204,11 @@ function generateStarHex(weaponArray){
 }
 
 /**
- * 
+ * Toggle the current state of all weapons
  * @param {Array<BaseWeapon>} weapons 
  */
 function toggleAll(weapons){
+    // TODO: Change to a for of loop
     for(let weapon in weapons){
         let weaponObj = weapons[weapon];
         weaponObj.toggleEnabled();
@@ -174,13 +216,14 @@ function toggleAll(weapons){
 }
 
 /**
- * 
- * @param {Array<BaseWeapon>} weapons 
- * @param {String} type 
- * @returns 
+ * Filter by weapon type
+ * @param {Array<BaseWeapon>} weapons - Weapons to filter
+ * @param {WeaponType} type - Type of weapon to filter by
+ * @returns {Array<BaseWeapon>} - Filtered weapons
  */
 function filterByType(weapons, type){
     let result = {};
+    // TODO: Change to a for of loop
     for(let weapon in weapons){
         let weaponObj = weapons[weapon];
         if(weaponObj.type.name == type.toLowerCase()){
@@ -190,6 +233,13 @@ function filterByType(weapons, type){
     return result;
 }
 
+/**
+ * 
+ * @param {Color} color1 - First color
+ * @param {Color} color2 - Second color
+ * @param {number} color2Weight - Weight of the second color (0-1)
+ * @returns {Color} - Average color using weighted average
+ */
 function averageColor(color1, color2, color2Weight){
     let color1Weight = 1 - color2Weight;
     let r = Math.round(color1.r * color1Weight + color2.r * color2Weight);
@@ -237,4 +287,5 @@ class Queue {
         return this.queue.length;
     }
 }
+
 export { Color, Team, Queue, sleep, randomObject, intervalFor, filterWeapons, filterWeaponsStars, generateStarHex, toggleAll, filterByType, averageColor };
