@@ -82,7 +82,14 @@ class SubWeapon extends SecondaryTextureWeapon {
     }
 }
 
+/**
+ * This is a special weapon class
+ */
 class SpecialWeapon extends SecondaryTextureWeapon {
+    /**
+     * @param {String} name - Name of the weapon
+     * @param {String} primaryTexture - The file name of the weapon's primary texture, excluding path and file extension as well as the file number "_1"
+     */
     constructor(name, primaryTexture) {
         super(name, primaryTexture);
     }
