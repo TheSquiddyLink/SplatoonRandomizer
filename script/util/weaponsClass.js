@@ -64,7 +64,16 @@ class SecondaryTextureWeapon extends BaseWeapon {
         this.secondaryTexture = this.path+primaryTexture+"_2.png";
     }
 }
+
+/**
+ * This is a sub weapon class
+ */
 class SubWeapon extends SecondaryTextureWeapon {
+    /**
+     * 
+     * @param {String} name - Name of the weapon
+     * @param {String} primaryTexture - The file name of the weapon's primary texture, excluding path and file extension as well as the file number "_1"
+     */
     constructor(name, primaryTexture) {
         super(name, primaryTexture);
     }
