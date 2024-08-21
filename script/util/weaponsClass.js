@@ -190,15 +190,30 @@ class ColorChip extends BaseWeapon {
     }
 }
 
+/**
+ * This is a side order weapon class
+ * @extends {MainWeapon}
+ */
 class SideOrderWeapon extends MainWeapon {
     /**
-     * @type {ColorChip}
+     * @type {ColorChip} - The primary color chip of the weapon
      */
     primaryChip;
     /**
-     * @type {ColorChip}
+     * @type {ColorChip} - The secondary color chip of the weapon
      */
     secondaryChip;
+
+    /**
+     * 
+     * @param {String} name - Name of the weapon
+     * @param {WeaponType} type - The type of the weapon
+     * @param {String} primaryTexture - The file name of the weapon's primary texture, excluding path and file extension
+     * @param {SubWeapon} subWeapon - The sub weapon of the weapon
+     * @param {SpecialWeapon} specialWeapon - The special weapon of the weapon
+     * @param {ColorChip} primaryChip - The primary color chip of the weapon
+     * @param {ColorChip} secondaryChip - The secondary color chip of the weapon
+     */
     constructor(name, type, primaryTexture, subWeapon, specialWeapon, primaryChip, secondaryChip){
         super(name, type, primaryTexture, subWeapon, specialWeapon);
         console.log(this.name)
@@ -210,6 +225,16 @@ class SideOrderWeapon extends MainWeapon {
     get path(){
         return WEAPON_TEXTURES;
     }
+    /**
+     * Get the current enabled state of the weapon, checking the following
+     * - The weapon is enabled
+     * - The sub weapon is enabled
+     * - The special weapon is enabled
+     * - The type is enabled
+     * - The primary chip is enabled | Unused
+     * - The secondary chip is enabled | Unused
+     * @returns {boolean} - Whether the weapon is enabled
+     */
     getEnabled() {
         return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled;
     }
