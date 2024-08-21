@@ -98,21 +98,40 @@ class SpecialWeapon extends SecondaryTextureWeapon {
     }
 }
 
+/**
+ * This is a main weapon class, it will contain a sub weapon and a special weapon
+ * @extends {BaseWeapon}
+ */
 class MainWeapon extends BaseWeapon {
     /**
-     * @type {string}
+     * @type {WeaponType} - The type of the weapon
+     * @see {@link WeaponType}
      */
     type;
     /**
-     * @type {SubWeapon}
+     * @type {SubWeapon} - The sub weapon of the weapon
+     * @see {@link SubWeapon}
      */
     subWeapon;
     /**
-     * @type {SpecialWeapon}
+     * @type {SpecialWeapon} - The special weapon of the weapon
+     * @see {@link SpecialWeapon}
      */
     specialWeapon;
 
+    /**
+     * @type {number} - The number of stars the weapon has
+     * @default 5 - This default is subject to change
+     */
     stars = 5;
+    /**
+     * 
+     * @param {String} name  - Name of the weapon
+     * @param {WeaponType} type - The type of the weapon
+     * @param {String} primaryTexture - The file name of the weapon's primary texture, excluding path and file extension
+     * @param {SubWeapon} subWeapon - The sub weapon of the weapon
+     * @param {SpecialWeapon} specialWeapon - The special weapon of the weapon
+     */
     constructor(name, type, primaryTexture, subWeapon, specialWeapon) {
         super(name, primaryTexture);
         this.type = type;
@@ -122,12 +141,31 @@ class MainWeapon extends BaseWeapon {
     get path(){
         return WEAPON_TEXTURES;
     }
+    /**
+     * Get the current enabled state of the weapon, checking the following
+     * - The weapon is enabled
+     * - The sub weapon is enabled
+     * - The special weapon is enabled
+     * - The type is enabled
+     * @returns {boolean} - Whether the weapon is enabled
+     */
     getEnabled() {
         return this.enabled && this.subWeapon.enabled && this.specialWeapon.enabled && this.type.enabled;
     }
+    /**
+     * Increase the stars of the weapon
+     * @returns {number} - The new number of stars the weapon has
+     * @see {@link stars}
+     */
     increaseStars() {
         if(this.stars < 5) this.stars++;
+        return this.stars;
     }
+    /**
+     * Decrease the stars of the weapon
+     * @returns {number} - The new number of stars the weapon has
+     * @see {@link stars}
+     */
     decreaseStars() {
         if(this.stars > 0) this.stars--;
         return this.stars;
