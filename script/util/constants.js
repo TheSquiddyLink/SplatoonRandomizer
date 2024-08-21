@@ -291,10 +291,15 @@ const AltKitsPreset = {
 const CustomBrandKitsPreset = {
   weaponHex: "1FFA000000000000000000000000000"
 }
+
+const ScopedPreset = {
+  weaponHex: "200010000000000000000000040002"
+}
 export const PRESETS = {
   SideOrder: SideOrderPreset,
   NoDLC: NoDLCPreset,
   Orginal: OriginalKitsPreset,
   AltKits: AltKitsPreset,
-  CustomKits: CustomBrandKitsPreset
+  CustomKits: CustomBrandKitsPreset,
+  Scoped: ScopedPreset
 }
