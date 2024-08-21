@@ -1,33 +1,45 @@
 import { Team, Color } from "./general.js";
 import { TEAMS } from "./constants.js";
 
+/**
+ * Class for a package
+ * @see {@link Config}
+ */
 export class Package {
-    /** @type {string} */
+    /** @type {string} - package name */
     name;
-    /** @type {string} */
+    /** @type {string} - package description */
     description;
-    /** @type {string} */
+    /** @type {string} - package author */
     author;
-    /** @type {string} */
+    /** @type {string} - package version */
     version;
-    /** @type {string} */
+    /** @type {string} - package date */
     date;
 
-    /** @type {Array<Config>} */
+    /** @type {Array<Config>} - package configs */
     configs = [];
 
     /**
-     * 
+     * Add a config to the package
      * @param {Config} config 
      */
     addConfig(config){
         this.configs.push(config);
         return this.length;
     }
+    /**
+     * Get the length of the package
+     * @returns {number}
+     */
     get length() {
         return this.configs.length
     }
 
+    /**
+     * Load a package from a JSON object
+     * @param {Package} json - JSON object, expected to be a package JSON object
+     */
     loadPackageJSON(json){
         this.name = json.name;
         this.description = json.description;
@@ -40,6 +52,11 @@ export class Package {
             return configObj;
         });
     }
+    /**
+     * Convert the package to a JSON object
+     * @returns {Object} - JSON object
+     * @see {@link Config.prepareJSON}
+     */
     toJSON(){
         return {
             name: this.name,
