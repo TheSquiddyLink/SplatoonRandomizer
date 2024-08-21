@@ -241,14 +241,36 @@ class SideOrderWeapon extends MainWeapon {
 
 }
 
+/**
+ * The weapon type class
+ * - This is used to determine the type of weapon a weapon is
+ * @see {@link MainWeapon}
+ * @see {@link SideOrderWeapon}
+ */
 class WeaponType {
+    /**
+     * @type {String} - The name of the weapon type
+     */
     name;
+    /**
+     * @type {String} - The file name of the weapon type's primary texture, excluding path and file extension
+     */
     primaryTexture;
+    /**
+     * @type {boolean} - Whether the weapon type is enabled
+     */
     enabled = true;
+    /**
+     * 
+     * @param {String} name - The name of the weapon type
+     */
     constructor(name) {
         this.name = name;
         this.primaryTexture = "./assets/weapon_type/"+name+".png";
     }
+    /**
+     * Toggle the enabled state of the weapon type
+     */
     toggleEnabled(){
         this.enabled = !this.enabled;
     }
