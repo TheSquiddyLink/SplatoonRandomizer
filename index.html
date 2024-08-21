@@ -475,9 +475,15 @@
                 <p>Version: <span id="pkgVersion"></span></p>
                 <p>Date: <span id="pkgDate"></span></p>
             </div>           
-            <label for="importPackage2">Import JSON Package</label>
+            <label for="importPackage2"
+                hoverTitle="Import Package"
+                hoverDesc="Import a package from a JSON file, overwriting the current package">
+                Import JSON Package</label>
             <input type="file" id="importPackage2" accept=".json">
-            <label for="configSelector">Select a Config</label>
+            <label for="configSelector"
+                hoverTitle="Select a Config"
+                hoverDesc="Select a config to load from the current package">
+                Select a Config</label>
             <select id="configSelector" ></select>
         </div>
         <button id="exportToURL">Export to URL</button>
