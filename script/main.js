@@ -837,7 +837,10 @@ function generateURL(){
     let url = new URL(window.location.href);
     for(let setting in CONFIG){
         if(setting == "metaData") continue;
-        if(CONFIG.isDefault(setting)) continue;
+        if(CONFIG.isDefault(setting)) {
+            url.searchParams.delete(setting);
+            continue;
+        }
         if(setting == "teamColor") {
             url.searchParams.set(setting, CONFIG[setting].name.replace(" ", ""));
             continue;

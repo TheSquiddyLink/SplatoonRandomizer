@@ -194,7 +194,7 @@ export class Config {
     isDefault(property) {
         const defaultConfig = new Config();
         defaultConfig.setDefault();
-        return this[property] === defaultConfig[property];
+        return this[property] == defaultConfig[property];
     }
     parseJSON(json){
         const KEYS = Object.keys(this);
