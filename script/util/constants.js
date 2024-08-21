@@ -1,5 +1,19 @@
 import {Team, Color, randomObject} from "./general.js";
-import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES, SideOrderWeapon, ColorChip} from "./weaponsClass.js";
+import {SubWeapon, SpecialWeapon, MainWeapon, SideOrderWeapon, ColorChip, WeaponType} from "./weaponsClass.js";
+
+export const MAIN_TYPES = {
+  Blaster: new WeaponType("blaster"),
+  Brella: new WeaponType("brella"),
+  Brush: new WeaponType("brush"),
+  Charger: new WeaponType("charger"),
+  Dualies: new WeaponType("dualies"),
+  Roller: new WeaponType("roller"),
+  Shooter: new WeaponType("shooter"),
+  Slosher: new WeaponType("slosher"),
+  Splatana: new WeaponType("splatana"),
+  Splatling: new WeaponType("splatling"),
+  Stringer: new WeaponType("stringer"),
+};
 
 export const SPECIAL_WEAPONS = {
     BigBubbler: new SpecialWeapon("Big Bubbler", "big_bubbler"),
@@ -317,4 +331,4 @@ export const PRESETS = {
   Heavy: HeavyPreset,
   ShortRange: ShortRangePreset,
   Retro: RetroPreset
-}
+};

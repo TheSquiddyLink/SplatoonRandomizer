@@ -130,19 +130,4 @@ class WeaponType {
     }
 }
 
-
-const MAIN_TYPES = {
-    Blaster: new WeaponType("blaster"),
-    Brella: new WeaponType("brella"),
-    Brush: new WeaponType("brush"),
-    Charger: new WeaponType("charger"),
-    Dualies: new WeaponType("dualies"),
-    Roller: new WeaponType("roller"),
-    Shooter: new WeaponType("shooter"),
-    Slosher: new WeaponType("slosher"),
-    Splatana: new WeaponType("splatana"),
-    Splatling: new WeaponType("splatling"),
-    Stringer: new WeaponType("stringer"),
-}
-
-export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, ColorChip, SideOrderWeapon, MAIN_TYPES };
+export { BaseWeapon, SubWeapon, SpecialWeapon, MainWeapon, WeaponType, ColorChip, SideOrderWeapon };
