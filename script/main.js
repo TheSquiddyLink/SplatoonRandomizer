@@ -230,6 +230,11 @@ async function importFromJSON(event){
     CONFIG.parseJSON(json)
     setDefaultConfig();
 }
+
+/**
+ * Export the current config to a file
+ * @see {@link CONFIG}
+ */
 function exportToJSON(){
     const JSON_CONFIG = structuredClone(CONFIG);
     JSON_CONFIG.teamColor = CONFIG.teamColor.name.replace(" ", "");
@@ -245,6 +250,10 @@ function exportToJSON(){
     a.click();
 }
 
+/**
+ * Select a preset from the dropdown menu
+ * @returns {void}
+ */
 function selectPreset(){
     let value = document.getElementById("presets").value;
     if(value == "none") return;
@@ -262,42 +271,77 @@ function selectPreset(){
     newURL += "?preset=" + value;
     window.location.href = newURL;
 }
+/**
+ * Toggle the visibility of the chip result
+ * @see  {@link CONFIG}
+ */
 function toggleShowChipResult(){
     let value = document.getElementById("showChipResult").checked;
     CONFIG.showChipResult = value;
 }
-
+/**
+ * Toggle averiging the chip color
+ * @see {@link CONFIG}
+ */
 function toggleAverageChipColor(){
     let value = document.getElementById("averageChipColor").checked;
     CONFIG.averageChipColor = value;
 }
 
+/**
+ * Toggle using an automaitc chip color
+ * @see {@link CONFIG}
+ */
 function toggleAutoChipColor(){
     let value = document.getElementById("autoChipColor").checked;
     document.getElementById("averageChipColorSpan").style.display = value ? "inline" : "none";
     CONFIG.autoChipColor = value;
 }
 
+/**
+ * Toggle the using side order mode
+ * @see {@link CONFIG}
+ */
 function toggleSideOrderMode(){
     let value = document.getElementById("sideOrderMode").checked;
     CONFIG.sideOrderMode = value;
 }
 
+/**
+ * Apply using a custom bravo color
+ * @see {@link CONFIG}
+ * @see {@link applyColorAll}
+ */
 function applyCustomBravoColor(){
     let value = document.getElementById("customBravoColor").value;
     CONFIG.customBravoColor = Color.hex(value);
     applyColorAll(CONFIG.customColor);
 }
+
+/**
+ * Toggle using a custom bravo color
+ * @see {@link CONFIG}
+ */
 function toggleCustomBravo(){
     let value = document.getElementById("customBravoToggle").checked;
     document.getElementById("customBravoSpan").hidden = !value;
     if(!value) CONFIG.customBravoColor = null;
 }
+
+/**
+ * Toggle Smart Generation
+ */
 function toggleSmartGen(){
     let value = document.getElementById("smartGen").checked;
     CONFIG.smartGen = value;
 }
 
+/**
+ * Invert the collor of all weapons, and update the opacity
+ * @see {@link MAIN_WEAPONS}
+ * @see {@link toggleAll}
+ * @see {@link setWeaponOpacity}
+ */
 function invertWeapons(){
     toggleAll(MAIN_WEAPONS);
     for(let weapon in MAIN_WEAPONS){
@@ -305,19 +349,37 @@ function invertWeapons(){
     }
 }
 
+/**
+ * Invert the collor of all sub weapons, and update the opacity
+ * @see {@link SUB_WEAPONS}
+ * @see {@link toggleAll}
+ * @see {@link setSubOpacity}
+ */
 function invertSubs(){
     toggleAll(SUB_WEAPONS);
     for(let weapon in SUB_WEAPONS){
         setSubOpacity(weapon);
     }
 }
-
+/**
+ * Invert the collor of all special weapons, and update the opacity
+ * @see {@link SPECIAL_WEAPONS}
+ * @see {@link toggleAll}
+ * @see {@link setSpecialOpacity}
+ */
 function invertSpecials(){
     toggleAll(SPECIAL_WEAPONS);
     for(let weapon in SPECIAL_WEAPONS){
         setSpecialOpacity(weapon);
     }
 }
+
+/**
+ * Invert all weapon types
+ * @see {@link MAIN_TYPES}
+ * @see {@link toggleAll}
+ * @see {@link setTypeOpacity}
+ */
 function invertTypes(){
     toggleAll(MAIN_TYPES);
     for(let weapon in MAIN_TYPES){
