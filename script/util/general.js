@@ -1,20 +1,30 @@
 import { BaseWeapon } from "./weaponsClass.js";
-
+/**
+ * Class for a color
+ * - Handles RGB and HEX colors
+ */
 class Color {
+
+    /** @type {number} - red value */ r;
+    /** @type {number} - green value */ g;
+    /** @type {number} - blue value */ b;
+
     /**
-     * 
-     * @param {number} r 
-     * @param {number} g 
-     * @param {number} b 
+     * An RGB constructor
+     * @param {number} r - red value
+     * @param {number} g - green value
+     * @param {number} b - blue value
      */
     constructor(r,g,b){
         this.r = r;
         this.g = g;
         this.b = b;
     }
+
     /**
-     * 
-     * @param {string} hex 6 character hex string
+     * Create a {@link Color} from a hex string
+     * @param {string} hex 6 character hex string (e.g. `#FF0000` for red)     
+     * @static
      * @returns {Color} RGB color
      */
     static hex(hex) {
@@ -24,12 +34,24 @@ class Color {
         let b = parseInt(result[3], 16)
         return new Color(r, g, b);
     }
+    /**
+     * Convert to a string for use in CSS
+     * @returns {string} CSS RGB color string
+     */
     toString(){
         return "rgb("+this.r+","+this.g+","+this.b+")";
     }
+    /**
+     * Create a new color that is the inverse of the current color
+     * @returns {Color} Inverted color
+     */
     invert(){
         return new Color(255-this.r, 255-this.g, 255-this.b);
     }
+    /**
+     * Convert to a 6 character hex string
+     * @returns {string} 6 character hex string (e.g. `#FF0000` for red)
+     */
     toHex(){
         return "#"+this.r.toString(16).padStart(2, "0")+this.g.toString(16).padStart(2, "0")+this.b.toString(16).padStart(2, "0");
     }
