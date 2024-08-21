@@ -435,8 +435,8 @@ const INPUT_KEYS = ["Space", "Enter"]
 function handleKeyPress(event){
     console.log("Key Pressed: ");
     console.log(event.code);
-    // BUG: If space is pressed in a form it will generate and not allow you to type in the form
     if(INPUT_KEYS.includes(event.code)){
+        if(event.target.tagName.toLowerCase() === "input") return;
         event.preventDefault();
         generate();
     }
