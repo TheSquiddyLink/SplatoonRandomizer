@@ -56,32 +56,23 @@ class Color {
         return "#"+this.r.toString(16).padStart(2, "0")+this.g.toString(16).padStart(2, "0")+this.b.toString(16).padStart(2, "0");
     }
 }
+
+/**
+ * Class for a team
+ */
 class Team {
 
-    /**
-     * @type {string}
-     */
-    name;
-    /**
-     * @type {string}
-     */
-    game;
-    /**
-     * @type {Color}
-     */
-    alpha;
-    /**
-     * @type {Color} 
-    */
-    bravo;
-
+    /** @type {string} - Name of the Team*/ name;
+    /** @type {string} - Game the Team is from (Unused)*/ game;
+    /** @type {Color} - Alpha team color*/ alpha;
+    /** @type {Color} - Bravo Team Color*/ bravo;
 
     /**
      * 
-     * @param {string} name 
-     * @param {string} game 
-     * @param {Color} alpha 
-     * @param {Color} bravo 
+     * @param {String} name - Name of the Team
+     * @param {String} game - Game the Team is from (Unused). Example: `Splatoon 2`
+     * @param {Color} alpha - Alpha team color
+     * @param {Color} bravo - Bravo Team Color
      */
     constructor(name, game, alpha, bravo){
         this.name = name;
@@ -90,6 +81,7 @@ class Team {
         this.bravo = bravo;
     }
 }
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
