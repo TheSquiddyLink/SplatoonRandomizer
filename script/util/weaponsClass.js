@@ -3,21 +3,47 @@ const SPECIAL_TEXTURES = "./assets/specials/";
 const WEAPON_TEXTURES = "./assets/weapon_flat/";
 const CHIP_TEXTURES = "./assets/chips/";
 
+/**
+ * This is a base weapon class, it is not directly used by the randomizer.
+ */
 class BaseWeapon {
+    /**
+     * @type {string} - The name of the weapon
+     */
     name;
+    /**
+     * @type {string} - The file name of the weapon's primary texture, excluding path and file extension
+     * @see {@link path}
+     */
     primaryTexture;
+    /**
+     * @type {boolean} - Whether the weapon is enabled or not
+     */
     enabled = false;
+    /**
+     * 
+     * @param {String} name - Name of the weapon
+     * @param {String} primaryTexture - The file name of the weapon's primary texture, excluding path and file extension
+     */
     constructor(name, primaryTexture) {
         this.name = name;
         this.primaryTexture = this.path+primaryTexture+".png";
     }
+    /**
+     * Get the folder path to the weapon's textures
+     * @returns {string} - The folder path to the weapon's textures
+     * @abstract - Override this method to return the folder path to the weapon's textures
+     */
     get path(){
         throw new Error("path not implemented");
     }
+    /**
+     * Toggle the enabled state of the weapon
+     * @see {@link enabled}
+     */
     toggleEnabled(){
         this.enabled = !this.enabled;
     }
-    
 }
 class SecondaryTextureWeapon extends BaseWeapon {
     secondaryTexture;
