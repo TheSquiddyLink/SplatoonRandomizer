@@ -1,4 +1,4 @@
-import { MainWeapon, MAIN_TYPES, BaseWeapon, WeaponType } from "./weaponsClass.js";
+import { BaseWeapon } from "./weaponsClass.js";
 
 class Color {
     /**

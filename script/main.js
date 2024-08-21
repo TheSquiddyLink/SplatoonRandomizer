@@ -1,5 +1,6 @@
 import {Color, filterWeapons, filterWeaponsStars, randomObject, generateStarHex, sleep, Team, Queue, toggleAll, filterByType, averageColor} from "./util/general.js";
-import {MAIN_TYPES, MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
+import {MainWeapon, SubWeapon, BaseWeapon, SpecialWeapon, WeaponType, ColorChip, SideOrderWeapon} from "./util/weaponsClass.js";
+import { MAIN_TYPES } from "./util/constants.js";
 
 import {  SPECIAL_WEAPONS, SUB_WEAPONS, TEAMS, MAIN_WEAPONS, SORTED_WEAPONS, WEAPON_SPLAT, ALL_SPLAT_IMGS, PRESETS, ORDER_WEAPONS, SIDE_ORDER_COLORS} from "./util/constants.js";
 import { Config, Package } from "./util/config.js";
