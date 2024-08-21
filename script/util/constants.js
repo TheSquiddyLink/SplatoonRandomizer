@@ -303,6 +303,10 @@ const HeavyPreset = {
 const ShortRangePreset = {
   weaponHex: "3060001800000181C084000060001821B1"
 }
+
+const RetroPreset = {
+  weaponHex: "4001840180000001E1E1C0046"
+}
 export const PRESETS = {
   SideOrder: SideOrderPreset,
   NoDLC: NoDLCPreset,
@@ -312,4 +316,5 @@ export const PRESETS = {
   Scoped: ScopedPreset,
   Heavy: HeavyPreset,
   ShortRange: ShortRangePreset,
+  Retro: RetroPreset
 }
