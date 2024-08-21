@@ -834,9 +834,9 @@ function hideAllControls(){
  * @returns {URL}
  */
 function generateURL(){
-    // BUG: Metada is being added to the url when it should not
     let url = new URL(window.location.href);
     for(let setting in CONFIG){
+        if(setting == "metaData") continue;
         if(CONFIG.isDefault(setting)) continue;
         if(setting == "teamColor") {
             url.searchParams.set(setting, CONFIG[setting].name.replace(" ", ""));
