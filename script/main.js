@@ -599,6 +599,9 @@ function resetConfig(){
     updateURL();
     setDefaultConfig();
 }
+/**
+ * Perminantly hide the config and header
+ */
 function permaHideConfig(){
     CONFIG.permaHide = true;
     document.getElementById("config").style.display = "none"
@@ -606,22 +609,39 @@ function permaHideConfig(){
     updateURL();
 }
 
+/**
+ * Set the auto URL setting
+ * @see {@link updateURL}
+ */
 function setAutoURL(){
     CONFIG.autoURL = document.getElementById("autoURL").checked;
     updateURL();
 }
 
+/**
+ * Update the URL if the auto URL setting is enabled
+ * @see {@link updateURL}
+ */
 async function automaticConfigUpdate(){
     if(!CONFIG.autoURL) return;
     await sleep(500);
     updateURL()
 }
+
+/**
+ * Update the current url
+ * @see {@link generateURL}
+ */
 function updateURL(){
     let url = generateURL();
     if(window.location.href == url.href) return;
     window.history.pushState({}, '', url)
     console.log(url)
 }
+
+/**
+ * Set the animated background
+ */
 function setAniBackground(){
     console.log("Setting Ani Background")
     let button = document.getElementById("generate");
@@ -636,15 +656,27 @@ function setAniBackground(){
     console.log(button.style.animation)
 }
 
+/**
+ * Set the config settings for the stars filter
+ */
 function setStarsFilter(){
     CONFIG.starsFilter = document.getElementById("selectStars").value;
     CONFIG.exactStarsFilter = document.getElementById("exactStarsFilter").checked;
 }
 
+/**
+ * Toggle showing stars in the result
+ * @see {@link updateStars}
+ */
 function toggleResultStars(){
     CONFIG.resultStars = !CONFIG.resultStars;
     updateStars();
 }
+
+/**
+ * Toggle editing stars in the config
+ * @see {@link toggleShowStarsConfig}
+ */
 function toggleEditStarsConfig(){
     CONFIG.editStars = !CONFIG.editStars;
     if(CONFIG.editStars){
@@ -652,10 +684,19 @@ function toggleEditStarsConfig(){
         toggleShowStarsConfig();
     }
 }
+
+/**
+ * Toggle the displaying stars setting
+ * @see {@link updateStars}
+ */
 function toggleShowStarsConfig(){
     CONFIG.displayStars = !CONFIG.displayStars;
     updateStars();
 }
+
+/**
+ * Update the stars in the result
+ */
 function updateStars(){
     let stars = document.getElementsByClassName("starDiv")
     console.log(stars.length)
@@ -675,6 +716,16 @@ function updateStars(){
 }
 loadUrlConfig();
 
+/**
+ * Load the config from the url
+ * - This will go through the search params and set the respective config value
+ * @see {@link CONFIG}
+ * @see {@link updateDropDowns}
+ * @see {@link updateDropDowns()}
+ * @see {@link updateStars}
+ * @see {@link updateURL}
+ * @see {@link generateAnyConfigHex}
+ */
 function loadUrlConfig(){
     console.log("loading url config");
     const params = new URLSearchParams(window.location.search);
@@ -733,18 +784,30 @@ function loadUrlConfig(){
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
     generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
 }
-
+/**
+ * Enable all weapon types
+ * @see {@link MAIN_TYPES}
+ */
 function enableAllTypes(){
     for(let type of MAIN_TYPES){
         type.enabled = true;
     }
 }
 
+/**
+ * Parse the weapon type hex
+ * @param {String} hex - hex value for the weapon types
+ */
 function parseTypeConfigHex(hex){
     parseAnyWeaponFromHex(hex, MAIN_TYPES);
 }
 
-
+/**
+ * Load a preset
+ * - If no preset is found, it will do nothing
+ * @param {String} presetStr 
+ * @returns  {void}
+ */
 function loadPreset(presetStr){
     console.log("Loading Preset"+ presetStr)
     const preset = PRESETS[presetStr];
