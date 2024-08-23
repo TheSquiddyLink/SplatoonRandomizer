@@ -125,11 +125,16 @@ function selectConfig(e){
 }
 
 /**
- * @param {Event} e
+ * Handles importing a package from a file
+ * - This will display the package info and update the config selector
+ * @param {Event} e - The event that triggered this function
+ * @see {@link Package.loadPackageJSON}
+ * @see {@link updateConfigSelector}
  */
 async function importPackage(e){
     console.log("Importing Package")
-    const file = e.target.files[0];
+    const target = /** @type {HTMLInputElement} */ (e.target);
+    const file = target.files[0];
     if(file){
         let raw = await file.text();
         let json = JSON.parse(raw);
@@ -146,6 +151,10 @@ async function importPackage(e){
     updateConfigSelector();
 }
 
+/**
+ * Update the config selection drop down menu with the configs in the package
+ * @see {@link PACKAGE}
+ */
 function updateConfigSelector(){
     const selctor = document.getElementById("configSelector");
     selctor.innerHTML = "";
@@ -163,6 +172,10 @@ function updateConfigSelector(){
     }
 }
 
+/**
+ * Export the current package to a file
+ * @see {@link PACKAGE}
+ */
 function exportPackage(){
     PACKAGE.name = document.getElementById("packageName").value;
     PACKAGE.description = document.getElementById("packageDescription").value;
@@ -181,10 +194,13 @@ function exportPackage(){
 }
 
 /**
+ * Add a config JSON to the package
+ * - This will add the config(s) to the package
  * @param {Event} event
  */
 async function addConfigJSON(event){
-    const files = event.target.files;
+    const target = /** @type {HTMLInputElement} */ (event.target);
+    const files = target.files;
     const selection = document.getElementById("configSelector");
     for(let i = 0; i < files.length; i++){
         let file = files[i];
@@ -202,16 +218,23 @@ async function addConfigJSON(event){
 }
 
 /**
- * @param {Event} e - File Upload Event
+ * Import a singular config from JSON
+ * @param {Event} event - File Upload Event
  */
 async function importFromJSON(event){
-    let file = event.target.files[0];
+    const target = /** @type {HTMLInputElement} */ (event.target);
+    let file = target.files[0];
     console.log(file)
     let raw = await file.text();
     let json = JSON.parse(raw);
     CONFIG.parseJSON(json)
     setDefaultConfig();
 }
+
+/**
+ * Export the current config to a file
+ * @see {@link CONFIG}
+ */
 function exportToJSON(){
     const JSON_CONFIG = structuredClone(CONFIG);
     JSON_CONFIG.teamColor = CONFIG.teamColor.name.replace(" ", "");
@@ -227,6 +250,10 @@ function exportToJSON(){
     a.click();
 }
 
+/**
+ * Select a preset from the dropdown menu
+ * @returns {void}
+ */
 function selectPreset(){
     let value = document.getElementById("presets").value;
     if(value == "none") return;
@@ -244,42 +271,77 @@ function selectPreset(){
     newURL += "?preset=" + value;
     window.location.href = newURL;
 }
+/**
+ * Toggle the visibility of the chip result
+ * @see  {@link CONFIG}
+ */
 function toggleShowChipResult(){
     let value = document.getElementById("showChipResult").checked;
     CONFIG.showChipResult = value;
 }
-
+/**
+ * Toggle averiging the chip color
+ * @see {@link CONFIG}
+ */
 function toggleAverageChipColor(){
     let value = document.getElementById("averageChipColor").checked;
     CONFIG.averageChipColor = value;
 }
 
+/**
+ * Toggle using an automaitc chip color
+ * @see {@link CONFIG}
+ */
 function toggleAutoChipColor(){
     let value = document.getElementById("autoChipColor").checked;
     document.getElementById("averageChipColorSpan").style.display = value ? "inline" : "none";
     CONFIG.autoChipColor = value;
 }
 
+/**
+ * Toggle the using side order mode
+ * @see {@link CONFIG}
+ */
 function toggleSideOrderMode(){
     let value = document.getElementById("sideOrderMode").checked;
     CONFIG.sideOrderMode = value;
 }
 
+/**
+ * Apply using a custom bravo color
+ * @see {@link CONFIG}
+ * @see {@link applyColorAll}
+ */
 function applyCustomBravoColor(){
     let value = document.getElementById("customBravoColor").value;
     CONFIG.customBravoColor = Color.hex(value);
     applyColorAll(CONFIG.customColor);
 }
+
+/**
+ * Toggle using a custom bravo color
+ * @see {@link CONFIG}
+ */
 function toggleCustomBravo(){
     let value = document.getElementById("customBravoToggle").checked;
     document.getElementById("customBravoSpan").hidden = !value;
     if(!value) CONFIG.customBravoColor = null;
 }
+
+/**
+ * Toggle Smart Generation
+ */
 function toggleSmartGen(){
     let value = document.getElementById("smartGen").checked;
     CONFIG.smartGen = value;
 }
 
+/**
+ * Invert the collor of all weapons, and update the opacity
+ * @see {@link MAIN_WEAPONS}
+ * @see {@link toggleAll}
+ * @see {@link setWeaponOpacity}
+ */
 function invertWeapons(){
     toggleAll(MAIN_WEAPONS);
     for(let weapon in MAIN_WEAPONS){
@@ -287,25 +349,49 @@ function invertWeapons(){
     }
 }
 
+/**
+ * Invert the collor of all sub weapons, and update the opacity
+ * @see {@link SUB_WEAPONS}
+ * @see {@link toggleAll}
+ * @see {@link setSubOpacity}
+ */
 function invertSubs(){
     toggleAll(SUB_WEAPONS);
     for(let weapon in SUB_WEAPONS){
         setSubOpacity(weapon);
     }
 }
-
+/**
+ * Invert the collor of all special weapons, and update the opacity
+ * @see {@link SPECIAL_WEAPONS}
+ * @see {@link toggleAll}
+ * @see {@link setSpecialOpacity}
+ */
 function invertSpecials(){
     toggleAll(SPECIAL_WEAPONS);
     for(let weapon in SPECIAL_WEAPONS){
         setSpecialOpacity(weapon);
     }
 }
+
+/**
+ * Invert all weapon types
+ * @see {@link MAIN_TYPES}
+ * @see {@link toggleAll}
+ * @see {@link setTypeOpacity}
+ */
 function invertTypes(){
     toggleAll(MAIN_TYPES);
     for(let weapon in MAIN_TYPES){
         setTypeOpacity(weapon);
     }
 }
+
+/**
+ * Cap the size of an input field using the max attribute
+ * @param {String} idStr - The id of the input field
+ * @returns {number} The new value of the input field
+ */
 function capSize(idStr){
     console.log("capSize", idStr);
     const input = document.getElementById(idStr);
@@ -318,6 +404,10 @@ function capSize(idStr){
     }
     return input.value;
 }
+/**
+ * Set the queue size for weapons
+ * @see {@link CONFIG}
+ */
 function setQueueSize(){
     CONFIG.weaponQueueSize = capSize("weaponQueueSize");
     MAIN_QUEUE.maxSize = CONFIG.weaponQueueSize;
@@ -332,6 +422,10 @@ function setQueueSize(){
     TYPE_QUEUE.maxSize = CONFIG.typeQueueSize;
 }   
 
+/**
+ * Toggle the visibility of config menu options based on the selection
+ * @see {@link CONFIG}
+ */
 function selectConfigMenu(){
     const configMenu = document.getElementById("selectConfigMenu");
     const configMenuValue = configMenu.value;
@@ -352,10 +446,17 @@ function selectConfigMenu(){
     }
 }
 
+/**
+ * Toggle the visibility of the hover info
+ * @see {@link CONFIG}
+ */
 function toggleHoverInfo(){
     CONFIG.hideHoverInfo = document.getElementById("hideHoverInfo").checked;
 }
 
+/**
+ * Toggle the custom color setting
+ */
 function toggleCustomColor(){
     let customColorToggle = document.getElementById("customColorToggle");
     let customColorSpan = document.getElementById("customColorSpan");
@@ -371,8 +472,9 @@ function toggleCustomColor(){
 }
 
 /**
- * 
+ * Handel hovering for hover info
  * @param {MouseEvent} event 
+ * @see {@link CONFIG}
  */
 function handleHover(event) {
     if(CONFIG.hideHoverInfo) return;
@@ -408,18 +510,30 @@ function handleHover(event) {
         hoverDesc.innerHTML = dec;
     });
 }
+/**
+ * Toggle the invert splat color setting
+ */
 function toggleSplatConfig(){
     let value = document.getElementById("invertSplat").checked;
     CONFIG.invertSplat = value;
     applyColorAll(getTeam());
 }
 
+/**
+ * Handle clicking when OBS friendly is enabled
+ * @param {MouseEvent} event 
+ */
 function handleClick(event){
     if(CONFIG.obsFriendly){
         event.preventDefault();
         generate();
     }
 }
+
+/**
+ * Confirm the user wants to reset all settings
+ * @returns {void}
+ */
 function resetAll(){
     let result = confirm("Are you sure you want to reset all settings including weapons?");
     if(!result) return;
@@ -430,7 +544,8 @@ function resetAll(){
 
 const INPUT_KEYS = ["Space", "Enter"]
 /**
- * 
+ * Handle pressing a key in {@link INPUT_KEYS}
+ * - If conditions are met it will generate a new weapon
  * @param {KeyboardEvent} event 
  */
 function handleKeyPress(event){
@@ -444,7 +559,14 @@ function handleKeyPress(event){
 
 }
 
-// setRainbowBackground();
+/**
+ * Set the background to the current setting
+ * - Rainbow background
+ * - Rainbow button
+ * - Normal Background
+ * - Normal button
+ * @see {@link CONFIG}
+ */
 function setBackground(){
     CONFIG.rainbowBackground = document.getElementById("rainbowBackground").checked
     CONFIG.rainbowButton = document.getElementById("rainbowButton").checked;
@@ -467,11 +589,19 @@ function setBackground(){
     }
   
 }
+
+/**
+ * Reset the current config to the default values
+ * @see {@link CONFIG.setDefault}
+ */
 function resetConfig(){
     CONFIG.setDefault();
     updateURL();
     setDefaultConfig();
 }
+/**
+ * Perminantly hide the config and header
+ */
 function permaHideConfig(){
     CONFIG.permaHide = true;
     document.getElementById("config").style.display = "none"
@@ -479,22 +609,39 @@ function permaHideConfig(){
     updateURL();
 }
 
+/**
+ * Set the auto URL setting
+ * @see {@link updateURL}
+ */
 function setAutoURL(){
     CONFIG.autoURL = document.getElementById("autoURL").checked;
     updateURL();
 }
 
+/**
+ * Update the URL if the auto URL setting is enabled
+ * @see {@link updateURL}
+ */
 async function automaticConfigUpdate(){
     if(!CONFIG.autoURL) return;
     await sleep(500);
     updateURL()
 }
+
+/**
+ * Update the current url
+ * @see {@link generateURL}
+ */
 function updateURL(){
     let url = generateURL();
     if(window.location.href == url.href) return;
     window.history.pushState({}, '', url)
     console.log(url)
 }
+
+/**
+ * Set the animated background
+ */
 function setAniBackground(){
     console.log("Setting Ani Background")
     let button = document.getElementById("generate");
@@ -509,15 +656,27 @@ function setAniBackground(){
     console.log(button.style.animation)
 }
 
+/**
+ * Set the config settings for the stars filter
+ */
 function setStarsFilter(){
     CONFIG.starsFilter = document.getElementById("selectStars").value;
     CONFIG.exactStarsFilter = document.getElementById("exactStarsFilter").checked;
 }
 
+/**
+ * Toggle showing stars in the result
+ * @see {@link updateStars}
+ */
 function toggleResultStars(){
     CONFIG.resultStars = !CONFIG.resultStars;
     updateStars();
 }
+
+/**
+ * Toggle editing stars in the config
+ * @see {@link toggleShowStarsConfig}
+ */
 function toggleEditStarsConfig(){
     CONFIG.editStars = !CONFIG.editStars;
     if(CONFIG.editStars){
@@ -525,10 +684,19 @@ function toggleEditStarsConfig(){
         toggleShowStarsConfig();
     }
 }
+
+/**
+ * Toggle the displaying stars setting
+ * @see {@link updateStars}
+ */
 function toggleShowStarsConfig(){
     CONFIG.displayStars = !CONFIG.displayStars;
     updateStars();
 }
+
+/**
+ * Update the stars in the result
+ */
 function updateStars(){
     let stars = document.getElementsByClassName("starDiv")
     console.log(stars.length)
@@ -548,6 +716,16 @@ function updateStars(){
 }
 loadUrlConfig();
 
+/**
+ * Load the config from the url
+ * - This will go through the search params and set the respective config value
+ * @see {@link CONFIG}
+ * @see {@link updateDropDowns}
+ * @see {@link updateDropDowns()}
+ * @see {@link updateStars}
+ * @see {@link updateURL}
+ * @see {@link generateAnyConfigHex}
+ */
 function loadUrlConfig(){
     console.log("loading url config");
     const params = new URLSearchParams(window.location.search);
@@ -606,18 +784,30 @@ function loadUrlConfig(){
     generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
     generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
 }
-
+/**
+ * Enable all weapon types
+ * @see {@link MAIN_TYPES}
+ */
 function enableAllTypes(){
     for(let type of MAIN_TYPES){
         type.enabled = true;
     }
 }
 
+/**
+ * Parse the weapon type hex
+ * @param {String} hex - hex value for the weapon types
+ */
 function parseTypeConfigHex(hex){
     parseAnyWeaponFromHex(hex, MAIN_TYPES);
 }
 
-
+/**
+ * Load a preset
+ * - If no preset is found, it will do nothing
+ * @param {String} presetStr 
+ * @returns  {void}
+ */
 function loadPreset(presetStr){
     console.log("Loading Preset"+ presetStr)
     const preset = PRESETS[presetStr];
@@ -802,6 +992,11 @@ function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc, prefix=""){
     }
 }
 
+/**
+ * Generate the weapon config
+ * @see {@link SORTED_WEAPONS}
+ * @see {@link MAIN_WEAPONS}
+ */
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     for (let weapon in SORTED_WEAPONS){
@@ -829,6 +1024,11 @@ function generateWeaponConfig(){
     }
     updateStars();
 }
+
+/**
+ * Togle the visibility of the weapon config
+ * @deprecated
+ */
 function toggleWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     if(weaponConfig.style.display === "none"){
@@ -839,12 +1039,21 @@ function toggleWeaponConfig(){
     }
     console.log(weaponConfig.hidden);
 }
+/**
+ * Hide the entier config section
+ */
 function hideAllControls(){
     document.getElementById("debugControls").hidden = true;
     document.getElementById("config").hidden = true;
 }
 /**
- * 
+ * Generate the URL for the current config
+ * @see {@link CONFIG}
+ * @see {@link generateWeaponConfigHex}
+ * @see {@link generateSubConfigHex}
+ * @see {@link generateSpecialConfigHex}
+ * @see {@link generateStarHex}
+ * @see {@link generateAnyConfigHex}
  * @returns {URL}
  */
 function generateURL(){
@@ -872,6 +1081,11 @@ function generateURL(){
     url.searchParams.set("typeConfig", generateAnyConfigHex(MAIN_TYPES));
     return url
 }
+
+/**
+ * Export the current url to the clipboard
+ * @see {@link generateURL}
+ */
 function exportToURL(){
     console.log("generating url config");
     let url = generateURL()
@@ -879,6 +1093,10 @@ function exportToURL(){
     alert("URL Config Generated and Copied to Clipboard");
 }
 
+/**
+ * 
+ * @param {*} defaultColor 
+ */
 function updateColorPreview(defaultColor){
     console.log(defaultColor)
     let color;
@@ -894,11 +1112,18 @@ function updateColorPreview(defaultColor){
     colorPreview.style.color = color.toString();
 }
 
+/**
+ * Toggle the visibility of the color config
+ * @deprecated
+ */
 function toggleColorConfig() {
     let colorConfig = document.getElementById("colorConfig");
     console.log(colorConfig.hidden)
     colorConfig.hidden =!colorConfig.hidden;
 }
+/**
+ * Hide the config section
+ */
 function hideConfig(){
     let config = document.getElementById("config")
     config.hidden = true
@@ -907,6 +1132,9 @@ function hideConfig(){
     let header = document.getElementById("header");
     header.style.display = "none"
 }
+/**
+ * Show the config section
+ */
 function showConfig(){
     let config = document.getElementById("config")
     config.hidden = false;
@@ -915,6 +1143,10 @@ function showConfig(){
     let header = document.getElementById("header");
     header.style.display = "flex"
 }
+
+/**
+ * Hide the randomizer result
+ */
 async function hide(){
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.style.animation = `fadeOut ${CONFIG.hideLen}s`;
@@ -922,7 +1154,10 @@ async function hide(){
     randomizerResult.hidden = true;
     randomizerResult.style.animation = "none";
 }
-
+/**
+ * Update the config
+ * @see {@link CONFIG}
+ */
 function updateConfig(){
     console.log("updating config");
     let autoHide = document.getElementById("autoHide").checked;
@@ -945,6 +1180,10 @@ function updateConfig(){
     updateColorPreview(CONFIG.teamColor[CONFIG.teamSide]);
 }
 
+/**
+ * Set the config settings on the document to the default values
+ * @see {@link CONFIG}
+ */
 function setDefaultConfig(){
     console.log(CONFIG)
     
@@ -991,17 +1230,39 @@ function setDefaultConfig(){
     }
     setBackground();
 }
+/**
+ * Generate Weapon config hex
+ * @deprecated Replaced by {@link generateAnyConfigHex}
+ * @returns {string} HEX string
+ */
 function generateWeaponConfigHex() {
     return generateAnyConfigHex(MAIN_WEAPONS);
 }
+/**
+ * Generate Sub config hex
+ * @deprecated Replaced by {@link generateAnyConfigHex}
+ * @returns {String} HEX string
+ */
 function generateSubConfigHex(){
     return generateAnyConfigHex(SUB_WEAPONS);
 }
+/**
+ * Generate Special config hex
+ * @deprecated Replaced by {@link generateAnyConfigHex}
+ * @returns {String} HEX string
+ */
 function generateSpecialConfigHex(){
     return generateAnyConfigHex(SPECIAL_WEAPONS);
 }
 
-
+/**
+ * Generate a HEX string from the given weapon array
+ * - Using the weapon's enabled status, generate a binary string, then convert to HEX
+ * @param {Record<String, BaseWeapon>} weaponArr 
+ * @returns {String} HEX String
+ * @see {@link BaseWeapon}
+ * @see {@link BaseWeapon.enabled}
+ */
 function generateAnyConfigHex(weaponArr){
     let binary = "";
     for (let weaponKey in weaponArr) {
@@ -1015,7 +1276,12 @@ function generateAnyConfigHex(weaponArr){
     console.log(hex);
     return hex;
 }
-
+/**
+ * Using a given HEX string, parse the stars for each weapon
+ * @param {String} hex HEX value for the current stars 
+ * @see {@link MainWeapon.stars}
+ * @see {@link generateStarHex}
+ */
 function parseStarHex(hex){
     let binaryString = BigInt("0x" + hex).toString(2);
     let expectedLength = Object.keys(MAIN_WEAPONS).length;
@@ -1026,8 +1292,13 @@ function parseStarHex(hex){
         let newStars = parseInt(binaryString[i] + binaryString[i + 1] + binaryString[i + 2], 2);
         weapon.stars = newStars;
     }
-
 }
+
+/**
+ * Parse a HEX string into the given weapon array
+ * @param {String} hex HEX value for the current stars
+ * @param {Record<String, BaseWeapon>} weapons An string base weapon pair of weapons such as: {@link MAIN_WEAPONS}
+ */
 function parseAnyWeaponFromHex(hex, weapons){
     let binaryString = BigInt("0x" + hex).toString(2);
     let expectedLength = Object.keys(weapons).length;
@@ -1040,17 +1311,36 @@ function parseAnyWeaponFromHex(hex, weapons){
         i++
     }
 }
+/**
+ * Parse a HEX string into the {@link MAIN_WEAPONS} array
+ * @param {String} hex - HEX value for the current stars
+ * @deprecated Replaced by {@link parseAnyWeaponFromHex}
+ */
 function parseWeaponConfigHex(hex) {
     parseAnyWeaponFromHex(hex, MAIN_WEAPONS);
 }
+/**
+ * Parse a HEX string into the {@link SUB_WEAPONS} array
+ * @param {String} hex - HEX value for the current stars
+ * @deprecated Replaced by {@link parseAnyWeaponFromHex}
+ */
 function parseSubConfigHex(hex){
     parseAnyWeaponFromHex(hex, SUB_WEAPONS);
 }
+/**
+ * Parse a HEX string into the {@link SPECIAL_WEAPONS} array
+ * @param {String} hex - HEX value for the current stars
+ * @deprecated Replaced by {@link parseAnyWeaponFromHex}
+ */
 function parseSpecialConfigHex(hex){
     parseAnyWeaponFromHex(hex, SPECIAL_WEAPONS);
 }
 
-
+/**
+ * Generate a new weapon and handle the randomization process
+ * - This is the main function of the generator, handling getting weapons, animations, and more
+ * @returns {Promise<void>}
+ */
 async function generate(){
     let generateButton = document.getElementById("generate");
     if(animationPlaying){
@@ -1195,7 +1485,11 @@ async function generate(){
 }
 
 /**
+ * Enques the weapon type to the type queue
  * @param {WeaponType} type
+ * @see {@link Queue}
+ * @see {@link TYPE_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function typeEnqueue(type){
     anyWeaponEnqueue(type, TYPE_QUEUE);
@@ -1203,17 +1497,24 @@ function typeEnqueue(type){
     console.log(TYPE_QUEUE.queue);
 }
 /**
- * 
- * @param {SpecialWeapon} special 
+ * Enques the special weapon to the special queue
+ * @param {SpecialWeapon} special
+ * @see {@link Queue}
+ * @see {@link SPECIAL_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function specialEnqueue(special){
     anyWeaponEnqueue(special, SPECIAL_QUEUE);
     console.log("Special Queue:")
     console.log(SPECIAL_QUEUE.queue);
 }
+
 /**
- * 
- * @param {MainWeapon} weapon 
+ * Enques the main weapon to the main queue
+ * @param {MainWeapon} weapon
+ * @see {@link Queue}
+ * @see {@link MAIN_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function mainEnqueue(weapon){
     anyWeaponEnqueue(weapon, MAIN_QUEUE);
@@ -1221,7 +1522,11 @@ function mainEnqueue(weapon){
 }
 
 /**
+ * Enques the sub weapon to the sub queue
  * @param {SubWeapon} sub
+ * @see {@link Queue}
+ * @see {@link SUB_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function subEnqueue(sub){
     anyWeaponEnqueue(sub, SUB_QUEUE);
@@ -1229,9 +1534,14 @@ function subEnqueue(sub){
     console.log(SUB_QUEUE.queue);
 }
 /**
- * 
+ * This will enqueue the weapon to the queue
+ * - If the queue is full, the oldest weapon will be removed from the queue
+ * - When adding to the queue it will disable the weapon
+ * - When removing from the queue it will enable the weapon
  * @param {BaseWeapon} weapon 
  * @param {Queue<BaseWeapon>} queue 
+ * @see {@link Queue}
+ * @see {@link BaseWeapon.enabled}
  */
 function anyWeaponEnqueue(weapon, queue){
     weapon.enabled = false;
@@ -1243,15 +1553,29 @@ function anyWeaponEnqueue(weapon, queue){
         console.log("Eneabled weapon: " + removedWeapon.name);
     }
 }
+/**
+ * Handle selecting a main weapon from the debug dropdown
+ * @see {@link applyMain}
+ * @deprecated No longer used
+ */
 function selectMainWeapon(){
     let main = document.getElementById("mainWeapon").value;
     applyMain(MAIN_WEAPONS[main]);
 }
+/**
+ * Apply the main weapon to the element
+ * @param {MainWeapon} main 
+ * @deprecated No longer used
+ */
 function applyMain(main){
     console.log(main);
     document.getElementById("mainWeaponImage").src = main.primaryTexture;
 }
 
+/**
+ * Apply the color when a custom color has been selected
+ * @see {@link applyColorAll}
+ */
 function applyCustomColor(){
     let color = document.getElementById("customColor").value;
     let customColor = Color.hex(color);
@@ -1259,6 +1583,11 @@ function applyCustomColor(){
     applyColorAll(customColor);
 
 }
+
+/**
+ * Test all main weapons by displaying their images
+ * - This is used to test if the images are loading correctly as well if the paths exist
+ */
 async function testMainWeapons(){
     const image = document.getElementById("mainWeaponImage");
     for (let main in MAIN_WEAPONS) {
@@ -1267,7 +1596,14 @@ async function testMainWeapons(){
         image.src = weapon.primaryTexture;
     }
 }
+
 applyColorAll(TEAMS.BlueYellow.alpha);
+
+/**
+ * Update the dropdowns with the current values
+ * - These are the debug dropdowns and are no longer uses
+ * @deprecated No longer used
+ */
 function updateDropDowns(){
     const teamColor = document.getElementById("teamColor");
     const subWeapon = document.getElementById("subWeapon");
@@ -1304,41 +1640,62 @@ function updateDropDowns(){
 }
 
 /**
- * 
- * @param {MainWeapon} weapon 
- * @param {HTMLDivElement} element 
- * @param {?string} _class
- */
+ * Generate the stars based on the weapon
+ * @param {MainWeapon} weapon  - The weapon to generate the stars for
+ * @param {HTMLDivElement} element  - The element to append the stars to
+ * @param {string} [_class="star"] - The CSS class for the star elements, defaults to "star"
+ * @see {@link createConfigStar}
+*/
 function generateStars(weapon, element, _class = "star"){
     for(let i = 0; i< weapon.stars; i++){
         let star = createConfigStar(_class);
         element.appendChild(star);
     }
 }
+/**
+ * Select a special weapon
+ * - This is used to select a special weapon from the debug dropdown
+ * @see {@link applySpecial}
+ * @deprecated No longer used
+ */
 function selectSpecial(){
     let special = document.getElementById("specialWeapon").value;
     applySpecial(SPECIAL_WEAPONS[special]);
 }
+/**
+ * Apply the special weapon to the element
+ * @param {SpecialWeapon} special
+ */
 function applySpecial(special){
     document.getElementById("specialColor").src = special.primaryTexture;
     document.getElementById("specialWhite").src = special.secondaryTexture;
 }
+
+/**
+ * Get the current selected team
+ * @returns {Team}
+ * @see {@link TEAMS}
+ */
 function getTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
     return TEAMS[team][side];
 }
 /**
- * 
+ * Get the alpha and bravo teams based on the team type selected
  * @returns {Team}
+ * @see {@link TEAMS}
  */
 function getAllTeams(){
     let team = document.getElementById("teamColor").value
     return TEAMS[team]
 }
 /**
- * 
- * @param {Color} sideOrderColor 
+ * Event for selecting a team
+ * @param {?Color} sideOrderColor -  The Side Order Color to apply to the team, if null the normal color will be used
+ * @see {@link updateColorPreview}
+ * @see {@link applyColorAll}
+ * @see {@link getTeam}
  */
 function selectTeam(sideOrderColor){
     let team = document.getElementById("teamColor").value;
@@ -1354,14 +1711,17 @@ function selectTeam(sideOrderColor){
 }
 
 /**
- * @deprecated
+ * Select a sub weapon
+ * - This is used to select a sub weapon from the debug dropdown
+ * @deprecated No longer used
  */
 function selectSub(){
     let sub = document.getElementById("subWeapon").value;
     applySub(SUB_WEAPONS[sub]);
 }
 /**
- * 
+ * Apply a sub weapon
+ * - Update the sub weapon images
  * @param {SubWeapon} sub 
  */
 function applySub(sub){
@@ -1372,9 +1732,9 @@ function applySub(sub){
 }
 
 /**
- * 
- * @param {ColorChip} primary 
- * @param {ColorChip} secondary 
+ * Apply the color chips
+ * @param {ColorChip} primary - Primary color chip
+ * @param {ColorChip} secondary - Secondary color chip
  */
 function applyChips(primary, secondary){
     console.log("Applying Chips")
@@ -1386,6 +1746,11 @@ function applyChips(primary, secondary){
     document.getElementById("secondaryChipName").innerHTML = secondary.name;
 }
 
+/**
+ * Toggle showing the color chips result
+ * @see {@link Config.sideOrderMode}
+ * @see {@link Config.showChipResult}
+ */
 function toggleChipResult(){
     document.getElementById("primaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
     document.getElementById("secondaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
@@ -1394,8 +1759,11 @@ function toggleChipResult(){
 }
 
 /**
- * 
- * @param {Color} color 
+ * Apply a color to the canvas
+ * - Using the current team color, adjust the image to use the color
+ * @param {Color} color  - The color to apply
+ * @param {string} imageID - The ID of the image to apply the color to
+ * @param {HTMLCanvasElement} canvas - The canvas to apply the color to
  */
 async function applyColor(color, imageID, canvas){
     let ctx = canvas.getContext("2d");
@@ -1420,8 +1788,13 @@ async function applyColor(color, imageID, canvas){
 }
 
 /**
- * 
- * @param {Color} color 
+ * Apply the color to all images:
+ * - Sub Weapon
+ * - Special Weapon\
+ * If the team color is set to custom, use the custom color
+ * Handle if the splat color is inverted
+ * @param {Color} color - The color to set the values of
+ * @see {@link applyColor}
  */
 function applyColorAll(color){
     if(CONFIG.customColor != null) color = CONFIG.customColor;
@@ -1452,6 +1825,13 @@ function applyColorAll(color){
     }
 }
 
+/**
+ * Generate a CSS linerar gradient that contains all the teams
+ * @returns {string} - The background image string
+ * @see {@link TEAMS}
+ * @see {@link Team}
+ * @see {@link Color}
+ */
 function genRainbowGradient(){
     let backgroundImageString = "";
     let i = 0;
