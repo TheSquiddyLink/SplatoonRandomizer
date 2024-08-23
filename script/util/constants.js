@@ -1,6 +1,28 @@
 import {Team, Color, randomObject} from "./general.js";
-import {SubWeapon, SpecialWeapon, MainWeapon, MAIN_TYPES, SideOrderWeapon, ColorChip} from "./weaponsClass.js";
+import {SubWeapon, SpecialWeapon, MainWeapon, SideOrderWeapon, ColorChip, WeaponType} from "./weaponsClass.js";
 
+/**
+ * Object of all weapon types
+ * @see {@link WeaponType}
+ */
+export const MAIN_TYPES = {
+  Blaster: new WeaponType("blaster"),
+  Brella: new WeaponType("brella"),
+  Brush: new WeaponType("brush"),
+  Charger: new WeaponType("charger"),
+  Dualies: new WeaponType("dualies"),
+  Roller: new WeaponType("roller"),
+  Shooter: new WeaponType("shooter"),
+  Slosher: new WeaponType("slosher"),
+  Splatana: new WeaponType("splatana"),
+  Splatling: new WeaponType("splatling"),
+  Stringer: new WeaponType("stringer"),
+};
+
+/**
+ * Object of all special weapons
+ * @see {@link SpecialWeapon}
+ */
 export const SPECIAL_WEAPONS = {
     BigBubbler: new SpecialWeapon("Big Bubbler", "big_bubbler"),
     BooyahBomb: new SpecialWeapon("Booyah Bomb", "booyah_bomb"),
@@ -22,6 +44,10 @@ export const SPECIAL_WEAPONS = {
     WaveBreaker: new SpecialWeapon("Wave Breaker", "wave_breaker"),
     Zipcaster: new SpecialWeapon("Zipcaster", "zipcaster"),
 }
+/**
+ * Object of all sub weapons
+ * @see {@link SubWeapon}
+ */
 export const SUB_WEAPONS = {
     AngleShooter: new SubWeapon("Angle Shooter", "angle_shooter"),
     AutoBomb: new SubWeapon("Auto Bomb", "auto_bomb"),
@@ -38,6 +64,11 @@ export const SUB_WEAPONS = {
     Torpedo: new SubWeapon("Torpedo", "torpedo"),
     ToxicMist: new SubWeapon("Toxic Mist", "toxic_mist"),
 }
+/**
+ * Object of all teams
+ * @see {@link Team}
+ * @see {@link Color}
+ */
 export const TEAMS = {
     BlueYellow: new Team("Blue Yellow", "Splatoon 3", new Color(26,26,174), new Color(227,141,36)),
     GreenPurple: new Team("Green Purple", "Splatoon 3", new Color(160,201,55), new Color(174,0,174)),
@@ -51,6 +82,10 @@ export const TEAMS = {
     YellowPurple: new Team("Yellow Purple", "Splatoon 3", new Color(206,177,33), new Color(144,37,198)),
 }
 
+/**
+ * Object of all main weapons
+ * @see {@link MainWeapon}
+ */
 export const MAIN_WEAPONS = {
     GalDeco52: new MainWeapon(".52 Gal Deco", MAIN_TYPES.Shooter, "52_gal_deco", SUB_WEAPONS.CurlingBomb, SPECIAL_WEAPONS.SplattercolorScreen),
     Gal52: new MainWeapon(".52 Gal", MAIN_TYPES.Shooter, "52_gal", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.KillerWail),
@@ -197,6 +232,10 @@ export const MAIN_WEAPONS = {
     ZinkMiniSplatling: new MainWeapon("Zink Mini Splatling", MAIN_TYPES.Splatling, "zink_mini_splatling", SUB_WEAPONS.ToxicMist, SPECIAL_WEAPONS.BigBubbler),
 }
 
+/**
+ * Object containing all of the color chips.
+ * @see {@link ColorChip}
+ */
 export const COLOR_CHIPS = {
   Drone: new ColorChip("Drone"),
   Lucky: new ColorChip("Lucky"),
@@ -206,6 +245,10 @@ export const COLOR_CHIPS = {
   Support: new ColorChip("Support"),
 }
 
+/**
+ * Object containing all of the side order weapons.
+ * @see {@link SideOrderWeapon}
+ */
 export const ORDER_WEAPONS = {
   Dualies: new SideOrderWeapon("Order Dualies", MAIN_TYPES.Dualies, "order_dualie_replicas", SUB_WEAPONS.CurlingBomb, SPECIAL_WEAPONS.ReefSlider, COLOR_CHIPS.Lucky, COLOR_CHIPS.Support),
   Brella: new SideOrderWeapon("Order Brella", MAIN_TYPES.Brella, "order_brella_replica", SUB_WEAPONS.Sprinkler, SPECIAL_WEAPONS.InkStorm, COLOR_CHIPS.Drone, COLOR_CHIPS.Power),
@@ -220,8 +263,12 @@ export const ORDER_WEAPONS = {
   Splatling: new SideOrderWeapon("Order Splatling", MAIN_TYPES.Splatling, "order_splatling_replica", SUB_WEAPONS.SplashWall, SPECIAL_WEAPONS.BooyahBomb, COLOR_CHIPS.Drone, COLOR_CHIPS.Support),
   OctoShot: new SideOrderWeapon("Octo Shot", MAIN_TYPES.Shooter, "octo_shot_replica", SUB_WEAPONS.SplatBomb, SPECIAL_WEAPONS.TripleSplashdown, COLOR_CHIPS.Power, COLOR_CHIPS.Mobility)
 }
-console.log(ORDER_WEAPONS)
-// Group/Filter by weapon type
+
+/**
+ * Sort the weapon list by type.
+ * @see {@link MAIN_WEAPONS}
+ * @type {Object.<string, MainWeapon>}
+ */
 export const SORTED_WEAPONS = Object.entries(MAIN_WEAPONS)
   .sort((a, b) => a[1].type.name.localeCompare(b[1].type.name))
   .reduce((acc, [key, value]) => {
@@ -229,27 +276,33 @@ export const SORTED_WEAPONS = Object.entries(MAIN_WEAPONS)
     return acc;
   }, {});
 
-
-  export const ALL_SPLAT_IMGS = [
-    'splat_01.svg',
-    'splat_02.svg',
-    'splat_03.svg',
-    'splat_04.svg',
-    'splat_05.svg',
-    'splat_06.svg',
-    'splat_07.svg',
-    'splat_08.svg',
-    'splat_09.svg',    
-    'splat_10.svg',
-    'splat_11.svg',
-    'splat_12.svg',
-    'splat_13.svg',
-    'splat_14.svg',
-    'splat_15.svg',
-    'splat_16.svg',
-    'splat_17.svg',
-    'splat_18.svg',
-  ]
+/**
+ * Array containing all splat SVG images.
+ * @example 'splat_01.svg' to 'splat_18.svg'
+ */
+export const ALL_SPLAT_IMGS = [
+  'splat_01.svg',
+  'splat_02.svg',
+  'splat_03.svg',
+  'splat_04.svg',
+  'splat_05.svg',
+  'splat_06.svg',
+  'splat_07.svg',
+  'splat_08.svg',
+  'splat_09.svg',    
+  'splat_10.svg',
+  'splat_11.svg',
+  'splat_12.svg',
+  'splat_13.svg',
+  'splat_14.svg',
+  'splat_15.svg',
+  'splat_16.svg',
+  'splat_17.svg',
+  'splat_18.svg',
+]
+/**
+ * Array containing all splat SVG images that are used for the weapon splat image
+ */
 export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[1],
   ALL_SPLAT_IMGS[3],
@@ -262,6 +315,10 @@ export const WEAPON_SPLAT = [
   ALL_SPLAT_IMGS[15],
 ]
 
+/**
+ * Object containing all of the side order colors.
+ * @see {@link Color}
+ */
 export const SIDE_ORDER_COLORS = {
   Drone:  new Color(112, 245, 186),
   Lucky: new Color(213, 246, 119),
@@ -271,6 +328,7 @@ export const SIDE_ORDER_COLORS = {
   Support: new Color(194, 117, 246)
 }
 
+//===== Presets =====
 const SideOrderPreset = {
   customColor: new Color(242, 154, 255),
   customBravoColor: new Color(213,89,238),
@@ -284,8 +342,41 @@ const NoDLCPreset = {
 const OriginalKitsPreset = {
   weaponHex: "C66AA000EFB0B4AA4F4080B6D2ACFAFF8E8"
 }
+
+const AltKitsPreset = {
+  weaponHex: "739955FFF104F4B15B0BF20092D530500717"
+}
+const CustomBrandKitsPreset = {
+  weaponHex: "1FFA000000000000000000000000000"
+}
+
+const ScopedPreset = {
+  weaponHex: "200010000000000000000000040002"
+}
+
+const HeavyPreset = {
+  weaponHex: "180000BAA23A040200000004E00000600C08"
+}
+
+const ShortRangePreset = {
+  weaponHex: "3060001800000181C084000060001821B1"
+}
+
+const RetroPreset = {
+  weaponHex: "4001840180000001E1E1C0046"
+}
+/**
+ * Object containing all of the presets.
+ * Each preset is an object that contains some settings from the Config class.
+ */
 export const PRESETS = {
   SideOrder: SideOrderPreset,
   NoDLC: NoDLCPreset,
-  Orginal: OriginalKitsPreset
-}
+  Orginal: OriginalKitsPreset,
+  AltKits: AltKitsPreset,
+  CustomKits: CustomBrandKitsPreset,
+  Scoped: ScopedPreset,
+  Heavy: HeavyPreset,
+  ShortRange: ShortRangePreset,
+  Retro: RetroPreset
+};
