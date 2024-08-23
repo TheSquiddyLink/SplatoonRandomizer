@@ -208,7 +208,6 @@ function generateStarHex(weaponArray){
  * @param {Array<BaseWeapon>} weapons 
  */
 function toggleAll(weapons){
-    // TODO: Change to a for of loop
     for(let weapon in weapons){
         let weaponObj = weapons[weapon];
         weaponObj.toggleEnabled();
@@ -223,7 +222,6 @@ function toggleAll(weapons){
  */
 function filterByType(weapons, type){
     let result = {};
-    // TODO: Change to a for of loop
     for(let weapon in weapons){
         let weaponObj = weapons[weapon];
         if(weaponObj.type.name == type.toLowerCase()){
