@@ -992,6 +992,11 @@ function generateAnyWeaponConfig(id, array, eventFunc, opacityFunc, prefix=""){
     }
 }
 
+/**
+ * Generate the weapon config
+ * @see {@link SORTED_WEAPONS}
+ * @see {@link MAIN_WEAPONS}
+ */
 function generateWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     for (let weapon in SORTED_WEAPONS){
@@ -1019,6 +1024,11 @@ function generateWeaponConfig(){
     }
     updateStars();
 }
+
+/**
+ * Togle the visibility of the weapon config
+ * @deprecated
+ */
 function toggleWeaponConfig(){
     let weaponConfig = document.getElementById("weaponConfig");
     if(weaponConfig.style.display === "none"){
@@ -1029,12 +1039,21 @@ function toggleWeaponConfig(){
     }
     console.log(weaponConfig.hidden);
 }
+/**
+ * Hide the entier config section
+ */
 function hideAllControls(){
     document.getElementById("debugControls").hidden = true;
     document.getElementById("config").hidden = true;
 }
 /**
- * 
+ * Generate the URL for the current config
+ * @see {@link CONFIG}
+ * @see {@link generateWeaponConfigHex}
+ * @see {@link generateSubConfigHex}
+ * @see {@link generateSpecialConfigHex}
+ * @see {@link generateStarHex}
+ * @see {@link generateAnyConfigHex}
  * @returns {URL}
  */
 function generateURL(){
@@ -1062,6 +1081,11 @@ function generateURL(){
     url.searchParams.set("typeConfig", generateAnyConfigHex(MAIN_TYPES));
     return url
 }
+
+/**
+ * Export the current url to the clipboard
+ * @see {@link generateURL}
+ */
 function exportToURL(){
     console.log("generating url config");
     let url = generateURL()
@@ -1069,6 +1093,10 @@ function exportToURL(){
     alert("URL Config Generated and Copied to Clipboard");
 }
 
+/**
+ * 
+ * @param {*} defaultColor 
+ */
 function updateColorPreview(defaultColor){
     console.log(defaultColor)
     let color;
@@ -1084,11 +1112,18 @@ function updateColorPreview(defaultColor){
     colorPreview.style.color = color.toString();
 }
 
+/**
+ * Toggle the visibility of the color config
+ * @deprecated
+ */
 function toggleColorConfig() {
     let colorConfig = document.getElementById("colorConfig");
     console.log(colorConfig.hidden)
     colorConfig.hidden =!colorConfig.hidden;
 }
+/**
+ * Hide the config section
+ */
 function hideConfig(){
     let config = document.getElementById("config")
     config.hidden = true
@@ -1097,6 +1132,9 @@ function hideConfig(){
     let header = document.getElementById("header");
     header.style.display = "none"
 }
+/**
+ * Show the config section
+ */
 function showConfig(){
     let config = document.getElementById("config")
     config.hidden = false;
@@ -1105,6 +1143,10 @@ function showConfig(){
     let header = document.getElementById("header");
     header.style.display = "flex"
 }
+
+/**
+ * Hide the randomizer result
+ */
 async function hide(){
     let randomizerResult = document.getElementById("randomizerResult");
     randomizerResult.style.animation = `fadeOut ${CONFIG.hideLen}s`;
@@ -1112,7 +1154,10 @@ async function hide(){
     randomizerResult.hidden = true;
     randomizerResult.style.animation = "none";
 }
-
+/**
+ * Update the config
+ * @see {@link CONFIG}
+ */
 function updateConfig(){
     console.log("updating config");
     let autoHide = document.getElementById("autoHide").checked;
@@ -1135,6 +1180,10 @@ function updateConfig(){
     updateColorPreview(CONFIG.teamColor[CONFIG.teamSide]);
 }
 
+/**
+ * Set the config settings on the document to the default values
+ * @see {@link CONFIG}
+ */
 function setDefaultConfig(){
     console.log(CONFIG)
     
@@ -1181,17 +1230,39 @@ function setDefaultConfig(){
     }
     setBackground();
 }
+/**
+ * Generate Weapon config hex
+ * @deprecated Replaced by {@link generateAnyConfigHex}
+ * @returns {string} HEX string
+ */
 function generateWeaponConfigHex() {
     return generateAnyConfigHex(MAIN_WEAPONS);
 }
+/**
+ * Generate Sub config hex
+ * @deprecated Replaced by {@link generateAnyConfigHex}
+ * @returns {String} HEX string
+ */
 function generateSubConfigHex(){
     return generateAnyConfigHex(SUB_WEAPONS);
 }
+/**
+ * Generate Special config hex
+ * @deprecated Replaced by {@link generateAnyConfigHex}
+ * @returns {String} HEX string
+ */
 function generateSpecialConfigHex(){
     return generateAnyConfigHex(SPECIAL_WEAPONS);
 }
 
-
+/**
+ * Generate a HEX string from the given weapon array
+ * - Using the weapon's enabled status, generate a binary string, then convert to HEX
+ * @param {Record<String, BaseWeapon>} weaponArr 
+ * @returns {String} HEX String
+ * @see {@link BaseWeapon}
+ * @see {@link BaseWeapon.enabled}
+ */
 function generateAnyConfigHex(weaponArr){
     let binary = "";
     for (let weaponKey in weaponArr) {
@@ -1205,7 +1276,12 @@ function generateAnyConfigHex(weaponArr){
     console.log(hex);
     return hex;
 }
-
+/**
+ * Using a given HEX string, parse the stars for each weapon
+ * @param {String} hex HEX value for the current stars 
+ * @see {@link MainWeapon.stars}
+ * @see {@link generateStarHex}
+ */
 function parseStarHex(hex){
     let binaryString = BigInt("0x" + hex).toString(2);
     let expectedLength = Object.keys(MAIN_WEAPONS).length;
@@ -1216,8 +1292,13 @@ function parseStarHex(hex){
         let newStars = parseInt(binaryString[i] + binaryString[i + 1] + binaryString[i + 2], 2);
         weapon.stars = newStars;
     }
-
 }
+
+/**
+ * Parse a HEX string into the given weapon array
+ * @param {String} hex HEX value for the current stars
+ * @param {Record<String, BaseWeapon>} weapons An string base weapon pair of weapons such as: {@link MAIN_WEAPONS}
+ */
 function parseAnyWeaponFromHex(hex, weapons){
     let binaryString = BigInt("0x" + hex).toString(2);
     let expectedLength = Object.keys(weapons).length;
