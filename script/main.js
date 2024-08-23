@@ -156,19 +156,19 @@ async function importPackage(e){
  * @see {@link PACKAGE}
  */
 function updateConfigSelector(){
-    const selctor = document.getElementById("configSelector");
-    selctor.innerHTML = "";
-    const palceholder = document.createElement("option");
-    palceholder.innerHTML = "Select Config";
-    palceholder.setAttribute("disabled", "true");
-    palceholder.setAttribute("selected", "true");
-    selctor.appendChild(palceholder);
+    const selector = document.getElementById("configSelector");
+    selector.innerHTML = "";
+    const placeHolder = document.createElement("option");
+    placeHolder.innerHTML = "Select Config";
+    placeHolder.setAttribute("disabled", "true");
+    placeHolder.setAttribute("selected", "true");
+    selector.appendChild(placeHolder);
     for(let i = 0; i < PACKAGE.configs.length; i++){
         console.log(PACKAGE.configs[i].metaData.name)
         let option = document.createElement("option");
         option.value = i;
         option.innerHTML = PACKAGE.configs[i].metaData.name == "" ? "Unnamed Config "+i : PACKAGE.configs[i].metaData.name;
-        selctor.appendChild(option);
+        selector.appendChild(option);
     }
 }
 
@@ -280,7 +280,7 @@ function toggleShowChipResult(){
     CONFIG.showChipResult = value;
 }
 /**
- * Toggle averiging the chip color
+ * Toggle averaging the chip color
  * @see {@link CONFIG}
  */
 function toggleAverageChipColor(){
@@ -289,7 +289,7 @@ function toggleAverageChipColor(){
 }
 
 /**
- * Toggle using an automaitc chip color
+ * Toggle using an automatic chip color
  * @see {@link CONFIG}
  */
 function toggleAutoChipColor(){
@@ -337,7 +337,7 @@ function toggleSmartGen(){
 }
 
 /**
- * Invert the collor of all weapons, and update the opacity
+ * Invert the color of all weapons, and update the opacity
  * @see {@link MAIN_WEAPONS}
  * @see {@link toggleAll}
  * @see {@link setWeaponOpacity}
@@ -350,7 +350,7 @@ function invertWeapons(){
 }
 
 /**
- * Invert the collor of all sub weapons, and update the opacity
+ * Invert the color of all sub weapons, and update the opacity
  * @see {@link SUB_WEAPONS}
  * @see {@link toggleAll}
  * @see {@link setSubOpacity}
@@ -362,7 +362,7 @@ function invertSubs(){
     }
 }
 /**
- * Invert the collor of all special weapons, and update the opacity
+ * Invert the color of all special weapons, and update the opacity
  * @see {@link SPECIAL_WEAPONS}
  * @see {@link toggleAll}
  * @see {@link setSpecialOpacity}
@@ -600,7 +600,7 @@ function resetConfig(){
     setDefaultConfig();
 }
 /**
- * Perminantly hide the config and header
+ * Permanently hide the config and header
  */
 function permaHideConfig(){
     CONFIG.permaHide = true;
@@ -1027,7 +1027,7 @@ function generateWeaponConfig(){
 }
 
 /**
- * Togle the visibility of the weapon config
+ * Toggle the visibility of the weapon config
  * @deprecated
  */
 function toggleWeaponConfig(){
@@ -1041,7 +1041,7 @@ function toggleWeaponConfig(){
     console.log(weaponConfig.hidden);
 }
 /**
- * Hide the entier config section
+ * Hide the entire config section
  */
 function hideAllControls(){
     document.getElementById("debugControls").hidden = true;
@@ -1385,15 +1385,15 @@ async function generate(){
     let mainWeaponName = document.getElementById("mainWeaponName");
     let subWeaponName = document.getElementById("subWeaponName");
     let specialWeaponName = document.getElementById("specialWeaponName");
-    let mainWeapoonStars = document.getElementById("mainWeaponStars");
+    let mainWeaponStars = document.getElementById("mainWeaponStars");
     let weaponSplatImg = document.getElementById("weaponSplatImg");
     let randomSplatIndex = Math.round(Math.random()*(WEAPON_SPLAT.length - 1));
     let primaryChipName = document.getElementById("primaryChipName");
     let secondaryChipName = document.getElementById("secondaryChipName");
-    const SPLATPATH = "assets/svg/splat/"
-    weaponSplatImg.src = SPLATPATH+WEAPON_SPLAT[randomSplatIndex];
+    const SPLAT_PATH = "assets/svg/splat/"
+    weaponSplatImg.src = SPLAT_PATH+WEAPON_SPLAT[randomSplatIndex];
     WEAPON_SPLAT_CANVAS.hidden = true;
-    mainWeapoonStars.innerHTML = "";
+    mainWeaponStars.innerHTML = "";
     console.log(weapon);
     if(weapon == undefined){
         alert("No weapons left to generate! Please adjust your filters and try again");
@@ -1417,9 +1417,9 @@ async function generate(){
     secondaryChip.hidden = true;
     primaryChipName.hidden = true;
     secondaryChipName.hidden = true;
-    let totalLenght = 2550;
+    let totalLength = 2550;
     let iterations = CONFIG.iterations;
-    let lengthMS = totalLenght/iterations;
+    let lengthMS = totalLength/iterations;
     let lengthS = lengthMS/1000;
     document.getElementById("mainWeaponImage").style.animation = `shake ${lengthS}s infinite`;
 
@@ -1447,7 +1447,7 @@ async function generate(){
         selectTeam();
     }
 
-    generateStars(weapon, mainWeapoonStars);
+    generateStars(weapon, mainWeaponStars);
 
     weaponImage.style.animation = `finish ${lengthS}s`;
     mainWeaponName.hidden = false;
@@ -1476,7 +1476,7 @@ async function generate(){
         hide();
     }
     console.log(AUDIO.duration)
-    await sleep(AUDIO.duration*1000 - totalLenght)
+    await sleep(AUDIO.duration*1000 - totalLength)
     animationPlaying = false;
     generateButton.disabled = false;
     if(CONFIG.weaponQueueSize > 0) mainEnqueue(weapon);
@@ -1486,7 +1486,7 @@ async function generate(){
 }
 
 /**
- * Enques the weapon type to the type queue
+ * Enqueue the weapon type to the type queue
  * @param {WeaponType} type
  * @see {@link Queue}
  * @see {@link TYPE_QUEUE}
@@ -1498,7 +1498,7 @@ function typeEnqueue(type){
     console.log(TYPE_QUEUE.queue);
 }
 /**
- * Enques the special weapon to the special queue
+ * Enqueue the special weapon to the special queue
  * @param {SpecialWeapon} special
  * @see {@link Queue}
  * @see {@link SPECIAL_QUEUE}
@@ -1511,7 +1511,7 @@ function specialEnqueue(special){
 }
 
 /**
- * Enques the main weapon to the main queue
+ * Enqueue the main weapon to the main queue
  * @param {MainWeapon} weapon
  * @see {@link Queue}
  * @see {@link MAIN_QUEUE}
@@ -1523,7 +1523,7 @@ function mainEnqueue(weapon){
 }
 
 /**
- * Enques the sub weapon to the sub queue
+ * Enqueue the sub weapon to the sub queue
  * @param {SubWeapon} sub
  * @see {@link Queue}
  * @see {@link SUB_QUEUE}
@@ -1551,7 +1551,7 @@ function anyWeaponEnqueue(weapon, queue){
     console.log(queue.maxSize)
     if(removedWeapon != undefined){
         removedWeapon.enabled = true;
-        console.log("Eneabled weapon: " + removedWeapon.name);
+        console.log("Enabled weapon: " + removedWeapon.name);
     }
 }
 /**
@@ -1779,8 +1779,8 @@ async function applyColor(color, imageID, canvas){
     }
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < imageData.data.length; i += 4) {
-        const threashold = 115;
-        if(!(imageData.data[i] <= threashold && imageData.data[i + 1] <= threashold && imageData.data[i + 2] <= threashold)) continue;
+        const threshold = 115;
+        if(!(imageData.data[i] <= threshold && imageData.data[i + 1] <= threshold && imageData.data[i + 2] <= threshold)) continue;
         imageData.data[i] = color.r;
         imageData.data[i + 1] = color.g;
         imageData.data[i + 2] = color.b;
@@ -1827,7 +1827,7 @@ function applyColorAll(color){
 }
 
 /**
- * Generate a CSS linerar gradient that contains all the teams
+ * Generate a CSS linear gradient that contains all the teams
  * @returns {string} - The background image string
  * @see {@link TEAMS}
  * @see {@link Team}

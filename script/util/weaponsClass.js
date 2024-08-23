@@ -174,7 +174,7 @@ class MainWeapon extends BaseWeapon {
 
 /**
  * This is a color chip class
- * - Although a Color Chip is technicly not a weapon, it is treated as a weapon for the purposes of the randomizer
+ * - Although a Color Chip is technically not a weapon, it is treated as a weapon for the purposes of the randomizer
  * @extends {BaseWeapon}
  */
 class ColorChip extends BaseWeapon {

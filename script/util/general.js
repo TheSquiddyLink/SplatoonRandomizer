@@ -91,7 +91,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// TODO: Change to retrive an object rather than key
+// TODO: Change to retrieve an object rather than key
 /**
  * Get a random key from an object
  * @param {Object} object - Object to get a random key from
