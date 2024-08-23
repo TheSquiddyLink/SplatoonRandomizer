@@ -48,65 +48,28 @@ const TYPE_QUEUE = new Queue(CONFIG.typeQueueSize);
 
 
 var animationPlaying = false;
-document.getElementById("teamColor").addEventListener("change", () => selectTeam());
-document.getElementById("teamSide").addEventListener("change", () => selectTeam());
-document.getElementById("subWeapon").addEventListener("change", () => selectSub());
-document.getElementById("specialWeapon").addEventListener("change", () => selectSpecial());
-document.getElementById("customColor").addEventListener("change", () => applyCustomColor());
-document.getElementById("mainWeapon").addEventListener("change", () => selectMainWeapon());
-document.getElementById("generate").addEventListener("click", () => generate());
-document.getElementById("hide").addEventListener("click", () => hide());
 
-document.getElementById("autoHide").addEventListener("change", () => updateConfig());
-document.getElementById("hideLen").addEventListener("change", () => updateConfig());
-document.getElementById("showLen").addEventListener("change", () => updateConfig());
-document.getElementById("disableSound").addEventListener("change", () => updateConfig());
-document.getElementById("iterations").addEventListener("change", () => updateConfig());
-document.getElementById("disableAnimation").addEventListener("change", () => updateConfig());
-
-document.getElementById("hideConfig").addEventListener("click", () => hideConfig());
-document.getElementById("showConfig").addEventListener("click", () => showConfig());
-document.getElementById("exportToURL").addEventListener("click", () => exportToURL());
-document.getElementById("editStarsToggle").addEventListener("click", () => toggleEditStarsConfig());
-document.getElementById("showStarsToggle").addEventListener("click", () => toggleShowStarsConfig());
-document.getElementById("showResultStars").addEventListener("click", () => toggleResultStars());
-document.getElementById("selectStars").addEventListener("change", () => setStarsFilter());
-document.getElementById("exactStarsFilter").addEventListener("change", () => setStarsFilter());
-document.getElementById("aniGenButton").addEventListener("click", () => setAniBackground())
-document.getElementById("autoURL").addEventListener("click", () => setAutoURL() )
-document.getElementById("permaHide").addEventListener("click", () => permaHideConfig())
-document.getElementById("resetConfig").addEventListener("click", () => resetConfig())
-document.getElementById("rainbowBackground").addEventListener("click", () => setBackground())
-document.getElementById("rainbowButton").addEventListener("click", () => setBackground())
-document.getElementById("resetAll").addEventListener("click", () => resetAll())
-document.getElementById("invertSplat").addEventListener("click", () => toggleSplatConfig())
-document.getElementById("hideHoverInfo").addEventListener("click", () => toggleHoverInfo())
-document.getElementById("customColorToggle").addEventListener("change", () => toggleCustomColor())
-document.getElementById("selectConfigMenu").addEventListener("change", () => selectConfigMenu())
-document.getElementById("weaponQueueSize").addEventListener("change", () => setQueueSize())
-document.getElementById("subQueueSize").addEventListener("change", () => setQueueSize())
-document.getElementById("specialQueueSize").addEventListener("change", () => setQueueSize())
-document.getElementById("typeQueueSize").addEventListener("change", () => setQueueSize())
-document.getElementById("invertWeapons").addEventListener("click", () => invertWeapons());
-document.getElementById("invertSubs").addEventListener("click", () => invertSubs());
-document.getElementById("invertSpecials").addEventListener("click", () => invertSpecials());
-document.getElementById("invertTypes").addEventListener("click", () => invertTypes());
-document.getElementById("smartGen").addEventListener("click", () => toggleSmartGen());
-document.getElementById("customBravoToggle").addEventListener("click", () => toggleCustomBravo())
-document.getElementById("customBravoColor").addEventListener("change", () => applyCustomBravoColor())
-document.getElementById("presets").addEventListener("change", () => selectPreset())
-document.getElementById("sideOrderMode").addEventListener("click", () => toggleSideOrderMode())
-document.getElementById("autoChipColor").addEventListener("click", () => toggleAutoChipColor())
-document.getElementById("averageChipColor").addEventListener("click", () => toggleAverageChipColor())
-document.getElementById("showChipResult").addEventListener("click", () => toggleShowChipResult())
-document.getElementById("exportToJSON").addEventListener("click", () => exportToJSON())
-document.getElementById("importFromJSON").addEventListener("change", (e) => importFromJSON(e))
-document.getElementById("config").addEventListener("change", () => automaticConfigUpdate())
 document.addEventListener("keypress", (e) => handleKeyPress(e));
 document.addEventListener("click", (e) => handleClick(e));
 
 let hoverTimeout;
 
+document.getElementById("config").addEventListener("change", (e) => handleConfigChange(e));
+document.getElementById("generate").addEventListener("click", () => generate());
+
+// Buttons
+document.getElementById("invertTypes").addEventListener("click", (e) => invertTypes());
+document.getElementById("invertWeapons").addEventListener("click", (e) => invertWeapons());
+document.getElementById("invertSubs").addEventListener("click", (e) => invertSubs());
+document.getElementById("invertSpecials").addEventListener("click", (e) => invertSpecials());
+document.getElementById("permaHide").addEventListener("click", (e) => permaHideConfig());
+document.getElementById("resetConfig").addEventListener("click", (e) => resetConfig());
+document.getElementById("resetAll").addEventListener("click", (e) => resetAll());
+document.getElementById("exportToURL").addEventListener("click", (e) => exportToURL());
+document.getElementById("exportToJSON").addEventListener("click", (e) => exportToJSON());
+document.getElementById("importFromJSON").addEventListener("change", (e) => importFromJSON(e));
+document.getElementById("hideConfig").addEventListener("click", (e) => hideConfig());
+document.getElementById("showConfig").addEventListener("click", (e) => showConfig());
 
 document.getElementById("addConfig").addEventListener("change", (e) => addConfigJSON(e));
 document.getElementById("exportPackage").addEventListener("click", (e) => exportPackage());
@@ -122,6 +85,109 @@ document.getElementById("config").addEventListener("mousemove", (e) => {
 function selectConfig(e){
     CONFIG.cloneFrom(PACKAGE.configs[e.target.value]);
     setDefaultConfig();
+}
+
+/**
+ * Handle when a config element has been changed
+ * - This version uses a singular event listener rather than multiple for each element, thus resulting in less CPU usuag.
+ * - NOTE: This has not been fully tested yet. Issues are likely to be present.
+ * @param {Event} event 
+ */
+function handleConfigChange(event){
+    console.log("Config Change");
+    const target = /** @type {HTMLInputElement} */ (event.target);
+    const id = target.id;
+
+    switch (target.type) {
+        case "checkbox":
+            console.log("Checkbox");
+            console.log(id, target.checked);
+            CONFIG[id] = target.checked;
+            break;
+        case "number":
+            console.log("Number");
+            console.log(id, target.value);
+            CONFIG[id] = parseInt(target.value);
+            break;
+        case "select-one":
+            console.log("Select");
+            console.log(id, target.value);
+            handleSelect(event)
+            break;
+        case "color":
+            console.log("Color");
+            console.log(id, target.value);
+            handelColor(event);
+            break;
+        default:
+            console.log("Unknown");
+            console.log(target.type)
+            console.log(id, target.value);
+            break;
+    }
+    if(event.target.getAttribute("submenu")!==null) updateSubMenu(event);
+    updateURL();
+}
+
+/**
+ * @param {Event} event
+ */
+function handelColor(event){
+    switch(event.target.id){
+        case "customColor":
+            CONFIG.customColor = Color.hex(event.target.value);
+            break;
+        case "customBravoColor":
+            CONFIG.customBravoColor = Color.hex(event.target.value);
+            break
+    }
+    applyColorAll(getTeam());
+}
+
+/**
+ * 
+ * @param {Event} event 
+ */
+function handleSelect(event){
+    console.log("Select");
+    console.log(event.target.id);
+    switch (event.target.id) {
+        case "selectConfigMenu":
+            selectConfigMenu();
+            break;
+        case "selectStars":
+            setStarsFilter();
+            break;
+        case "presets":
+            selectPreset();
+            break;
+        case "teamSide":
+        case "teamColor":
+            selectTeam();
+            applyColorAll(getTeam())
+            break;
+    }
+
+}
+
+/**
+ * 
+ * @param {Event} event 
+ */
+function updateSubMenu(event){
+    console.log("Updating Sub menu!")
+    console.log(event.target.id);
+    switch (event.target.id) {
+        case "autoHide":
+            document.getElementById("showControls").hidden = !event.target.checked;
+            break;
+        case "customColorToggle":
+            document.getElementById("customColorSpan").hidden = !event.target.checked;
+            break;
+        case "customBravoToggle":
+            document.getElementById("customBravoSpan").hidden = !event.target.checked;
+            break;
+    }
 }
 
 /**
@@ -1767,7 +1833,7 @@ function toggleChipResult(){
  * @param {HTMLCanvasElement} canvas - The canvas to apply the color to
  */
 async function applyColor(color, imageID, canvas){
-    let ctx = canvas.getContext("2d", { willReadFrequently: true });
+    let ctx = canvas.getContext("2d");
     console.log(imageID)
     let image = document.getElementById(imageID);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
