@@ -1311,17 +1311,36 @@ function parseAnyWeaponFromHex(hex, weapons){
         i++
     }
 }
+/**
+ * Parse a HEX string into the {@link MAIN_WEAPONS} array
+ * @param {String} hex - HEX value for the current stars
+ * @deprecated Replaced by {@link parseAnyWeaponFromHex}
+ */
 function parseWeaponConfigHex(hex) {
     parseAnyWeaponFromHex(hex, MAIN_WEAPONS);
 }
+/**
+ * Parse a HEX string into the {@link SUB_WEAPONS} array
+ * @param {String} hex - HEX value for the current stars
+ * @deprecated Replaced by {@link parseAnyWeaponFromHex}
+ */
 function parseSubConfigHex(hex){
     parseAnyWeaponFromHex(hex, SUB_WEAPONS);
 }
+/**
+ * Parse a HEX string into the {@link SPECIAL_WEAPONS} array
+ * @param {String} hex - HEX value for the current stars
+ * @deprecated Replaced by {@link parseAnyWeaponFromHex}
+ */
 function parseSpecialConfigHex(hex){
     parseAnyWeaponFromHex(hex, SPECIAL_WEAPONS);
 }
 
-
+/**
+ * Generate a new weapon and handle the randomization process
+ * - This is the main function of the generator, handling getting weapons, animations, and more
+ * @returns {Promise<void>}
+ */
 async function generate(){
     let generateButton = document.getElementById("generate");
     if(animationPlaying){
@@ -1466,7 +1485,11 @@ async function generate(){
 }
 
 /**
+ * Enques the weapon type to the type queue
  * @param {WeaponType} type
+ * @see {@link Queue}
+ * @see {@link TYPE_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function typeEnqueue(type){
     anyWeaponEnqueue(type, TYPE_QUEUE);
@@ -1474,17 +1497,24 @@ function typeEnqueue(type){
     console.log(TYPE_QUEUE.queue);
 }
 /**
- * 
- * @param {SpecialWeapon} special 
+ * Enques the special weapon to the special queue
+ * @param {SpecialWeapon} special
+ * @see {@link Queue}
+ * @see {@link SPECIAL_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function specialEnqueue(special){
     anyWeaponEnqueue(special, SPECIAL_QUEUE);
     console.log("Special Queue:")
     console.log(SPECIAL_QUEUE.queue);
 }
+
 /**
- * 
- * @param {MainWeapon} weapon 
+ * Enques the main weapon to the main queue
+ * @param {MainWeapon} weapon
+ * @see {@link Queue}
+ * @see {@link MAIN_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function mainEnqueue(weapon){
     anyWeaponEnqueue(weapon, MAIN_QUEUE);
@@ -1492,7 +1522,11 @@ function mainEnqueue(weapon){
 }
 
 /**
+ * Enques the sub weapon to the sub queue
  * @param {SubWeapon} sub
+ * @see {@link Queue}
+ * @see {@link SUB_QUEUE}
+ * @deprecated Replaced by {@link anyWeaponEnqueue}
  */
 function subEnqueue(sub){
     anyWeaponEnqueue(sub, SUB_QUEUE);
@@ -1500,9 +1534,14 @@ function subEnqueue(sub){
     console.log(SUB_QUEUE.queue);
 }
 /**
- * 
+ * This will enqueue the weapon to the queue
+ * - If the queue is full, the oldest weapon will be removed from the queue
+ * - When adding to the queue it will disable the weapon
+ * - When removing from the queue it will enable the weapon
  * @param {BaseWeapon} weapon 
  * @param {Queue<BaseWeapon>} queue 
+ * @see {@link Queue}
+ * @see {@link BaseWeapon.enabled}
  */
 function anyWeaponEnqueue(weapon, queue){
     weapon.enabled = false;
@@ -1514,15 +1553,29 @@ function anyWeaponEnqueue(weapon, queue){
         console.log("Eneabled weapon: " + removedWeapon.name);
     }
 }
+/**
+ * Handle selecting a main weapon from the debug dropdown
+ * @see {@link applyMain}
+ * @deprecated No longer used
+ */
 function selectMainWeapon(){
     let main = document.getElementById("mainWeapon").value;
     applyMain(MAIN_WEAPONS[main]);
 }
+/**
+ * Apply the main weapon to the element
+ * @param {MainWeapon} main 
+ * @deprecated No longer used
+ */
 function applyMain(main){
     console.log(main);
     document.getElementById("mainWeaponImage").src = main.primaryTexture;
 }
 
+/**
+ * Apply the color when a custom color has been selected
+ * @see {@link applyColorAll}
+ */
 function applyCustomColor(){
     let color = document.getElementById("customColor").value;
     let customColor = Color.hex(color);
@@ -1530,6 +1583,11 @@ function applyCustomColor(){
     applyColorAll(customColor);
 
 }
+
+/**
+ * Test all main weapons by displaying their images
+ * - This is used to test if the images are loading correctly as well if the paths exist
+ */
 async function testMainWeapons(){
     const image = document.getElementById("mainWeaponImage");
     for (let main in MAIN_WEAPONS) {
@@ -1538,7 +1596,14 @@ async function testMainWeapons(){
         image.src = weapon.primaryTexture;
     }
 }
+
 applyColorAll(TEAMS.BlueYellow.alpha);
+
+/**
+ * Update the dropdowns with the current values
+ * - These are the debug dropdowns and are no longer uses
+ * @deprecated No longer used
+ */
 function updateDropDowns(){
     const teamColor = document.getElementById("teamColor");
     const subWeapon = document.getElementById("subWeapon");
@@ -1575,41 +1640,62 @@ function updateDropDowns(){
 }
 
 /**
- * 
- * @param {MainWeapon} weapon 
- * @param {HTMLDivElement} element 
- * @param {?string} _class
- */
+ * Generate the stars based on the weapon
+ * @param {MainWeapon} weapon  - The weapon to generate the stars for
+ * @param {HTMLDivElement} element  - The element to append the stars to
+ * @param {string} [_class="star"] - The CSS class for the star elements, defaults to "star"
+ * @see {@link createConfigStar}
+*/
 function generateStars(weapon, element, _class = "star"){
     for(let i = 0; i< weapon.stars; i++){
         let star = createConfigStar(_class);
         element.appendChild(star);
     }
 }
+/**
+ * Select a special weapon
+ * - This is used to select a special weapon from the debug dropdown
+ * @see {@link applySpecial}
+ * @deprecated No longer used
+ */
 function selectSpecial(){
     let special = document.getElementById("specialWeapon").value;
     applySpecial(SPECIAL_WEAPONS[special]);
 }
+/**
+ * Apply the special weapon to the element
+ * @param {SpecialWeapon} special
+ */
 function applySpecial(special){
     document.getElementById("specialColor").src = special.primaryTexture;
     document.getElementById("specialWhite").src = special.secondaryTexture;
 }
+
+/**
+ * Get the current selected team
+ * @returns {Team}
+ * @see {@link TEAMS}
+ */
 function getTeam(){
     let team = document.getElementById("teamColor").value;
     let side = document.getElementById("teamSide").value;
     return TEAMS[team][side];
 }
 /**
- * 
+ * Get the alpha and bravo teams based on the team type selected
  * @returns {Team}
+ * @see {@link TEAMS}
  */
 function getAllTeams(){
     let team = document.getElementById("teamColor").value
     return TEAMS[team]
 }
 /**
- * 
- * @param {Color} sideOrderColor 
+ * Event for selecting a team
+ * @param {?Color} sideOrderColor -  The Side Order Color to apply to the team, if null the normal color will be used
+ * @see {@link updateColorPreview}
+ * @see {@link applyColorAll}
+ * @see {@link getTeam}
  */
 function selectTeam(sideOrderColor){
     let team = document.getElementById("teamColor").value;
@@ -1625,14 +1711,17 @@ function selectTeam(sideOrderColor){
 }
 
 /**
- * @deprecated
+ * Select a sub weapon
+ * - This is used to select a sub weapon from the debug dropdown
+ * @deprecated No longer used
  */
 function selectSub(){
     let sub = document.getElementById("subWeapon").value;
     applySub(SUB_WEAPONS[sub]);
 }
 /**
- * 
+ * Apply a sub weapon
+ * - Update the sub weapon images
  * @param {SubWeapon} sub 
  */
 function applySub(sub){
@@ -1643,9 +1732,9 @@ function applySub(sub){
 }
 
 /**
- * 
- * @param {ColorChip} primary 
- * @param {ColorChip} secondary 
+ * Apply the color chips
+ * @param {ColorChip} primary - Primary color chip
+ * @param {ColorChip} secondary - Secondary color chip
  */
 function applyChips(primary, secondary){
     console.log("Applying Chips")
@@ -1657,6 +1746,11 @@ function applyChips(primary, secondary){
     document.getElementById("secondaryChipName").innerHTML = secondary.name;
 }
 
+/**
+ * Toggle showing the color chips result
+ * @see {@link Config.sideOrderMode}
+ * @see {@link Config.showChipResult}
+ */
 function toggleChipResult(){
     document.getElementById("primaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
     document.getElementById("secondaryChip").hidden = !CONFIG.sideOrderMode || (!CONFIG.showChipResult && CONFIG.sideOrderMode);
@@ -1665,8 +1759,11 @@ function toggleChipResult(){
 }
 
 /**
- * 
- * @param {Color} color 
+ * Apply a color to the canvas
+ * - Using the current team color, adjust the image to use the color
+ * @param {Color} color  - The color to apply
+ * @param {string} imageID - The ID of the image to apply the color to
+ * @param {HTMLCanvasElement} canvas - The canvas to apply the color to
  */
 async function applyColor(color, imageID, canvas){
     let ctx = canvas.getContext("2d");
@@ -1691,8 +1788,13 @@ async function applyColor(color, imageID, canvas){
 }
 
 /**
- * 
- * @param {Color} color 
+ * Apply the color to all images:
+ * - Sub Weapon
+ * - Special Weapon\
+ * If the team color is set to custom, use the custom color
+ * Handle if the splat color is inverted
+ * @param {Color} color - The color to set the values of
+ * @see {@link applyColor}
  */
 function applyColorAll(color){
     if(CONFIG.customColor != null) color = CONFIG.customColor;
@@ -1723,6 +1825,13 @@ function applyColorAll(color){
     }
 }
 
+/**
+ * Generate a CSS linerar gradient that contains all the teams
+ * @returns {string} - The background image string
+ * @see {@link TEAMS}
+ * @see {@link Team}
+ * @see {@link Color}
+ */
 function genRainbowGradient(){
     let backgroundImageString = "";
     let i = 0;
