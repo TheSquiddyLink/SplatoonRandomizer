@@ -163,13 +163,29 @@ function handleSelect(event){
             break;
         case "teamSide":
         case "teamColor":
-            selectTeam();
-            applyColorAll(getTeam())
+            handleTeamSelect(event);
             break;
     }
 
 }
 
+/**
+ * @param {Event} event
+ */
+function handleTeamSelect(event){
+    console.log("Team Select");
+    console.log(event.target.id);
+    switch (event.target.id) {
+        case "teamSide":
+            CONFIG.teamSide = event.target.value;
+            break;
+        case "teamColor":
+            CONFIG.teamColor = TEAMS[event.target.value];
+            break;
+    }
+    console.log(CONFIG);
+    applyColorAll(getTeam());
+}
 /**
  * 
  * @param {Event} event 
@@ -670,8 +686,8 @@ function resetConfig(){
  */
 function permaHideConfig(){
     CONFIG.permaHide = true;
-    document.getElementById("config").style.display = "none"
-    document.getElementById("header").style.display = "none"
+    document.getElementById("config").remove();
+    document.getElementById("header").remove();
     updateURL();
 }
 
@@ -820,7 +836,6 @@ function loadUrlConfig(){
     if(params.get("starConfig") !== null) parseStarHex(params.get("starConfig"));
     if(params.get("aniGenButton") !== null) CONFIG.aniGenButton = params.get("aniGenButton") == "true";
     if(params.get("autoURL") !=null) CONFIG.autoURL = params.get("autoURL") == "true";
-    if(params.get("permaHide") == "true") permaHideConfig(); 
     if(params.get("rainbowBackground") !== null) CONFIG.rainbowBackground = params.get("rainbowBackground") == "true";
     if(params.get("rainbowButton") !== null) CONFIG.rainbowButton = params.get("rainbowButton") == "true";
     if(params.get("obsFriendly") !== null) CONFIG.obsFriendly = params.get("obsFriendly") == "true";
@@ -844,12 +859,16 @@ function loadUrlConfig(){
     document.getElementById("specialQueueSize").setAttribute("max", Object.keys(SPECIAL_WEAPONS).length);
     updateDropDowns();
     setDefaultConfig();
-    updateConfig();
-    generateWeaponConfig();
-    generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
-    generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
-    generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
-}
+    if(params.get("permaHide") == "true") permaHideConfig(); 
+    if(!CONFIG.permaHide){
+        updateConfig();
+        generateWeaponConfig();
+        generateAnyWeaponConfig("subConfig", SUB_WEAPONS, toggleSub, setSubOpacity);
+        generateAnyWeaponConfig("specialConfig", SPECIAL_WEAPONS, toggleSpecial, setSpecialOpacity);
+        generateAnyWeaponConfig("typeConfig", MAIN_TYPES, toggleType, setTypeOpacity, "_");
+    }
+    }
+    
 /**
  * Enable all weapon types
  * @see {@link MAIN_TYPES}
@@ -1452,6 +1471,8 @@ async function generate(){
     let subWeaponName = document.getElementById("subWeaponName");
     let specialWeaponName = document.getElementById("specialWeaponName");
     let mainWeapoonStars = document.getElementById("mainWeaponStars");
+    console.log("Result Stars: "+CONFIG.resultStars)
+    mainWeapoonStars.style.display = CONFIG.resultStars ? "flex" : "none";  
     let weaponSplatImg = document.getElementById("weaponSplatImg");
     let randomSplatIndex = Math.round(Math.random()*(WEAPON_SPLAT.length - 1));
     let primaryChipName = document.getElementById("primaryChipName");
@@ -1744,9 +1765,7 @@ function applySpecial(special){
  * @see {@link TEAMS}
  */
 function getTeam(){
-    let team = document.getElementById("teamColor").value;
-    let side = document.getElementById("teamSide").value;
-    return TEAMS[team][side];
+    return CONFIG.teamColor[CONFIG.teamSide];
 }
 /**
  * Get the alpha and bravo teams based on the team type selected
@@ -1754,8 +1773,7 @@ function getTeam(){
  * @see {@link TEAMS}
  */
 function getAllTeams(){
-    let team = document.getElementById("teamColor").value
-    return TEAMS[team]
+    return CONFIG.teamColor;
 }
 /**
  * Event for selecting a team
@@ -1765,14 +1783,6 @@ function getAllTeams(){
  * @see {@link getTeam}
  */
 function selectTeam(sideOrderColor){
-    let team = document.getElementById("teamColor").value;
-    let side = document.getElementById("teamSide").value;
-    console.log("Team Changed")
-    console.log(side)
-    console.log(team)
-    CONFIG.teamColor = TEAMS[team];
-    CONFIG.teamSide = side;
-    updateColorPreview();
     if(sideOrderColor != null) applyColorAll(sideOrderColor);
     else applyColorAll(getTeam());
 }
